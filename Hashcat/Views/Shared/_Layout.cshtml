@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebHashcat</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebHashcat.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="body_header">
+        <header>
+            <a href="#" class="logo">LOGOTIPE</a>
+            <nav>
+                <ul>
+                    <li><a href="#">Головна</a></li>
+                    <li>
+                        <a href="#">Послуги &bigtriangledown;</a>
+                        <ul>
+                            <li><a href="@Url.Action("Index", "LookupTable", new {Area = ""})">Пошук по базі</a></li>
+                            <li><a href="#">Brute</a></li>
+                            <li><a href="#">Склеювання словників</a></li>
+                            <li><a href="#">Telegram Bot</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Скачування &bigtriangledown;</a>
+                        <ul>
+                            <li><a href="#">Мобільний додаток</a></li>
+                            <li><a href="#">Додаток</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <partial name="_LoginPartial" />
+        </header>
+    </div>
+
+    <div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @*<footer class="border-top footer text-muted">
+        <div>
+            &copy; 2023 - WebHashcat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
