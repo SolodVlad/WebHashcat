@@ -14,7 +14,7 @@ namespace DLL.Context
             Database.EnsureCreated();
         }
 
-        protected override async void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
@@ -25,17 +25,18 @@ namespace DLL.Context
             builder.Entity<Currency>().Property(currency => currency.Name).HasMaxLength(100);
 
             //HashCrackInfo
-            builder.Entity<HashCrackInfo>().Property(hashCrackInfo => hashCrackInfo.Hash).HasColumnType("varchar");
+            builder.Entity<HashCrackInfo>().HasKey(hashCrackInfo => hashCrackInfo.Hash);
+            builder.Entity<HashCrackInfo>().Property(hashCrackInfo => hashCrackInfo.Hash).HasColumnType("varchar").HasMaxLength(8000);
             builder.Entity<HashCrackInfo>().Property(hashCrackInfo => hashCrackInfo.Progress).HasColumnType("tinyint");
 
             //LookupTable
             builder.Entity<DataLookupTable>().ToTable("LookupTable");
             builder.Entity<DataLookupTable>().HasKey(lookupTable => lookupTable.SHA512);
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.MD5).HasColumnType("varchar");
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA1).HasColumnType("varchar");
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA256).HasColumnType("varchar");
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA384).HasColumnType("varchar");
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA512).HasColumnType("varchar");
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.MD5).HasColumnType("varchar(max)");
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA1).HasColumnType("varchar(max)");
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA256).HasColumnType("varchar(max)");
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA384).HasColumnType("varchar(max)");
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA512).HasColumnType("varchar").HasMaxLength(8000);
 
             //var md5 = MD5.Create();
             //var sha1 = SHA1.Create();
