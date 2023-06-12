@@ -1,3 +1,258 @@
+/*Main page*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    list-style: none;
+}
+body {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(#000, #04143f);
+    background-size: cover;
+    background-position: center;
+    justify-self: center;
+    align-items: center;
+    min-height: 100vh;
+}
+a {
+    text-decoration: none;
+}
+button {
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 1px solid #FFF;
+    color: #FFF;
+}
+header {
+    position: fixed;
+    top: 2px;
+    left: 2px;
+    right:2px;
+    background: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2%;
+    box-shadow: 0 5px 10px #0b5a9d;
+}
+header .logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: #00ff22; /*игнорирует цвет теста*/
+    transition: .5s;
+}
+header .logo:hover {
+    transform: scale(1.2);
+}
+header nav ul li {
+    position: relative;
+    float: left;
+}
+header nav ul li a {
+    font-family: 'Montserrat', sans-serif;
+    padding: 15px;
+    color: #FFF; /*игнорирует цвет теста*/
+    font-size: 16px;
+    display: block;
+}
+header nav ul li a:hover {
+    background: #0b5a9d; /*отступ с лева*/
+    color: #000;
+}
+nav ul li ul {
+    position: absolute;
+    left: 0;
+    width: 180px;
+    background: linear-gradient(#000, #04143f);
+    display: none;
+}
+nav ul li ul li {
+    float: left;
+    padding: 0px;
+    width: 100%;
+    /*border: 1px solid #fff;*/ /*отступ с лева*/
+}
+nav ul li:hover > ul {
+    display: initial;
+}
+.pageContent {
+    margin: 100px 150px 0px 150px;
+}
+/*Main page*/
+/*Поиск по базе*/
+/*//////////////////////////////////////////////////////////////ОПТИМИЗИРОВАТЬ КОД/////////////////////////////////////////////////////////////////*/
+.conteiner_search_db {
+    width: 800px;
+    height: 500px;
+}
+.textarea_search_db {
+    height: 80%;
+    width: 100%;
+    background-color: rgba(6, 29, 80, 0.6);
+    box-shadow: 0 5px 45px rgba(12, 88, 252, 0.685);
+    color: #FFF;
+    padding: 1em;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    transition: all 0.2s;
+}
+.textarea_search_db:hover {
+    cursor: pointer;
+    background-color: rgba(9, 42, 114, 0.719);
+}
+.textarea_search_db::placeholder {
+    color: #FFF;
+}
+/*///////////////////////////////////////////////////////Переписать кнопку/////////////////////////////////////////////////////////*/
+.btn_search_db {
+    position: relative;
+    float: left;
+    margin: 0px 0px 0px 350px;
+}
+.table_search_db {
+    width: 100%;
+}
+.th {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+}
+.td {
+    font-family: 'Montserrat', sans-serif;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+}
+.text_info1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFF;
+}
+.m1 {
+    font-family: 'Montserrat', sans-serif;
+    background: #00ff22;
+    font-size: 16px;
+    font-weight: 500;
+}
+.m2 {
+    font-family: 'Montserrat', sans-serif;
+    background: #eeff00;
+    font-size: 16px;
+    font-weight: 500;
+}
+.m3 {
+    font-family: 'Montserrat', sans-serif;
+    background: #ff0000;
+    font-size: 16px;
+    font-weight: 500;
+}
+/*Поиск по базе*/
+/*Авторизация - Регистрация*/
+.autorith {
+    margin-top: 170px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.container_authorization {
+    width: 800px;
+    height: 500px;
+    padding: 40px 0;
+    position: relative;
+}
+.block {
+    height: 100%;
+    background-color: rgba(6, 29, 80, 0.6);
+    box-shadow: 0 5px 45px rgba(12, 88, 252, 0.685);
+    display: flex;
+    align-items: center;
+}
+.block-item {
+    text-align: center;
+    width: 50%;
+}
+.block-item_title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #FFF;
+    margin-bottom: 10px;
+}
+.block-item_btn {
+    font-size: 16px;
+    font-weight: 500;
+}
+.form-box {
+    background-color: #000;
+    height: 100%;
+    width: 50%;
+    box-shadow: 0 5px 45px rgba(12, 88, 252, 0.685);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.form-box.active {
+    left: 50%;
+}
+.form {
+    width: 100%;
+    padding: 50px;
+    font-size: 16px; 
+    position: absolute;
+    transition: 0.5s;
+}
+.form_signin {
+    left: 0;
+    transition-delay: 0.25s;
+}
+.form_signup {
+    left: 100%;
+    transition-delay: 0s;
+}
+.form-box.active .form_signin {
+    left: -100%;
+    transition-delay: 0s;
+}
+.form-box.active .form_signup {
+    left: 0;
+    transition-delay: 0.25s
+}
+.form_title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color:#FFF;
+}
+.form_input {
+    width: 100%;
+    padding: 10px;
+    border: solid 2px #018ed5;
+    font-size: inherit;
+}
+.form_fargot {
+    color: #FFF; /*игнорирует цвет теста*/
+}
+/*Авторизация - Регистрация*/
+
+
+
+/*////////////////////////////////////////////////////////////////////////////////////////*/
 /*html {
   font-size: 14px;
 }
@@ -20,17 +275,17 @@ html {
 body {
   margin-bottom: 60px;
 }*/
-
-* {
+/*////////////////////////////////////////////////////////////////////////////////////////*/
+/** {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
     list-style: none;
     text-decoration: none;
-}
+}*/
 /*Шапка сайта*/
-.body_header {
+/*.body_header {
     width: 100%;
     height: 100vh;
     background: linear-gradient(#000, #04143f);
@@ -130,11 +385,11 @@ nav ul li ul li {
 
 nav ul li:hover > ul {
     display: initial;
-}
+}*/
 
 /*Шапка сайта*/
 /*Карточки продуктов*/
-.body_card {
+/*.body_card {
     position: relative;
     margin: 0;
     padding: 0;
@@ -258,11 +513,11 @@ nav ul li:hover > ul {
 
 .box:nth-child(3)::before {
     background: linear-gradient(#04143f, #0e4cf8);
-}
+}*/
 
 /*Карточки продуктов*/
 /*Авторизация/Регистрация*/
-.body_authorization {
+/*.body_authorization {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -321,11 +576,11 @@ nav ul li:hover > ul {
 
 .form-box.active {
     left: 50%;
-}
+}*/
 
 /*Авторизация/Регистрация*/
 /*Поиск по базе*/
-.body_search_db {
+/*.body_search_db {
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -418,5 +673,5 @@ nav ul li:hover > ul {
     color: #FFF;
     font-size: 16px;
     font-weight: 500;
-}
+}*/
 /*Поиск по базе*/

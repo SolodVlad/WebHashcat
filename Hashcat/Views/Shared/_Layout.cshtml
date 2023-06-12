@@ -12,9 +12,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="body_header">
-        <header>
-            <a href="#" class="logo">LOGOTIPE</a>
+    <header>
+         <a href="#" class="logo">LOGOTIPE</a>
+         <nav>
+             <ul>
+                <li>
+                    <a href="#">Послуги</a>
+                    <ul>
+                        <li><a href="#">Brute</a></li>
+                        <li><a href="#">Склеювання словників</a></li>
+                        <li><a href="#">Telegram Bot</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Скачування</a>
+                    <ul>
+                        <li><a href="#">Мобільний додаток</a></li>
+                        <li><a href="#">Додаток</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Авторизація</a></li>
+             </ul>
+         </nav>
+    </header>
+    <div class="pageContent">
+        @RenderBody()
+    </div>
+
+    @*<footer class="border-top footer text-muted">
+        <div>
+            &copy; 2023 - WebHashcat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>*@
+    @*<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="indxe.js"></script>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" defer asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
+
+
+
+
+@*<a href="#" class="logo">LOGOTIPE</a>
             <nav>
                 <ul>
                     <li><a href="#">Головна</a></li>
@@ -36,24 +81,4 @@
                     </li>
                 </ul>
             </nav>
-            <partial name="_LoginPartial" />
-        </header>
-    </div>
-
-    <div>
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    @*<footer class="border-top footer text-muted">
-        <div>
-            &copy; 2023 - WebHashcat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>*@
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+            <partial name="_LoginPartial" />*@
