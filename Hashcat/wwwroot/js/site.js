@@ -1,11 +1,20 @@
-﻿const signInBtn = document.querySelector('.signin-btn');
-const signUpBtn = document.querySelector('.signup-btn');
+﻿//const signInBtn = document.querySelector('.signin-btn')
+//const signUpBtn = document.querySelector('.signup-btn');
 const formBox = document.querySelector('.form-box');
 
-singUpBtn.addEventListener('click', function () {
+$("#signup-btn").on("click", function (x) {
+    console.log('A')
     formBox.classList.add('active');
 });
-
-singInBtn.addEventListener('click', function () {
+$(".signin-btn").on("click", function (x) {
     formBox.classList.remove('active');
 });
+
+
+//signUpBtn.addEventListener('click', function() {
+//    formBox.classList.add('active');
+//});
+
+//signInBtn.addEventListener('click', function() {
+//    formBox.classList.remove('active');
+//});
