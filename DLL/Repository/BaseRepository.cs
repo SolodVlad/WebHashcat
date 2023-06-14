@@ -24,7 +24,7 @@ namespace DLL.Repository
             try
             {
                 await Entities.AddAsync(entity).ConfigureAwait(false);
-                await _hashWorkDbContext.SaveChangesAsync();
+                await _hashWorkDbContext.SaveChangesAsync().ConfigureAwait(false);
                 return new OperationDetail { Message = "Created" };
             }
             catch (Exception ex)

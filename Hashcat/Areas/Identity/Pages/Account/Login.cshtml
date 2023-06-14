@@ -79,7 +79,7 @@
     </div>
 </div>*@
 
-<div class="body_authorization">
+<div class="autorith">
     <article class="container_authorization">
         <div class="block">
             <selection class="block_item block-item">
@@ -88,10 +88,40 @@
             </selection>
             <selection class="block_item block-item">
                 <h2 class="block-item_title">У вас немає аккаунту?</h2>
-                <button class="block-item_btn signup-btn">Реєстрація</button>
+                <button class="block-item_btn " id="signup-btn">Реєстрація</button>
             </selection>
         </div>
         <div class="form-box">
+            <form action="#" class="form form_signin">
+                <h3 class="form_title">Вхід</h3>
+                <p>
+                    <input type="email" class="form_input" placeholder="Пошта" />
+                </p>
+                <p>
+                    <input type="password" class="form_input" placeholder="Пароль" />
+                </p>
+                <p>
+                    <button class="form_btn">Увійти</button>
+                </p>
+                <p>
+                    <a href="#" class="form-forgot">Відновити пароль</a>
+                </p>
+            </form>
+            <form action="#" class="form form_signup">
+                <h3 class="form_title">Реєстрація</h3>
+                <p>
+                    <input type="email" class="form_input" placeholder="Email" />
+                </p>
+                <p>
+                    <input type="password" class="form_input" placeholder="Пароль" />
+                </p>
+                <p>
+                    <input type="password" class="form_input" placeholder="Підтвердіть пароль" />
+                </p>
+                <p>
+                    <button class="form_btn">Зареєструватись</button>
+                </p>
+            </form>
         </div>
     </article>
 </div>
