@@ -3,7 +3,6 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-<ul>
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
@@ -21,4 +20,3 @@ else
         <a href="@Url.Action("Login", "Account", new {Area = "Identity"})">Авторизація</a>
     </li>
 }
-</ul>

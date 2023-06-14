@@ -44,18 +44,18 @@ namespace DLL.Context
             var sha384 = SHA384.Create();
             var sha512 = SHA512.Create();
 
-            string? password;
-            using var streamReader = new StreamReader("E:\\Словари для брута\\test.txt");
-            while ((password = streamReader.ReadLine()) != null)
-                builder.Entity<DataLookupTable>().HasData(new DataLookupTable()
-                {
-                    Value = password,
-                    MD5 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), md5),
-                    SHA1 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha1),
-                    SHA256 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha256),
-                    SHA384 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha384),
-                    SHA512 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha512),
-                });
+            //string? password;
+            //using var streamReader = new StreamReader("E:\\Словари для брута\\test.txt");
+            //while ((password = streamReader.ReadLine()) != null)
+            //    builder.Entity<DataLookupTable>().HasData(new DataLookupTable()
+            //    {
+            //        Value = password,
+            //        MD5 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), md5),
+            //        SHA1 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha1),
+            //        SHA256 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha256),
+            //        SHA384 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha384),
+            //        SHA512 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha512),
+            //    });
         }
 
         public DbSet<User> Users { get; set; }

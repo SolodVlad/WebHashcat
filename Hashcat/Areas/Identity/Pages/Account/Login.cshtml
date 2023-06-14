@@ -5,8 +5,57 @@
 @{
     ViewData["Title"] = "Log in";
 }
+<div class="autorith">
+    <article class="container_authorization">
+        <div class="block">
+            <selection class="block_item block-item">
+                <h2 class="block-item_title">У вас є аккаунт?</h2>
+                <button class="block-item_btn signin-btn">Авторизація</button>
+            </selection>
+            <selection class="block_item block-item">
+                <h2 class="block-item_title">У вас немає аккаунту?</h2>
+                <button class="block-item_btn " id="signup-btn">Реєстрація</button>
+            </selection>
+        </div>
+        <div class="form-box">
+            <form action="#" class="form form_signin">
+                <h3 class="form_title">Вхід</h3>
+                <p>
+                    <input type="email" class="form_input" placeholder="Пошта" />
+                </p>
+                <p>
+                    <input type="password" class="form_input" placeholder="Пароль" />
+                </p>
+                <p>
+                    <button class="form_btn">Увійти</button>
+                </p>
+                <p>
+                    <a href="#" class="form-forgot">Відновити пароль</a>
+                </p>
+            </form>
+            <form action="#" class="form form_signup">
+                <h3 class="form_title">Реєстрація</h3>
+                <p>
+                    <input type="email" class="form_input" placeholder="Email" />
+                </p>
+                <p>
+                    <input type="password" class="form_input" placeholder="Пароль" />
+                </p>
+                <p>
+                    <input type="password" class="form_input" placeholder="Підтвердіть пароль" />
+                </p>
+                <p>
+                    <button class="form_btn">Зареєструватись</button>
+                </p>
+            </form>
+        </div>
+    </article>
+</div>
 
-<h1>@ViewData["Title"]</h1>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
 @*<div class="row">
     <div class="col-md-4">
         <section>
@@ -78,54 +127,3 @@
         </section>
     </div>
 </div>*@
-
-<div class="autorith">
-    <article class="container_authorization">
-        <div class="block">
-            <selection class="block_item block-item">
-                <h2 class="block-item_title">У вас є аккаунт?</h2>
-                <button class="block-item_btn signin-btn">Авторизація</button>
-            </selection>
-            <selection class="block_item block-item">
-                <h2 class="block-item_title">У вас немає аккаунту?</h2>
-                <button class="block-item_btn " id="signup-btn">Реєстрація</button>
-            </selection>
-        </div>
-        <div class="form-box">
-            <form action="#" class="form form_signin">
-                <h3 class="form_title">Вхід</h3>
-                <p>
-                    <input type="email" class="form_input" placeholder="Пошта" />
-                </p>
-                <p>
-                    <input type="password" class="form_input" placeholder="Пароль" />
-                </p>
-                <p>
-                    <button class="form_btn">Увійти</button>
-                </p>
-                <p>
-                    <a href="#" class="form-forgot">Відновити пароль</a>
-                </p>
-            </form>
-            <form action="#" class="form form_signup">
-                <h3 class="form_title">Реєстрація</h3>
-                <p>
-                    <input type="email" class="form_input" placeholder="Email" />
-                </p>
-                <p>
-                    <input type="password" class="form_input" placeholder="Пароль" />
-                </p>
-                <p>
-                    <input type="password" class="form_input" placeholder="Підтвердіть пароль" />
-                </p>
-                <p>
-                    <button class="form_btn">Зареєструватись</button>
-                </p>
-            </form>
-        </div>
-    </article>
-</div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

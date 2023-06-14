@@ -1,6 +1,4 @@
-﻿//const signInBtn = document.querySelector('.signin-btn')
-//const signUpBtn = document.querySelector('.signup-btn');
-const formBox = document.querySelector('.form-box');
+﻿const formBox = document.querySelector('.form-box');
 
 $("#signup-btn").on("click", function (x) {
     console.log('A')
@@ -10,11 +8,12 @@ $(".signin-btn").on("click", function (x) {
     formBox.classList.remove('active');
 });
 
+//const signInBtn = document.querySelector('.signin-btn')
+//const signUpBtn = document.querySelector('.signup-btn');
 
 //signUpBtn.addEventListener('click', function() {
 //    formBox.classList.add('active');
 //});
-
 //signInBtn.addEventListener('click', function() {
 //    formBox.classList.remove('active');
 //});
