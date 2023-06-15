@@ -49,7 +49,7 @@ namespace WebHashcat.Controllers
         }
 
         [HttpPost]
-        public async Task<DataLookupTableViewModel[]> SearchPasswords(string hashesStr)
+        public async Task<DataLookupTableViewModel[]> SearchPasswords([FromBody] string hashesStr)
         {
             var hashesArr = hashesStr.Split(Environment.NewLine);
             var datas = new DataLookupTableViewModel[hashesArr.Length];

@@ -1,12 +1,19 @@
-﻿const formBox = document.querySelector('.form-box');
+﻿const formBox = document.querySelector('#form-box');
 
-$("#signup-btn").on("click", function (x) {
-    console.log('A')
+$("#signup-btn").on("click", function () {
     formBox.classList.add('active');
 });
-$(".signin-btn").on("click", function (x) {
+$("#signin-btn").on("click", function () {
     formBox.classList.remove('active');
 });
+
+//$("#signup-btn").on("click", function (x) {
+//    console.log('A')
+//    formBox.classList.add('active');
+//});
+//$(".signin-btn").on("click", function (x) {
+//    formBox.classList.remove('active');
+//});
 
 //const signInBtn = document.querySelector('.signin-btn')
 //const signUpBtn = document.querySelector('.signup-btn');
@@ -25,22 +32,20 @@ $(function () {
                         '<th class="th">Пароль</th>' +
                     '</tr>'
 
-    loadData()
-
     $("#searchPass").click(function () {
-        var fd = new FormData()
-        fd.append("hashesStr", $("#hashes").val())
-
         $.ajax({
             url: "api/SearchPasswords",
             type: "POST",
-            contentType: false,
-            processData: false,
-            data: fd,
+            //processData: false,
+            contentType: "text/plain",
+            data: $("#hashes").val(),
 
             success: function () {
-                $("#data").html("")
+                $("#table_search_db").html("")
                 loadData()
+            },
+            error: function (errorMessage) {
+                alert("Error: " + errorMessage);
             }
         })
     })
@@ -63,6 +68,9 @@ $(function () {
                               '</tr>'
                     $("#table_search_db").append(row)
                 })
+            },
+            error: function (errorMessage) {
+                alert("Error: " + errorMessage);
             }
         })
     }

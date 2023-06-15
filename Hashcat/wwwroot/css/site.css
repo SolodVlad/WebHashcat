@@ -201,7 +201,7 @@ nav ul li:hover > ul {
     font-size: 16px;
     font-weight: 500;
 }
-.form-box {
+#form-box {
     background-color: #000;
     height: 100%;
     width: 50%;
@@ -215,7 +215,7 @@ nav ul li:hover > ul {
     align-items: center;
     overflow: hidden;
 }
-.form-box.active {
+#form-box.active {
     left: 50%;
 }
 .form {
@@ -233,11 +233,11 @@ nav ul li:hover > ul {
     left: 100%;
     transition-delay: 0s;
 }
-.form-box.active .form_signin {
+#form-box.active .form_signin {
     left: -100%;
     transition-delay: 0s;
 }
-.form-box.active .form_signup {
+#form-box.active .form_signup {
     left: 0;
     transition-delay: 0.25s
 }
