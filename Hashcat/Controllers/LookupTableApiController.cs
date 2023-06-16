@@ -1,6 +1,7 @@
 ﻿using BLL.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
@@ -15,6 +16,7 @@ namespace WebHashcat.Controllers
     {
         private readonly LookupTableService _lookupTableService;
         private readonly CheckHashTypeService _checkHashTypeService;
+        private static readonly List<DataLookupTableViewModel> _datas = new List<DataLookupTableViewModel>();
 
         public LookupTableApiController(LookupTableService lookupTableService)
         {
@@ -48,22 +50,29 @@ namespace WebHashcat.Controllers
             //}
         }
 
+        [HttpGet]
+        public List<DataLookupTableViewModel> Get() { return _datas; }
+
         [HttpPost]
-        public async Task<DataLookupTableViewModel[]> SearchPasswords([FromBody] string hashesStr)
+        public async Task SearchPasswords([FromBody] string hashesStr)
         {
             var hashesArr = hashesStr.Split(Environment.NewLine);
-            var datas = new DataLookupTableViewModel[hashesArr.Length];
+            //var datas = new List<DataLookupTableViewModel>();
 
-            for (int i = 0; i < hashesArr.Length; i++)
+            foreach (var hash in hashesArr)
             {
-                datas[i].Password = (await _lookupTableService.FindAsync(x => x.MD5 == hashesArr[i] || x.SHA1 == hashesArr[i] || x.SHA256 == hashesArr[i] || x.SHA384 == hashesArr[i] || x.SHA512 == hashesArr[i])).FirstOrDefault()?.Value;
-                datas[i].HashType = _checkHashTypeService.GetHashType(hashesArr[i]);
+                var dataLookupTable = new DataLookupTableViewModel
+                {
+                    Hash = hash,
+                    Password = (await _lookupTableService.FindAsync(x => x.MD5 == hash || x.SHA1 == hash || x.SHA256 == hash || x.SHA384 == hash || x.SHA512 == hash)).FirstOrDefault()?.Value,
+                    HashType = _checkHashTypeService.GetHashType(hash)
+                };
 
-                if (datas[i].Password != null) datas[i].Status = Status.Success;
-                else datas[i].Status = Status.Failed;
+                if (dataLookupTable.Password != null) dataLookupTable.Status = Status.Success;
+                else dataLookupTable.Status = Status.Failed;
+
+                _datas.Add(dataLookupTable);
             }
-
-            return datas;
         }
     }
 }

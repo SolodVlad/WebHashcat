@@ -34,33 +34,34 @@ $(function () {
 
     $("#searchPass").click(function () {
         $.ajax({
-            url: "api/SearchPasswords",
+            url: "api/LookupTableApi",
             type: "POST",
             //processData: false,
-            contentType: "text/plain",
-            data: $("#hashes").val(),
+            contentType: "application/json",
+            data: JSON.stringify($("#hashes").val()),
+            //dataType: "json",
 
             success: function () {
                 $("#table_search_db").html("")
                 loadData()
             },
-            error: function (errorMessage) {
-                alert("Error: " + errorMessage);
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
             }
         })
     })
 
     function loadData() {
         $.ajax({
-            url: "LookupTable/Index",
+            url: "api/LookupTableApi",
             type: "GET",
-            contentType: "application/json; charset=utf-8",
+            //contentType: "application/json",
             dataType: "json",
 
             success: function (data) {
                 $("#table_search_db").append(headlines)
 
-                $.each(data, function (dataLookupTable) {
+                $.each(data, function (i, dataLookupTable) {
                     var row = '<tr>' +
                                 '<td class="td">' + dataLookupTable.hash + '</td>' +
                                 '<td class="td">' + dataLookupTable.hashType + '</td>' +
@@ -69,8 +70,22 @@ $(function () {
                     $("#table_search_db").append(row)
                 })
             },
-            error: function (errorMessage) {
-                alert("Error: " + errorMessage);
+            error: function (jqXHR, exception) {
+                if (jqXHR.status === 0) {
+                    alert('Not connect. Verify Network.');
+                } else if (jqXHR.status == 404) {
+                    alert('Requested page not found (404).');
+                } else if (jqXHR.status == 500) {
+                    alert('Internal Server Error (500).');
+                } else if (exception === 'parsererror') {
+                    alert('Requested JSON parse failed.');
+                } else if (exception === 'timeout') {
+                    alert('Time out error.');
+                } else if (exception === 'abort') {
+                    alert('Ajax request aborted.');
+                } else {
+                    alert('Uncaught Error. ' + jqXHR.responseText);
+                }
             }
         })
     }
