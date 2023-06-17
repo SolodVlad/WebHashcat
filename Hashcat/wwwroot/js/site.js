@@ -62,11 +62,28 @@ $(function () {
                 $("#table_search_db").append(headlines)
 
                 $.each(data, function (i, dataLookupTable) {
-                    var row = '<tr>' +
-                                '<td class="td">' + dataLookupTable.hash + '</td>' +
-                                '<td class="td">' + dataLookupTable.hashType + '</td>' +
-                                '<td class="td">' + dataLookupTable.password + '</td>' +
-                              '</tr>'
+                    var row = ''
+
+                    if (dataLookupTable.status == 1)
+                        row = '<tr>' +
+                                '<td class="td" style="background-color: green">' + dataLookupTable.hash + '</td>' +
+                                '<td class="td" style="background-color: green">' + dataLookupTable.hashType + '</td>' +
+                                '<td class="td" style="background-color: green">' + dataLookupTable.password + '</td>' +
+                            '</tr>'
+                    else if (dataLookupTable.status == 2)
+                        if (dataLookupTable.hashType != 0)
+                            row = '<tr>' +
+                                    '<td class="td" style="background-color: yellow; color: black">' + dataLookupTable.hash + '</td>' +
+                                    '<td class="td" style="background-color: yellow; color: black">' + dataLookupTable.hashType + '</td>' +
+                                    '<td class="td" style="background-color: yellow; color: black">' + dataLookupTable.password + '</td>' +
+                                '</tr>'
+                        else
+                            row = '<tr>' +
+                                    '<td class="td" style="background-color: red">' + dataLookupTable.hash + '</td>' +
+                                    '<td class="td" style="background-color: red">' + dataLookupTable.hashType + '</td>' +
+                                    '<td class="td" style="background-color: red">' + dataLookupTable.password + '</td>' +
+                                  '</tr>'
+
                     $("#table_search_db").append(row)
                 })
             },

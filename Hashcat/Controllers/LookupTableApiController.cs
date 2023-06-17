@@ -1,10 +1,7 @@
 ﻿using BLL.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using System.Security.Cryptography;
-using System.Security.Policy;
-using System.Text;
+using Microsoft.Extensions.Caching.Memory;
 using WebHashcat.Services;
 using WebHashcat.ViewModels;
 
@@ -16,48 +13,23 @@ namespace WebHashcat.Controllers
     {
         private readonly LookupTableService _lookupTableService;
         private readonly CheckHashTypeService _checkHashTypeService;
-        private static readonly List<DataLookupTableViewModel> _datas = new List<DataLookupTableViewModel>();
+        private readonly IMemoryCache _cache;
 
-        public LookupTableApiController(LookupTableService lookupTableService)
+        public LookupTableApiController(LookupTableService lookupTableService, IMemoryCache cache)
         {
             _lookupTableService = lookupTableService;
             _checkHashTypeService = new CheckHashTypeService();
-
-            //var md5 = MD5.Create();
-            //var sha1 = SHA1.Create();
-            //var sha256 = SHA256.Create();
-            //var sha384 = SHA384.Create();
-            //var sha512 = SHA512.Create();
-
-            //string? password;
-            //using var streamReader = new StreamReader("E:\\Словари для брута\\test.txt");
-            //while ((password = streamReader.ReadLine()) != null)
-            //    _lookupTableService.AddAsync(new DataLookupTable()
-            //    {
-            //        Value = password,
-            //        MD5 = ComputeHash(Encoding.UTF8.GetBytes(password), md5),
-            //        SHA1 = ComputeHash(Encoding.UTF8.GetBytes(password), sha1),
-            //        SHA256 = ComputeHash(Encoding.UTF8.GetBytes(password), sha256),
-            //        SHA384 = ComputeHash(Encoding.UTF8.GetBytes(password), sha384),
-            //        SHA512 = ComputeHash(Encoding.UTF8.GetBytes(password), sha512),
-            //    });
-
-            //string ComputeHash(byte[] data, HashAlgorithm algorithm)
-            //{
-            //    using var stream = new MemoryStream(data);
-            //    var hashBytes = algorithm.ComputeHash(stream);
-            //    return BitConverter.ToString(hashBytes).Replace("-", "");
-            //}
+            _cache = cache;
         }
 
         [HttpGet]
-        public List<DataLookupTableViewModel> Get() { return _datas; }
+        public IActionResult Get() => Ok((List<DataLookupTableViewModel>)_cache.Get("dataLookupTableCache"));
 
         [HttpPost]
-        public async Task SearchPasswords([FromBody] string hashesStr)
+        public async Task<IActionResult> SearchPasswords([FromBody] string hashesStr)
         {
-            var hashesArr = hashesStr.Split(Environment.NewLine);
-            //var datas = new List<DataLookupTableViewModel>();
+            var hashesArr = hashesStr.Split("\n");
+            var datas = new List<DataLookupTableViewModel>();
 
             foreach (var hash in hashesArr)
             {
@@ -71,8 +43,12 @@ namespace WebHashcat.Controllers
                 if (dataLookupTable.Password != null) dataLookupTable.Status = Status.Success;
                 else dataLookupTable.Status = Status.Failed;
 
-                _datas.Add(dataLookupTable);
+                datas.Add(dataLookupTable);
             }
+
+            _cache.Set("dataLookupTableCache", datas);
+
+            return Ok();
         }
     }
 }
