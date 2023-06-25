@@ -27,9 +27,9 @@ $("#signin-btn").on("click", function () {
 
 $(function () {
     var headlines = '<tr>' +
-                        '<th class="th">Хеш</th>' +
-                        '<th class="th">Тип</th>' +
-                        '<th class="th">Пароль</th>' +
+                        '<th class="th width_hash">Хеш</th>' +
+                        '<th class="th width_type">Тип</th>' +
+                        '<th class="th width_password">Пароль</th>' +
                     '</tr>'
 
     $("#searchPass").click(function () {
@@ -63,25 +63,25 @@ $(function () {
 
                 $.each(data, function (i, dataLookupTable) {
                     var row = ''
-
+                    //Можливо це оптимізувати?
                     if (dataLookupTable.status == 1)
                         row = '<tr>' +
-                                '<td class="td" style="background-color: green">' + dataLookupTable.hash + '</td>' +
-                                '<td class="td" style="background-color: green">' + dataLookupTable.hashType + '</td>' +
-                                '<td class="td" style="background-color: green">' + dataLookupTable.password + '</td>' +
+                                '<td class="td width_hash" style="background-color: green">' + dataLookupTable.hash + '</td>' +
+                                '<td class="td width_type" style="background-color: green">' + dataLookupTable.hashType + '</td>' +
+                                '<td class="td width_password" style="background-color: green">' + dataLookupTable.password + '</td>' +
                             '</tr>'
                     else if (dataLookupTable.status == 2)
                         if (dataLookupTable.hashType != 0)
                             row = '<tr>' +
-                                    '<td class="td" style="background-color: yellow; color: black">' + dataLookupTable.hash + '</td>' +
-                                    '<td class="td" style="background-color: yellow; color: black">' + dataLookupTable.hashType + '</td>' +
-                                    '<td class="td" style="background-color: yellow; color: black">' + dataLookupTable.password + '</td>' +
+                                    '<td class="td width_hash" style="background-color: yellow">' + dataLookupTable.hash + '</td>' +
+                                    '<td class="td width_type" style="background-color: yellow">' + dataLookupTable.hashType + '</td>' +
+                                    '<td class="td width_password" style="background-color: yellow">' + dataLookupTable.password + '</td>' +
                                 '</tr>'
                         else
                             row = '<tr>' +
-                                    '<td class="td" style="background-color: red">' + dataLookupTable.hash + '</td>' +
-                                    '<td class="td" style="background-color: red">' + dataLookupTable.hashType + '</td>' +
-                                    '<td class="td" style="background-color: red">' + dataLookupTable.password + '</td>' +
+                                    '<td class="td width_hash" style="background-color: red">' + dataLookupTable.hash + '</td>' +
+                                    '<td class="td width_type" style="background-color: red">' + dataLookupTable.hashType + '</td>' +
+                                    '<td class="td width_password" style="background-color: red">' + dataLookupTable.password + '</td>' +
                                   '</tr>'
 
                     $("#table_search_db").append(row)

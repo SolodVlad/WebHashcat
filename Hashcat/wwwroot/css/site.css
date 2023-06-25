@@ -120,25 +120,46 @@ nav ul li:hover > ul {
 }
 /*///////////////////////////////////////////////////////Переписать кнопку/////////////////////////////////////////////////////////*/
 .btn_search_db {
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 1px solid #FFF;
+    color: #FFF;
     display: flex;
     margin: 0 auto;
 }
 .table_search_db {
     width: 100%;
-    margin: 10px 15px 25px 15px;
+    border-collapse: separate;
+    border-spacing: 2px;
 }
 .th {
+    padding: 10px;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     color: #FFF;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
 }
 .td {
+    padding: 10px;
     font-family: 'Montserrat', sans-serif;
-    color: #FFF;
-    font-size: 16px;
+    color: #000;
+    font-size: 14px;
     font-weight: 500;
+}
+.width_hash {
+    max-width: 150px; /*Параметри не мають значення*/
+    width: 70%;
+    word-wrap: break-word;
+}
+.width_type {
+    width: 5%;
+    text-align: center;
+}
+.width_password {
+    max-width: 100px; /*Параметри не мають значення*/
+    width: 25%;
+    word-wrap: break-word;
 }
 .text_info1 {
     display: flex;
@@ -149,19 +170,19 @@ nav ul li:hover > ul {
 }
 .m1 {
     font-family: 'Montserrat', sans-serif;
-    background: #00ff22;
+    background-color: green;
     font-size: 16px;
     font-weight: 500;
 }
 .m2 {
     font-family: 'Montserrat', sans-serif;
-    background: #eeff00;
+    background-color: yellow;
     font-size: 16px;
     font-weight: 500;
 }
 .m3 {
     font-family: 'Montserrat', sans-serif;
-    background: #ff0000;
+    background-color: red;
     font-size: 16px;
     font-weight: 500;
 }
