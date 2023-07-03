@@ -45,7 +45,7 @@ namespace DLL.Context
             var sha512 = SHA512.Create();
 
             string? password;
-            using var streamReader = new StreamReader("C:\\Users\\User\\Desktop\\Текстовый документ.txt");
+            using var streamReader = new StreamReader("E:\\Словари для брута\\test.txt");
             while ((password = streamReader.ReadLine()) != null)
                 builder.Entity<DataLookupTable>().HasData(new DataLookupTable()
                 {

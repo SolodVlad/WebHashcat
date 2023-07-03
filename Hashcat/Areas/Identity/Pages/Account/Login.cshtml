@@ -18,13 +18,15 @@
             </selection>
         </div>
         <div id="form-box">
-            <form action="#" class="form form_signin">
+            <form action="@Url.Action("LoginAsync", "Account", new {Area = "Identity"})" method="post" class="form form_signin">
                 <h3 class="form_title">Вхід</h3>
                 <p>
-                    <input type="email" class="form_input" placeholder="Пошта" />
+                    <input asp-for="Email" name="Email" type="email" class="form_input" placeholder="Пошта" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </p>
                 <p>
-                    <input type="password" class="form_input" placeholder="Пароль" />
+                    <input asp-for="Password" name="Password" type="password" class="form_input" placeholder="Пароль" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </p>
                 <p>
                     <button class="form_btn">Увійти</button>
@@ -33,19 +35,24 @@
                     <a href="#" class="form-forgot">Відновити пароль</a>
                 </p>
             </form>
-            <form action="#" class="form form_signup">
+
+            <form action="@Url.Action("Register", "Account", new {Area = "Identity"})" method="post" id="registerForm" class="form form_signup">
+                @Html.AntiForgeryToken()
                 <h3 class="form_title">Реєстрація</h3>
                 <p>
-                    <input type="email" class="form_input" placeholder="Email" />
+                    <input asp-for="Email" type="email" id="registerEmail" class="form_input" placeholder="Пошта" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </p>
                 <p>
-                    <input type="password" class="form_input" placeholder="Пароль" />
+                    <input asp-for="Password" type="password" id="registerPasssword" class="form_input" placeholder="Пароль" required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </p>
                 <p>
-                    <input type="password" class="form_input" placeholder="Підтвердіть пароль" />
+                    <input asp-for="ConfirmPassword" type="password" id="confirmPassword" class="form_input" placeholder="Підтвердіть пароль" required />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </p>
                 <p>
-                    <button class="form_btn">Зареєструватись</button>
+                    <button type="submit" id="registerBtn" class="form_btn">Зареєструватись</button>
                 </p>
             </form>
         </div>

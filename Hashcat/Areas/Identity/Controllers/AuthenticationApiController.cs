@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using WebHashcat.Models;
 
-namespace WebHashcat.Controllers
+namespace WebHashcat.Areas.Identity.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -29,7 +29,7 @@ namespace WebHashcat.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] Register register)
+        public async Task<IActionResult> RegisterAsync([FromBody] Register register)
         {
             var user = await _userManager.FindByEmailAsync(register.Email);
             if (user != null) { return StatusCode(500, new Response() { Status = "Error", Message = "User already exists" }); }
@@ -59,15 +59,15 @@ namespace WebHashcat.Controllers
             //    if (role.Succeeded) await _userManager.AddToRoleAsync(user, "manager");
             //}
 
-            //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            //var confirmLink = Url.Action("Confirm", "EmailConfirm", new { guid = token, userEmail = user.Email }, Request.Scheme, Request.Host.Value);
-
-            //await _emailSender.SendEmailAsync(user.Email, "Please activate link", $"<a href = {confirmLink}>Click to confirm email</a>");
-
-            //var res = await _userManager.ConfirmEmailAsync(user, token);
-
             var res = await _userManager.CreateAsync(user, register.Password);
-            return !res.Succeeded ? new BadRequestObjectResult(res) : StatusCode(201);
+            if (!res.Succeeded) return new BadRequestObjectResult(res);
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmLink = Url.Action("Confirm", "EmailConfirm", new { guid = token, userEmail = user.Email }, Request.Scheme, Request.Host.Value);
+
+            await _emailSender.SendEmailAsync(user.Email, "Please activate link", $"<a href = {confirmLink}>Click to confirm email</a>");
+
+            return StatusCode(201);
 
             //if (!res.Succeeded) return StatusCode(500, new Response() { Status = "Error", Message = "User create failed" });
 
@@ -76,7 +76,7 @@ namespace WebHashcat.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(Login login)
+        public async Task<IActionResult> LoginAsync(Login login)
         {
             if (login != null)
             {

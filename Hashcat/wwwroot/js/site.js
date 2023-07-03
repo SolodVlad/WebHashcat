@@ -55,8 +55,8 @@ $(function () {
         $.ajax({
             url: "api/LookupTableApi",
             type: "GET",
-            //contentType: "application/json",
-            dataType: "json",
+            contentType: "application/json",
+            //dataType: "json",
 
             success: function (data) {
                 $("#table_search_db").append(headlines)
@@ -64,24 +64,24 @@ $(function () {
                 $.each(data, function (i, dataLookupTable) {
                     var row = ''
                     //Можливо це оптимізувати?
-                    if (dataLookupTable.status == 1)
+                    if (dataLookupTable.status == "Success")
                         row = '<tr>' +
                                 '<td class="td width_hash" style="background-color: green">' + dataLookupTable.hash + '</td>' +
                                 '<td class="td width_type" style="background-color: green">' + dataLookupTable.hashType + '</td>' +
                                 '<td class="td width_password" style="background-color: green">' + dataLookupTable.password + '</td>' +
                             '</tr>'
-                    else if (dataLookupTable.status == 2)
-                        if (dataLookupTable.hashType != 0)
+                    else if (dataLookupTable.status == "Failed")
+                        if (dataLookupTable.hashType != "None")
                             row = '<tr>' +
                                     '<td class="td width_hash" style="background-color: yellow">' + dataLookupTable.hash + '</td>' +
                                     '<td class="td width_type" style="background-color: yellow">' + dataLookupTable.hashType + '</td>' +
-                                    '<td class="td width_password" style="background-color: yellow">' + dataLookupTable.password + '</td>' +
+                                    '<td class="td width_password" style="background-color: yellow">' + "NOT FOUND" + '</td>' +
                                 '</tr>'
                         else
                             row = '<tr>' +
                                     '<td class="td width_hash" style="background-color: red">' + dataLookupTable.hash + '</td>' +
                                     '<td class="td width_type" style="background-color: red">' + dataLookupTable.hashType + '</td>' +
-                                    '<td class="td width_password" style="background-color: red">' + dataLookupTable.password + '</td>' +
+                                    '<td class="td width_password" style="background-color: red">' + "NOT FOUND" + '</td>' +
                                   '</tr>'
 
                     $("#table_search_db").append(row)
@@ -106,4 +106,13 @@ $(function () {
             }
         })
     }
+
+    $('#registerEmail, #registerPasssword, #confirmPassword').on('input', function () {
+        // Проверяем валидность всех полей
+        var isValid = $('registerForm')[0].checkValidity();
+
+        // Изменяем состояние кнопки в зависимости от валидности
+        if (isValid) $('#registerBtn').removeAttr('disabled');
+        else $('#registerBtn').attr('disabled', 'disabled');
+    });
 })

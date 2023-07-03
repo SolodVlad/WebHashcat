@@ -1,38 +1,29 @@
-﻿using WebHashcat.Areas.Identity.Models;
-using Microsoft.AspNetCore.Mvc;
-using Domain.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebHashcat.Areas.Identity.Models;
 
 namespace WebHashcat.Areas.Identity.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public AccountController() => _httpClient = new HttpClient { BaseAddress = new Uri("https://localhost:7149/api/") };
+        public AccountController(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
         [HttpGet]
         public IActionResult Register() => View();
 
-        //[HttpPost]
-        //public async Task<IActionResult> RegisterAsync([FromBody] RegisterViewModel model)
-        //{
-        //    var user = new User() { Email = model.Email, UserName = model.Email, Password = model.Password };
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Register")]
+        public async Task<IActionResult> Register(RegisterViewModel register)
+        {
+            if (register.Password != register.ConfirmPassword) return View();
 
-        //    HttpResponseMessage response = await _httpClient.PostAsJsonAsync("AuthentificationApi/RegisterUser", user);
+            var httpClient = _httpClientFactory.CreateClient();
+            var response = await httpClient.GetAsync("api/AuthenticationApi/RegisterAsync");
 
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        // Обработка успешного ответа
-        //        var responseData = await response.Content.ReadAsStringAsync();
-        //        // Дальнейшая обработка полученных данных
-        //        return RedirectToAction("Index", "Home", new { Area = "" });
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //        // Обработка ошибки
-        //        // Можно вернуть соответствующий HTTP-статус или другую информацию о неудачном запросе
-        //    }
-        //}
+            if (response.IsSuccessStatusCode) return RedirectToAction("Index", "Profile");
+            else return View();
+        }
     }
 }
