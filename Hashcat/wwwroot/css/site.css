@@ -18,7 +18,7 @@ body {
 }
 a {
     text-decoration: none;
-    color: white;
+    color: #FFF !important;
 }
 button {
     padding: 10px 20px;
@@ -27,22 +27,49 @@ button {
     color: #FFF;
 }
 header {
-    position: fixed;
+    position: relative;
     top: 2px;
     left: 2px;
-    right:2px;
+    margin-right: 4px;
     background: #000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 2%;
-    box-shadow: 0 5px 10px #0b5a9d;
+}
+header::before,
+header::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    background: linear-gradient(45deg, #0e4cf8, #0934a8, #062372, #030e2e,#01030a, #0e4cf8, #0934a8, #062372, #030e2e,#01030a );
+    background-size: 500%;
+    z-index: -1;
+    animation: animate 30s ease infinite;
+}
+header::after {
+    filter: blur(15px);
+}
+@keyframes animate {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 300% 0;
+    }
+
+    0% {
+        background-position: 0 0;
+    }
 }
 header .logo {
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     font-weight: 900;
-    color: #00ff22; /*игнорирует цвет теста*/
     transition: .5s;
 }
 header .logo:hover {
@@ -55,48 +82,50 @@ header nav ul li {
 header nav ul li a {
     font-family: 'Montserrat', sans-serif;
     padding: 15px;
-    color: #FFF; /*игнорирует цвет теста*/
     font-size: 16px;
     display: block;
 }
 header nav ul li a:hover {
-    background: #0b5a9d; /*отступ с лева*/
-    color: #000;
+    background: #0b5a9d;
+    /*color: #000 !important;*/ /*Не працює зміна кольору навіть з пріоритетом*/
 }
-nav ul li ul {
+header nav ul li ul {
     position: absolute;
-    left: 0;
+    padding-left: 0 !important;
+    left: 0px;
     width: 180px;
     background: linear-gradient(#000, #04143f);
     display: none;
 }
-nav ul li ul li {
+header nav ul li ul li {
     float: left;
-    padding: 0px;
+    padding: 0;
     width: 100%;
-    /*border: 1px solid #fff;*/ /*отступ с лева*/
+    border: 1px solid #fff;
 }
-nav ul li:hover > ul {
+header nav ul li:hover > ul {
     display: initial;
 }
 .pageContent {
-    margin: 100px 150px 0px 150px;
+    margin-top: 3%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 /*Main page*/
 /*Поиск по базе*/
 /*//////////////////////////////////////////////////////////////ОПТИМИЗИРОВАТЬ КОД/////////////////////////////////////////////////////////////////*/
 .container_search_db {
-    width: 800px;
-    height: 500px;
-    outline: solid;
+    min-width: 400px;
+    height: 250px;
+    /*outline: solid;*/
 }
 .form_search_db{
-    outline: solid;
+    /*outline: solid;*/
     width: 100%;
     height: 100%;
 }
 .textarea_search_db {
-    height: 64%;
+    height: 75%;
     width: 100%;
     background-color: rgba(6, 29, 80, 0.6);
     box-shadow: 0 5px 45px rgba(12, 88, 252, 0.685);
@@ -118,7 +147,6 @@ nav ul li:hover > ul {
 .textarea_search_db::placeholder {
     color: #FFF;
 }
-/*///////////////////////////////////////////////////////Переписать кнопку/////////////////////////////////////////////////////////*/
 .btn_search_db {
     padding: 10px 20px;
     background-color: transparent;
@@ -148,7 +176,7 @@ nav ul li:hover > ul {
     font-weight: 500;
 }
 .width_hash {
-    max-width: 150px; /*Параметри не мають значення*/
+    max-width: 150px;
     width: 70%;
     word-wrap: break-word;
 }
@@ -157,7 +185,7 @@ nav ul li:hover > ul {
     text-align: center;
 }
 .width_password {
-    max-width: 100px; /*Параметри не мають значення*/
+    max-width: 100px;
     width: 25%;
     word-wrap: break-word;
 }
@@ -246,6 +274,9 @@ nav ul li:hover > ul {
     position: absolute;
     transition: 0.5s;
 }
+.form_restore {
+    display: none;
+}
 .form_signin {
     left: 0;
     transition-delay: 0.25s;
@@ -273,149 +304,7 @@ nav ul li:hover > ul {
     border: solid 2px #018ed5;
     font-size: inherit;
 }
-.form_fargot {
-    color: #FFF; /*игнорирует цвет теста*/
-}
 /*Авторизация - Регистрация*/
-
-
-
-/*////////////////////////////////////////////////////////////////////////////////////////*/
-/*html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}*/
-/*////////////////////////////////////////////////////////////////////////////////////////*/
-/** {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-    list-style: none;
-    text-decoration: none;
-}*/
-/*Шапка сайта*/
-/*.body_header {
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(#000, #04143f);
-    background-size: cover;
-    background-position: center;
-    justify-self: center;
-    align-items: center;
-    min-height: 100vh;
-    font-family: 'Montserrat', sans-serif;
-}
-
-header {
-    font-family: 'Montserrat', sans-serif;
-    position: relative;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    background: #000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2%;
-}
-
-header::before,
-header::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    bottom: -2px;
-    left: -2px;
-    background: linear-gradient(45deg, #0e4cf8, #0934a8, #062372, #030e2e,#01030a, #0e4cf8, #0934a8, #062372, #030e2e,#01030a );
-    background-size: 500%;
-    z-index: -1;
-    animation: animate 30s ease infinite;
-}
-
-    header::after {
-        filter: blur(10px);
-    }
-
-@keyframes animate {
-    0% {
-        background-position: 0 0;
-    }
-
-    50% {
-        background-position: 300% 0;
-    }
-
-    0% {
-        background-position: 0 0;
-    }
-}
-
-header .logo {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
-    font-weight: 900;
-    color: #FFF;
-    transition: .5s;
-}
-
-header .logo:hover {
-    transform: scale(1.2);
-}
-
-header nav ul li {
-    position: relative;
-    float: left;
-}
-
-header nav ul li a {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    padding: 15px 20px;
-    color: #FFF;
-    letter-spacing: 3px;
-    transition: .4s ease;
-    z-index: 1;
-    display: block;
-}
-
-nav ul li ul {
-    position: absolute;
-    left: 0;
-    width: 180px;
-    background: linear-gradient(#000, #04143f);
-    display: none;
-}
-
-nav ul li ul li {
-    width: 100%;
-    border: 1px solid rgba(0,0,0,.1);
-}
-
-nav ul li:hover > ul {
-    display: initial;
-}*/
-
-/*Шапка сайта*/
 /*Карточки продуктов*/
 /*.body_card {
     position: relative;
@@ -542,164 +431,4 @@ nav ul li:hover > ul {
 .box:nth-child(3)::before {
     background: linear-gradient(#04143f, #0e4cf8);
 }*/
-
 /*Карточки продуктов*/
-/*Авторизация/Регистрация*/
-/*.body_authorization {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    min-height: 100vh;
-    background: linear-gradient(#000, #04143f);
-}
-
-.container_authorization {
-    width: 800px;
-    height: 500px;
-    padding: 40px 0;
-    position: relative;
-}
-
-.block {
-    height: 100%;
-    background-color: rgba(6, 29, 80, 0.6);
-    box-shadow: 0 5px 45px rgba(12, 88, 252, 0.685);
-    display: flex;
-    align-items: center;
-}
-
-.block-item {
-    text-align: center;
-    width: 50%;
-}
-
-.block-item_title {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #FFF;
-    margin-bottom: 10px;
-}
-
-.block-item_btn {
-    border: none;
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #FFF;
-    color: #333;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.form-box {
-    background-color: #FFF;
-    height: 100%;
-    width: 50%;
-    box-shadow: 0 5px 45px rgba(12, 88, 252, 0.685);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-.form-box.active {
-    left: 50%;
-}*/
-
-/*Авторизация/Регистрация*/
-/*Поиск по базе*/
-/*.body_search_db {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.conteiner_search_db {
-    width: 800px;
-    height: 500px;
-}
-
-.textarea_search_db {
-    height: 80%;
-    width: 100%;
-    background-color: rgba(6, 29, 80, 0.6);
-    box-shadow: 0 5px 45px rgba(12, 88, 252, 0.685);
-    color: #FFF;
-    padding: 1em;
-    border-radius: 20px;
-    border: 2px solid transparent;
-    outline: none;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.4;
-    transition: all 0.2s;
-}
-
-.textarea_search_db:hover {
-    cursor: pointer;
-    background-color: rgba(9, 42, 114, 0.719);
-}
-
-.textarea_search_db::placeholder {
-    color: #FFF;
-}
-
-.btn_search_db {
-    position: relative;
-    left: 20px;
-    top: -231px;
-    border: none;
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #000;
-    color: #333;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.text_info1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;
-    color: #FFF;
-}
-
-.m1 {
-    font-family: 'Montserrat', sans-serif;
-    background: #00ff22;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.m2 {
-    font-family: 'Montserrat', sans-serif;
-    background: #eeff00;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.m3 {
-    font-family: 'Montserrat', sans-serif;
-    background: #ff0000;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.th {
-    font-family: 'Montserrat', sans-serif;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.td {
-    font-family: 'Montserrat', sans-serif;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: 500;
-}*/
-/*Поиск по базе*/

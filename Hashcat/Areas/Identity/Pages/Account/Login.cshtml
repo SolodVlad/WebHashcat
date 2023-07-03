@@ -18,6 +18,19 @@
             </selection>
         </div>
         <div id="form-box">
+            <form action="@Url.Action("LoginAsync", "Account", new {Area = "Identity"})" method="post" class="form form_signin form_restore">
+                <h3 class="form_title">Напис</h3>
+                <p>
+                    <input asp-for="Email" name="Email" type="email" class="form_input" placeholder="Пошта" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </p>
+                <p>
+                    <button class="form_btn">Відправити</button>
+                </p>
+                <p>
+                    <a href="#">Повернутися до авторизації</a>
+                </p>
+            </form>
             <form action="@Url.Action("LoginAsync", "Account", new {Area = "Identity"})" method="post" class="form form_signin">
                 <h3 class="form_title">Вхід</h3>
                 <p>
@@ -32,7 +45,7 @@
                     <button class="form_btn">Увійти</button>
                 </p>
                 <p>
-                    <a href="#" class="form-forgot">Відновити пароль</a>
+                    <a href="#">Відновити пароль</a>
                 </p>
             </form>
 
