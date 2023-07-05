@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebHashcat.Areas.Identity.Controllers
+namespace WebHashcat.Areas.Cabinet.Controllers
 {
-    public class ProfileController : Controller
+    public class CabinetController : Controller
     {
         public IActionResult Index()
         {
