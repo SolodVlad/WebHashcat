@@ -1,6 +1,8 @@
 using BLL.Infrastructure;
 using BLL.Services;
 using Domain.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection;
 using WebHashcat.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,18 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureSwagger();
+//builder.Services.AuthenticationCookie();
+
+//builder.Services.Configure<CookieAuthenticationOptions>(options =>
+//{
+//    options.Cookie.Name = "AuthCookie";
+//    options.Cookie.HttpOnly = true;
+//    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+//    options.Cookie.SameSite = SameSiteMode.Strict;
+//    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+//    options.SlidingExpiration = false;
+//    options.LoginPath = "/Login";
+//});
 
 builder.Services.Configure<SendGridEmailSenderOptions>(option =>
 {
@@ -28,6 +42,8 @@ builder.Services.Configure<SendGridEmailSenderOptions>(option =>
 ConfigurationBll.Configure(builder.Services, builder.Configuration);
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
@@ -50,19 +66,25 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCookiePolicy();
 app.UseAuthorization();
 app.UseAuthentication();
 
+app.MapControllers();
 app.MapRazorPages();
 
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}"
-);
+//app.MapControllerRoute(
+//    name: "areas",
+//    pattern: "{Cabinet/{controller=Home}/{action=Index}"
+//);
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}"
-);
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}"
+//);
+
+app.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}");
+
+app.MapControllerRoute("default", "{controller=Home}/{action=Index}");
 
 app.Run();

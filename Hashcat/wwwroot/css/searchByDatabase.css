@@ -1,0 +1,118 @@
+﻿/*Поиск по базе*/
+/*//////////////////////////////////////////////////////////////ОПТИМИЗИРОВАТЬ КОД/////////////////////////////////////////////////////////////////*/
+.container_search_db {
+    min-width: 400px;
+    height: 250px;
+    /*outline: solid;*/
+}
+
+.form_search_db {
+    /*outline: solid;*/
+    width: 100%;
+    height: 100%;
+}
+
+.textarea_search_db {
+    height: 75%;
+    width: 100%;
+    background-color: rgba(6, 29, 80, 0.6);
+    box-shadow: 0 5px 45px rgba(12, 88, 252, 0.685);
+    color: #FFF;
+    padding: 1em;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    transition: all 0.2s;
+}
+
+    .textarea_search_db:hover {
+        cursor: pointer;
+        background-color: rgba(9, 42, 114, 0.719);
+    }
+
+    .textarea_search_db::placeholder {
+        color: #FFF;
+    }
+
+.btn_search_db {
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 1px solid #FFF;
+    color: #FFF;
+    display: flex;
+    margin: 0 auto;
+}
+
+.table_search_db {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+.th {
+    padding: 10px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.td {
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.width_hash {
+    max-width: 150px;
+    width: 70%;
+    word-wrap: break-word;
+}
+
+.width_type {
+    width: 5%;
+    text-align: center;
+}
+
+.width_password {
+    max-width: 100px;
+    width: 25%;
+    word-wrap: break-word;
+}
+
+.text_info1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFF;
+}
+
+.m1 {
+    font-family: 'Montserrat', sans-serif;
+    background-color: green;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.m2 {
+    font-family: 'Montserrat', sans-serif;
+    background-color: yellow;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.m3 {
+    font-family: 'Montserrat', sans-serif;
+    background-color: red;
+    font-size: 16px;
+    font-weight: 500;
+}
+/*Поиск по базе*/

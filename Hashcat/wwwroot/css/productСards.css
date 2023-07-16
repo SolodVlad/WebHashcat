@@ -1,0 +1,127 @@
+﻿/*Карточки продуктов*/
+.body_card {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    position: relative;
+    top: 300px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.content {
+    position: relative;
+    padding: 40px;
+    color: #FFF;
+}
+
+.content h2 {
+    position: absolute;
+    top: -60px;
+    right: 20px;
+    margin: 0;
+    padding: 0;
+    font-size: 160px;
+    line-height: 1.1;
+    color: rgba(255,255,255,.06);
+    transition: .5s;
+}
+
+.content h3 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
+
+.content p {
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
+
+.content button {
+    cursor: pointer;
+    position: relative;
+    margin: 20px 0 0;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 1px solid #FFF;
+    color: #FFF;
+    transition: .5s;
+    transform: translatey(-40px);
+    opacity: 0;
+    text-transform: uppercase;
+    font-size: 12px;
+    z-index: 1;
+}
+
+.content button::before {
+    color: #000;
+    background-color: #FFF;
+}
+
+.box {
+    width: 400px;
+    min-height: 680px;
+    cursor: pointer;
+    position: relative;
+    background-color: #040a20;
+    display: flex;
+    justify-items: center;
+    align-items: flex-end;
+    border: 1px solid rgba(0, 0, 0, .5);
+}
+
+.box:hover .content h2 {
+    top: -140px;
+}
+
+.box:hover .content button {
+    transform: translatey(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(255,255,255,.06);
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background-color: #FFF;
+    transform: skew(2deg, 2deg);
+    z-index: -1;
+}
+
+.box:nth-child(1)::before {
+    background: linear-gradient(#04143f, #0e4cf8);
+}
+
+.box:nth-child(2)::before {
+    background: linear-gradient(#04143f, #0e4cf8);
+}
+
+.box:nth-child(3)::before {
+    background: linear-gradient(#04143f, #0e4cf8);
+}
+/*Карточки продуктов*/

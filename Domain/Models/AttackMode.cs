@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-    public enum HashType
+    public enum AttackMode
     {
         MD4 = 900,                                                          //MD4
         MD5 = 0,                                                            //MD5

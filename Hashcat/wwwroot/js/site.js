@@ -108,11 +108,55 @@ $(function () {
     }
 
     $('#registerEmail, #registerPasssword, #confirmPassword').on('input', function () {
-        // Проверяем валидность всех полей
-        var isValid = $('registerForm')[0].checkValidity();
+        var isValid = $('#registerForm').checkValidity();
 
-        // Изменяем состояние кнопки в зависимости от валидности
-        if (isValid) $('#registerBtn').removeAttr('disabled');
-        else $('#registerBtn').attr('disabled', 'disabled');
+        var registerBtn = $('#registerBtn');
+        if (isValid) registerBtn.prop('disabled', true);
+        else registerBtn.prop('disabled', false);
+    });
+
+    $("#attackModeSelect, #hash").on("input", function () {
+        var isValid = $('#hashcatForm').checkValidity();
+
+        var attackModeSelect = $("#attackModeSelect");
+        var hash = $("#hash");
+        var startCrackBtn = $("#startCrackBtn");
+
+        if (isValid) startCrackBtn.prop("disabled", true);
+        else startCrackBtn.prop("disabled", false);
+    });
+
+    $("#switchToLogin").click(function () {
+        $("#restoreForm").toggleClass("form_restore");
+        $("#loginForm").toggleClass("form_restore");
+    });
+
+    $("#switchToRestore").click(function () {
+        $("#loginForm").toggleClass("form_restore");
+        $("#restoreForm").toggleClass("form_restore");
+    });
+
+    // Обработчик события клика по ссылке с классом "Payment"
+    $('a[href="#Payment"]').click(function () {
+        // Удаление класса "active" у всех элементов с классом "profile_content"
+        $('.profile_content').removeClass('active');
+        // Добавление класса "active" к элементам с id "profile_2" и ссылке с href "#Payment"
+        $('#profile_2, a[href="#Payment"]').addClass('active');
+    });
+
+    // Обработчик события клика по ссылке с классом "Menu_1"
+    $('a[href="#Menu_1"]').click(function () {
+        // Удаление класса "active" у всех элементов с классом "profile_content"
+        $('.profile_content').removeClass('active');
+        // Добавление класса "active" к элементам с id "profile_1" и ссылке с href "#Menu_1"
+        $('#profile_1, a[href="#Menu_1"]').addClass('active');
+    });
+
+    // Обработчик события клика по ссылке с классом "Password"
+    $('a[href="#Password"]').click(function () {
+        // Удаление класса "active" у всех элементов с классом "profile_content"
+        $('.profile_content').removeClass('active');
+        // Добавление класса "active" к элементам с id "profile_3" и ссылке с href "#Password"
+        $('#profile_3, a[href="#Password"]').addClass('active');
     });
 })

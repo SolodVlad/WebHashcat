@@ -23,7 +23,7 @@ namespace BLL.Infrastructure
 
             serviceCollection.AddIdentity<User, IdentityRole>(opt =>
             {
-                //opt.SignIn.RequireConfirmedEmail = true;
+                opt.SignIn.RequireConfirmedEmail = true;
             }).AddEntityFrameworkStores<HashWorkDbContext>()
               .AddDefaultTokenProviders();
         }

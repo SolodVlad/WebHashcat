@@ -10,7 +10,7 @@ namespace DLL.Context
     {
         public HashWorkDbContext(DbContextOptions<HashWorkDbContext> options) : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

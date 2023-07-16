@@ -1,10 +1,14 @@
-﻿@page
-@using WebHashcat.Areas.Identity.Models;
+﻿@using WebHashcat.Areas.Identity.Models;
 @model RegisterViewModel
-@*Треба робити регеєстрацію і авторизацію на одній сторінці? Якщо потрібно робити однією моделлю, то як закривати сторінку, коли потрібні обидві моделі?*@
 @{
     ViewData["Title"] = "Log in";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
+
+<head>
+    <link rel="stylesheet" href="~/css/authentication.css" asp-append-version="true" />
+</head>
+
 <div class="autorith">
     <article class="container_authorization">
         <div class="block">
@@ -18,7 +22,7 @@
             </selection>
         </div>
         <div id="form-box">
-            <form action="@Url.Action("LoginAsync", "Account", new {Area = "Identity"})" method="post" class="form form_signin form_restore">
+            <form action="@Url.Action("LoginAsync", "Account", new {Area = "Identity"})" method="post" class="form form_signin form_restore" id="restoreForm">
                 <h3 class="form_title">Напис</h3>
                 <p>
                     <input asp-for="Email" name="Email" type="email" class="form_input" placeholder="Пошта" />
@@ -28,10 +32,11 @@
                     <button class="form_btn">Відправити</button>
                 </p>
                 <p>
-                    <a href="#">Повернутися до авторизації</a>
+                    <a href="#" id="switchToLogin">Повернутися до авторизації</a>
                 </p>
             </form>
-            <form action="@Url.Action("LoginAsync", "Account", new {Area = "Identity"})" method="post" class="form form_signin">
+
+            <form action="@Url.Action("Login", "Account", new {Area = "Identity"})" method="post" class="form form_signin" id="loginForm">
                 <h3 class="form_title">Вхід</h3>
                 <p>
                     <input asp-for="Email" name="Email" type="email" class="form_input" placeholder="Пошта" />
@@ -42,26 +47,26 @@
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </p>
                 <p>
-                    <button class="form_btn">Увійти</button>
+                    <button type="submit" class="form_btn">Увійти</button>
                 </p>
                 <p>
-                    <a href="#">Відновити пароль</a>
+                    <a href="#" id="switchToRestore">Відновити пароль</a>
                 </p>
+                @*@Html.AntiForgeryToken()*@
             </form>
 
             <form action="@Url.Action("Register", "Account", new {Area = "Identity"})" method="post" id="registerForm" class="form form_signup">
-                @Html.AntiForgeryToken()
                 <h3 class="form_title">Реєстрація</h3>
                 <p>
-                    <input asp-for="Email" type="email" id="registerEmail" class="form_input" placeholder="Пошта" required />
+                    <input asp-for="Email" name="Email" type="email" id="registerEmail" class="form_input" placeholder="Пошта" required />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </p>
                 <p>
-                    <input asp-for="Password" type="password" id="registerPasssword" class="form_input" placeholder="Пароль" required />
+                    <input asp-for="Password" name="Password" type="password" id="registerPasssword" class="form_input" placeholder="Пароль" required />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </p>
                 <p>
-                    <input asp-for="ConfirmPassword" type="password" id="confirmPassword" class="form_input" placeholder="Підтвердіть пароль" required />
+                    <input asp-for="ConfirmPassword" name="ConfirmPassword" type="password" id="confirmPassword" class="form_input" placeholder="Підтвердіть пароль" required />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </p>
                 <p>

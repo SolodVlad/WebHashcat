@@ -13,8 +13,8 @@ namespace WebHashcat.Areas.Identity.Controllers
 
         public async Task<IActionResult> ConfirmAsync(string guid, string userEmail)
         {
-            var user = await _userManager.FindByNameAsync(userEmail);
-            if (user == null) return View("USER NOT FOUND");
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            if (user == null) return Json("USER NOT FOUND");
             var res = await _userManager.ConfirmEmailAsync(user, guid);
             if (res.Succeeded) return RedirectToAction("Index", "Home", new { Area = "" });
 

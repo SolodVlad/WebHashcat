@@ -1,0 +1,40 @@
+﻿@model WebHashcat.Models.HashcatArguments
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/cabinet.css" asp-append-version="true" />
+</head>
+
+<div class="container">
+    <div>
+        <div class="profile_tab">
+            <div class="profile_menu">
+                <ul class="menu">
+                    <li><a class="menu_first active" href="#Menu_1">Hash crack</a></li>
+                    <li><a href="#Payment">Payment</a></li>
+                    <li><a href="#Password">Password</a></li>
+                    <li><a>Log out</a></li>
+                </ul>
+            </div>
+            <div class="separator" />
+            <div class="profile_window">
+                <div class="profile_content active" id="profile_1">
+                    <form action="@Url.Action("StartHashcat", "Home", new {Area = ""})" id="hashcatForm" method="post" class="form">
+                        <select asp-for="AttackMode" asp-items="Html.GetEnumSelectList<Domain.Models.AttackMode>()" id="attackModeSelect">
+                            <option selected="selected">Select hash...</option>
+                        </select>
+                        <span asp-validation-for="AttackMode" class="text-danger">ATTACK</span>
+                        <input asp-for="Hash" placeholder="Hash" id="hash" />
+                        <span asp-validation-for="Hash" class="text-danger">HASH</span>
+                        <button type="submit" id="startCrackBtn">START CRACK</button>
+                    </form>
+                </div>
+                <div class="profile_content" id="profile_2">Надпись 2</div>
+                <div class="profile_content" id="profile_3">Надпись 3</div>
+            </div>
+        </div>
+    </div>
+</div>

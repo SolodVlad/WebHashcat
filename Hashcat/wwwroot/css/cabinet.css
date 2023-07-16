@@ -1,0 +1,59 @@
+﻿.profile_tab {
+    display: flex;
+    align-items: stretch;
+    min-width: 250px;
+    min-height: 500px;
+    outline: solid;
+    background-color: rgba(6, 29, 80, 0.6);
+    border-radius: 20px 20px;
+}
+
+.separator {
+    width: 2px;
+    min-height: 100%;
+    background-color: rgb(5, 19, 68);
+}
+
+.profile_menu {
+    width: 20%;
+}
+
+.profile_window {
+    width: 80%;
+    padding: 20px;
+}
+
+.menu {
+    list-style: none;
+    padding: 0px;
+    border-radius: 20px 20px;
+    outline: solid;
+}
+
+.menu_first {
+    border-top-left-radius: 20px;
+}
+
+.menu li {
+    display: blok;
+}
+
+.menu a {
+    margin-left: 4%;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.menu li.active {
+    background: #0b5a9d;
+}
+
+.profile_content {
+    display: none;
+}
+
+.profile_content.active {
+    display: block;
+}

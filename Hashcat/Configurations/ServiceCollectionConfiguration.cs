@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -7,6 +8,20 @@ namespace WebHashcat.Configurations
 {
     public static class ServiceCollectionConfiguration
     {
+        public static void AuthenticationCookie(this IServiceCollection services)
+        {
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "AuthCookie";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+                options.SlidingExpiration = false;
+                options.LoginPath = "/Login";
+            });
+        }
+
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtConfig = configuration.GetSection("JWT");

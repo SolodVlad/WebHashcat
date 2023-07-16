@@ -28,8 +28,8 @@ namespace WebHashcat.Areas.Identity.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody] Register register)
+        [Route("Register")]
+        public async Task<IActionResult> RegisterAsync(Register register)
         {
             var user = await _userManager.FindByEmailAsync(register.Email);
             if (user != null) { return StatusCode(500, new Response() { Status = "Error", Message = "User already exists" }); }
@@ -63,7 +63,7 @@ namespace WebHashcat.Areas.Identity.Controllers
             if (!res.Succeeded) return new BadRequestObjectResult(res);
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var confirmLink = Url.Action("Confirm", "EmailConfirm", new { guid = token, userEmail = user.Email }, Request.Scheme, Request.Host.Value);
+            var confirmLink = Url.Action("Confirm", "EmailConfirm", new { Area = "Identity", guid = token, userEmail = user.Email }, Request.Scheme, Request.Host.Value);
 
             await _emailSender.SendEmailAsync(user.Email, "Please activate link", $"<a href = {confirmLink}>Click to confirm email</a>");
 
@@ -75,7 +75,8 @@ namespace WebHashcat.Areas.Identity.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("Login")]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginAsync(Login login)
         {
             if (login != null)
@@ -101,7 +102,7 @@ namespace WebHashcat.Areas.Identity.Controllers
                     return Ok(new
                     {
                         Token = new JwtSecurityTokenHandler().WriteToken(token),
-                        Response = new Response() { Status = "Success", Message = "Authorizated" }
+                        Response = new Response() { Status = "Success", Message = "Authenticated" }
                     });
                 }
             }
