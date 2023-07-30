@@ -7,6 +7,8 @@ using Domain.Models;
 using WebHashcat.Models;
 using Newtonsoft.Json;
 using System.Text;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebHashcat.Controllers
 {
@@ -27,17 +29,20 @@ namespace WebHashcat.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> StartHashcat(HashcatArguments hashcatArguments)
-        {
-            var httpClient = _httpClientFactory.CreateClient();
-            var jsonContent = new StringContent(JsonConvert.SerializeObject(hashcatArguments), Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync("https://localhost:7149/api/HashcatApi", jsonContent);
+        //[HttpPost]
+        //public async Task<IActionResult> StartHashcat(HashcatArguments hashcatArguments)
+        //{
+        //    var token = Request.Cookies["AuthCookie"];
 
-            if (response.IsSuccessStatusCode) return RedirectToAction("Index", "Profile");
-            else return View();
-        }
+        //    var httpClient = _httpClientFactory.CreateClient();
+        //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
 
+        //    var jsonContent = new StringContent(JsonConvert.SerializeObject(hashcatArguments), Encoding.UTF8, "application/json");
+        //    var response = await httpClient.PostAsync("https://localhost:7149/api/HashcatApi", jsonContent);
+
+        //    if (response.IsSuccessStatusCode) return RedirectToAction("Index", "Profile");
+        //    else return View();
+        //}
 
         public IActionResult Privacy()
         {

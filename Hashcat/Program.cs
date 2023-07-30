@@ -2,8 +2,10 @@ using BLL.Infrastructure;
 using BLL.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using WebHashcat.Configurations;
+using WebHashcat.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,21 @@ builder.Services.ConfigureSwagger();
 //    options.SlidingExpiration = false;
 //    options.LoginPath = "/Login";
 //});
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(options =>
+//{
+//    options.Cookie.Name = "AuthCookie";
+//    options.Cookie.HttpOnly = true;
+//    options.Cookie.SecurePolicy = CookieSecurePolicy.None; //заменить на always
+//    options.Cookie.SameSite = SameSiteMode.Strict;
+//    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+//    options.SlidingExpiration = false;
+//    options.LoginPath = "/Login";
+//});
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddIdentityServerJwt();
+
+builder.Services.AddSignalR();
 
 builder.Services.Configure<SendGridEmailSenderOptions>(option =>
 {
@@ -72,6 +89,8 @@ app.UseAuthentication();
 
 app.MapControllers();
 app.MapRazorPages();
+
+//app.MapHub<CabinetHub>("/Cabinet");
 
 //app.MapControllerRoute(
 //    name: "areas",

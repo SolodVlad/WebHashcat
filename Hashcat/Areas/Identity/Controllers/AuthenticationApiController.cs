@@ -93,8 +93,9 @@ namespace WebHashcat.Areas.Identity.Controllers
 
                     foreach (var role in roles) authClaims.Add(new Claim(ClaimTypes.Role, role));
 
-                    var authStringKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
-                    var token = new JwtSecurityToken(issuer: _config["JWT:ValidAudience"],
+                    var authStringKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:secret"]));
+                    var token = new JwtSecurityToken(issuer: _config["JWT:validIssuer"],
+                        audience: _config["JWT:validAudience"],
                         expires: DateTime.Now.AddDays(1),
                         claims: authClaims,
                         signingCredentials: new SigningCredentials(authStringKey, SecurityAlgorithms.HmacSha512));

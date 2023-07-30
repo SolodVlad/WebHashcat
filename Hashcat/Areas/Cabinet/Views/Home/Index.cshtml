@@ -22,15 +22,13 @@
             <div class="separator" />
             <div class="profile_window">
                 <div class="profile_content active" id="profile_1">
-                    <form action="@Url.Action("StartHashcat", "Home", new {Area = ""})" id="hashcatForm" method="post" class="form">
-                        <select asp-for="AttackMode" asp-items="Html.GetEnumSelectList<Domain.Models.AttackMode>()" id="attackModeSelect">
-                            <option selected="selected">Select hash...</option>
-                        </select>
-                        <span asp-validation-for="AttackMode" class="text-danger">ATTACK</span>
-                        <input asp-for="Hash" placeholder="Hash" id="hash" />
-                        <span asp-validation-for="Hash" class="text-danger">HASH</span>
-                        <button type="submit" id="startCrackBtn">START CRACK</button>
-                    </form>
+                    <select asp-for="AttackMode" asp-items="Html.GetEnumSelectList<Domain.Models.AttackMode>()" id="attackModeSelect">
+                        <option selected="selected">Select hash...</option>
+                    </select>
+                    <span asp-validation-for="AttackMode" class="text-danger">ATTACK</span>
+                    <input asp-for="Hash" placeholder="Hash" id="hash" />
+                    <span asp-validation-for="Hash" class="text-danger">HASH</span>
+                    <button type="submit" id="startCrackBtn">START CRACK</button>
                 </div>
                 <div class="profile_content" id="profile_2">Надпись 2</div>
                 <div class="profile_content" id="profile_3">Надпись 3</div>

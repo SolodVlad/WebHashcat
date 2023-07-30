@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -8,19 +10,20 @@ namespace WebHashcat.Configurations
 {
     public static class ServiceCollectionConfiguration
     {
-        public static void AuthenticationCookie(this IServiceCollection services)
-        {
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.Name = "AuthCookie";
-                options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                options.Cookie.SameSite = SameSiteMode.Strict;
-                options.ExpireTimeSpan = TimeSpan.FromDays(1);
-                options.SlidingExpiration = false;
-                options.LoginPath = "/Login";
-            });
-        }
+        //public static AuthenticationBuilder AddCookie(this AuthenticationBuilder builder, Action<CookieAuthenticationOptions> configureOptions)
+        //{
+        //    builder.Services.ConfigureApplicationCookie(options =>
+        //    {
+        //        options.Cookie.Name = "AuthCookie";
+        //        options.Cookie.HttpOnly = true;
+        //        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        //        options.Cookie.SameSite = SameSiteMode.Strict;
+        //        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        //        options.SlidingExpiration = false;
+        //        options.LoginPath = "/Login";
+        //    });
+        //    return builder;
+        //}
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
@@ -43,6 +46,24 @@ namespace WebHashcat.Configurations
                     ValidAudience = jwtConfig["validAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        context.Token = context.Request.Cookies["AuthCookie"];
+                        return Task.CompletedTask;
+                    }
+                };
+            })
+            .AddCookie(options =>
+            {
+                options.Cookie.Name = "AuthCookie";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.None; //заменить на always
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+                options.SlidingExpiration = false;
+                options.LoginPath = "/Login";
             });
         }
 

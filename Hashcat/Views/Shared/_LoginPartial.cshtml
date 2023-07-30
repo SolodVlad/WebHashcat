@@ -1,12 +1,13 @@
 ﻿@using Domain.Models;
 @using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@if (SignInManager.IsSignedIn(User))
+@if (!string.IsNullOrEmpty(User.FindFirst(ClaimTypes.NameIdentifier)?.Value))
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity?.Name!</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.FindFirst(ClaimTypes.NameIdentifier)?.Value</a>
     </li>
     <li class="nav-item">
         <form class="form-inline" href="@Url.Action("Logout", "Account", new {Area = "Identity"})">
