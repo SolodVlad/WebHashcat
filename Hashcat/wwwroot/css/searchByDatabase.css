@@ -29,14 +29,14 @@
     transition: all 0.2s;
 }
 
-    .textarea_search_db:hover {
-        cursor: pointer;
-        background-color: rgba(9, 42, 114, 0.719);
-    }
+.textarea_search_db:hover {
+    cursor: pointer;
+    background-color: rgba(9, 42, 114, 0.719);
+}
 
-    .textarea_search_db::placeholder {
-        color: #FFF;
-    }
+.textarea_search_db::placeholder {
+    color: #FFF;
+}
 
 .btn_search_db {
     padding: 10px 20px;
