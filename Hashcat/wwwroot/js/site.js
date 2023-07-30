@@ -314,27 +314,56 @@ $(function () {
         $("#restoreForm").toggleClass("form_restore");
     });
 
+    //// Обработчик события клика по ссылке с классом "Payment"
+    //$('a[href="#Payment"]').click(function () {
+    //    // Удаление класса "active" у всех элементов с классом "profile_content"
+    //    $('.profile_content').removeClass('active');
+    //    // Добавление класса "active" к элементам с id "profile_2" и ссылке с href "#Payment"
+    //    $('#profile_2, a[href="#Payment"]').addClass('active');
+    //});
+
+    //// Обработчик события клика по ссылке с классом "Menu_1"
+    //$('a[href="#Menu_1"]').click(function () {
+    //    // Удаление класса "active" у всех элементов с классом "profile_content"
+    //    $('.profile_content').removeClass('active');
+    //    // Добавление класса "active" к элементам с id "profile_1" и ссылке с href "#Menu_1"
+    //    $('#profile_1, a[href="#Menu_1"]').addClass('active');
+    //});
+
+    //// Обработчик события клика по ссылке с классом "Password"
+    //$('a[href="#Password"]').click(function () {
+    //    // Удаление класса "active" у всех элементов с классом "profile_content"
+    //    $('.profile_content').removeClass('active');
+    //    // Добавление класса "active" к элементам с id "profile_3" и ссылке с href "#Password"
+    //    $('#profile_3, a[href="#Password"]').addClass('active');
+    //});
     // Обработчик события клика по ссылке с классом "Payment"
-    $('a[href="#Payment"]').click(function () {
+    $('li[href="#Payment"]').click(function () {
+        // Удаление класса "active" у всех элементов с классом ".profile_menu"
+        $('.profile_menu').removeClass('active');
         // Удаление класса "active" у всех элементов с классом "profile_content"
         $('.profile_content').removeClass('active');
         // Добавление класса "active" к элементам с id "profile_2" и ссылке с href "#Payment"
-        $('#profile_2, a[href="#Payment"]').addClass('active');
+        $('#profile_2, li[href="#Payment"]').addClass('active');
     });
 
     // Обработчик события клика по ссылке с классом "Menu_1"
-    $('a[href="#Menu_1"]').click(function () {
+    $('li[href="#Menu_1"]').click(function () {
+        // Удаление класса "active" у всех элементов с классом ".profile_menu"
+        $('.profile_menu').removeClass('active');
         // Удаление класса "active" у всех элементов с классом "profile_content"
         $('.profile_content').removeClass('active');
         // Добавление класса "active" к элементам с id "profile_1" и ссылке с href "#Menu_1"
-        $('#profile_1, a[href="#Menu_1"]').addClass('active');
+        $('#profile_1, li[href="#Menu_1"]').addClass('active');
     });
 
     // Обработчик события клика по ссылке с классом "Password"
-    $('a[href="#Password"]').click(function () {
+    $('li[href="#Password"]').click(function () {
+        // Удаление класса "active" у всех элементов с классом ".profile_menu"
+        $('.profile_menu').removeClass('active');
         // Удаление класса "active" у всех элементов с классом "profile_content"
         $('.profile_content').removeClass('active');
         // Добавление класса "active" к элементам с id "profile_3" и ссылке с href "#Password"
-        $('#profile_3, a[href="#Password"]').addClass('active');
+        $('#profile_3, li[href="#Password"]').addClass('active');
     });
 })
