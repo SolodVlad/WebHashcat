@@ -24,6 +24,7 @@ namespace BLL.Infrastructure
             serviceCollection.AddIdentity<User, IdentityRole>(opt =>
             {
                 opt.SignIn.RequireConfirmedEmail = true;
+                opt.Password.RequiredLength = 12;
             }).AddEntityFrameworkStores<HashWorkDbContext>()
               .AddDefaultTokenProviders();
         }

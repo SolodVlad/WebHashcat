@@ -1,11 +1,18 @@
 using BLL.Infrastructure;
 using BLL.Services;
 using Domain.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using WebHashcat.Configurations;
 using WebHashcat.SignalR;
+using System.Security.Claims;
+//using SignalRAuthenticationSample.Data;
+//using SignalRAuthenticationSample.Hubs;
+//using SignalRAuthenticationSample;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,9 +52,10 @@ builder.Services.ConfigureSwagger();
 //    options.LoginPath = "/Login";
 //});
 
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddIdentityServerJwt();
-
 builder.Services.AddSignalR();
+//builder.Services.AddAuthentication().AddIdentityServerJwt();
+//builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>());
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 builder.Services.Configure<SendGridEmailSenderOptions>(option =>
 {
@@ -90,17 +98,15 @@ app.UseAuthentication();
 app.MapControllers();
 app.MapRazorPages();
 
-//app.MapHub<CabinetHub>("/Cabinet");
+//app.UseCors(builder =>
+//{
+//    builder.WithOrigins("https://localhost:7149")
+//        .AllowAnyHeader()
+//        .WithMethods("GET", "POST")
+//        .AllowCredentials();
+//});
 
-//app.MapControllerRoute(
-//    name: "areas",
-//    pattern: "{Cabinet/{controller=Home}/{action=Index}"
-//);
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}"
-//);
+app.MapHub<CabinetHub>("/Cabinet");
 
 app.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}");
 

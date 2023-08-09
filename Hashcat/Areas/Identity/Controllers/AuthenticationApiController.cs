@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -16,13 +17,15 @@ namespace WebHashcat.Areas.Identity.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _config;
         private readonly IEmailSender _emailSender;
 
-        public AuthenticationApiController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config, IEmailSender emailSender)
+        public AuthenticationApiController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, IConfiguration config, IEmailSender emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
             _config = config;
             _emailSender = emailSender;
         }
@@ -109,6 +112,36 @@ namespace WebHashcat.Areas.Identity.Controllers
             }
             return Unauthorized();
             //return StatusCode(500, new Response() { Status = "Error", Message = "User authorization failed" });
+        }
+
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public async Task<IActionResult> ForgotPasswordAsync(ForgotPassword model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
+                return BadRequest();
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+            var link = Url.Action("ResetPassword", "Account", new { Area = "Identity", token, userEmail = user.Email }, Request.Scheme, Request.Host.Value);
+            await _emailSender.SendEmailAsync(user.Email, "Reset password", $"<a href = {link}>Click to reset password</a>");
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout(string returnUrl = "")
+        {
+            returnUrl ??= Url.Content("~/");
+
+            await _signInManager.SignOutAsync();
+
+            return Ok();
+
+            //if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
+            //return RedirectToAction("Index", "Ad", new { Area = "" });
         }
     }
 }

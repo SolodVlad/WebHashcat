@@ -1,23 +1,30 @@
 ﻿@using Domain.Models;
 @using Microsoft.AspNetCore.Identity
 @using System.Security.Claims;
+@using System.IdentityModel.Tokens.Jwt;
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@if (!string.IsNullOrEmpty(User.FindFirst(ClaimTypes.NameIdentifier)?.Value))
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.FindFirst(ClaimTypes.NameIdentifier)?.Value</a>
-    </li>
-    <li class="nav-item">
-        <form class="form-inline" href="@Url.Action("Logout", "Account", new {Area = "Identity"})">
-            <button type="submit" class="nav-link btn btn-link text-dark">Вихід</button>
-        </form>
-    </li>
-}
-else
-{
-    <li>
-        <a href="@Url.Action("Login", "Account", new {Area = "Identity"})">Авторизація</a>
-    </li>
+@{
+    var token = Context.Request.Cookies["AuthCookie"];
+    if (!string.IsNullOrEmpty(token))
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtSecurityToken = handler.ReadJwtToken(token);
+        if (!string.IsNullOrEmpty(jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value</a>
+            </li>
+            <li class="nav-item">
+                <input type="button" id="logoutBtn" class="nav-link btn btn-link text-dark" value="Вихід"/>
+            </li>
+        }
+    }
+    else
+    {
+        <li>
+            <a href="@Url.Action("Login", "Account", new {Area = "Identity"})">Авторизація</a>
+        </li>
+    }
 }

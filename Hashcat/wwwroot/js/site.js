@@ -1,15 +1,15 @@
-﻿//let token;      // токен
-//let username;   // имя пользователя
-//const hubConnection = new signalR.HubConnectionBuilder()
-//    .withUrl("/Cabinet", { accessTokenFactory: () => token })
-//    .build();
+﻿let token;      // токен
+let username;   // имя пользователя
+const hubConnection = new signalR.HubConnectionBuilder()
+    .withUrl("/Cabinet", { accessTokenFactory: () => token })
+    .build();
 
-//// аутентификация
+// аутентификация
 //document.getElementById("LoginBtn").addEventListener("click", async () => {
 
 //    // отправляем запрос на аутентификацию
 //    // посылаем запрос на адрес "/login", в ответ получим токен и имя пользователя
-//    const response = await fetch("/Login", {
+//    const response = await fetch("api/AuthenticationApi/Login", {
 //        method: "POST",
 //        headers: { "Content-Type": "application/json" },
 //        body: JSON.stringify({
@@ -24,6 +24,18 @@
 //        const data = await response.json();
 //        token = data.access_token;
 //        username = data.username;
+
+//        var cookieOptions = {
+//            path: "/",
+//            expires: 1,
+//            secure: true,
+//            sameSite: "strict",
+//            isEssential: true
+//        };
+
+//        document.cookie = "AuthCookie=" + data.token + ";" + $.param(cookieOptions);
+
+//        window.location.replace("Cabinet");
 
 //        hubConnection.start().catch(err => console.error(err.toString()));
 //    }
@@ -230,6 +242,8 @@ $(function () {
                 document.cookie = "AuthCookie=" + data.token + ";" + $.param(cookieOptions);
 
                 window.location.replace("Cabinet");
+
+                hubConnection.start().catch(err => console.error(err.toString()));
             },
             error: function (jqXHR, exception) {
                 if (jqXHR.status === 0) {
@@ -250,6 +264,48 @@ $(function () {
                 }
             }
         });
+    })
+
+    $('#forgotPasswordBtn').click(function () {
+        var model = { Email: $("#resetEmail").val() }
+
+        $.ajax({
+            url: "api/AuthenticationApi/ForgotPassword",
+            type: "POST",
+            data: JSON.stringify(model),
+            contentType: "application/json",
+            success: function (data) {
+                $("#message").text("Перейдіть за посиланням у електронній пошті")
+            },
+            error: function (jqXHR, exception) {
+                if (jqXHR.status === 0) {
+                    console.error('Not connect. Verify Network.');
+                } else if (jqXHR.status == 404) {
+                    console.error('Requested page not found (404).');
+                } else if (jqXHR.status == 500) {
+                    console.error('Internal Server Error.');
+                } else if (exception === 'parsererror') {
+                    console.error('Requested JSON parse failed.');
+                } else if (exception === 'timeout') {
+                    console.error('Time out error.');
+                } else if (exception === 'abort') {
+                    console.error('Ajax request aborted.');
+                } else {
+                    console.error('Uncaught Error. ' + jqXHR.responseText);
+                    $("#message").text(jqXHR.responseText)
+                }
+            }
+        });
+    })
+
+    $('#logoutBtn').click(function () {
+        $.ajax({
+            url: "api/AuthenticationApi/Logout",
+            type: "GET",
+            success: function () {
+                window.location.replace("/");
+            }
+        })
     })
 
     $('#startCrackBtn').click(function () {

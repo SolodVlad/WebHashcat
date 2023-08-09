@@ -9,15 +9,22 @@ using WebHashcat.Areas.Identity.Models;
 using WebHashcat.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Domain.Models;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace WebHashcat.Areas.Identity.Controllers
 {
     [Area("Identity")]
     public class AccountController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly UserManager<User> _userManager;
 
-        public AccountController(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
+        public AccountController(UserManager<User> userManager) => _userManager = userManager;
+
+        //private readonly IHttpClientFactory _httpClientFactory;
+
+        //public AccountController(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
         //[HttpPost]
         //[Route("Register")]
@@ -38,6 +45,29 @@ namespace WebHashcat.Areas.Identity.Controllers
         [HttpGet]
         [Route("Login")]
         public IActionResult Login() => View();
+
+        [HttpGet]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(string userEmail, string token = null)
+        {
+            if (token == null) return BadRequest("A code must be supplied for password reset");
+            return View(new ResetPassword { Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token)), Email = userEmail });
+        }
+
+        [HttpPost]
+        [Route("ResetPassword")]
+        public async Task<IActionResult> ResetPasswordAsync(ResetPassword resetPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+            if (user == null) return Json("This user is not exist");
+
+            var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.NewPassword);
+
+            if (result.Succeeded) return Redirect(Url.Action("Login", "Account", new { Area = "Identity" }));
+            return Json(result.Errors);
+        }
+
+
 
         //[HttpPost]
         //[Route("Login")]

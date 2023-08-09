@@ -25,11 +25,11 @@
             <div class="form form_signin form_restore" id="restoreForm">
                 <h3 class="form_title">Напис</h3>
                 <p>
-                    <input asp-for="Email" name="Email" type="email" class="form_input" placeholder="Пошта" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input asp-for="Email" name="Email" id="resetEmail" type="email" class="form_input" placeholder="Пошта" />
+                    <span asp-validation-for="Email" class="text-danger" id="message"></span>
                 </p>
                 <p>
-                    <button class="form_btn">Відправити</button>
+                    <input type="button" id="forgotPasswordBtn" class="form_btn" value="Відправити"/>
                 </p>
                 <p>
                     <a href="#" id="switchToLogin">Повернутися до авторизації</a>
