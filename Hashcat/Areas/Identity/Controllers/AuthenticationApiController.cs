@@ -1,4 +1,8 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -130,13 +134,14 @@ namespace WebHashcat.Areas.Identity.Controllers
             return Ok();
         }
 
+        //[Authorize]
         [HttpGet]
         [Route("Logout")]
         public async Task<IActionResult> Logout(string returnUrl = "")
         {
             returnUrl ??= Url.Content("~/");
 
-            await _signInManager.SignOutAsync();
+            Response.Cookies.Delete("AuthCookie");
 
             return Ok();
 
