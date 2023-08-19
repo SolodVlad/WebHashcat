@@ -12,7 +12,7 @@ namespace BLL.Services
 
         public async Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> expression) => await _userRepository.FindByConditionAsync(expression);
 
-        public async Task AddAsync(User User) => await _userRepository.CreateAsync(User);
+        public async Task AddAsync(User user) => await _userRepository.CreateAsync(user);
 
         public async Task<User> GetAsync(string id) => (await _userRepository.FindByConditionAsync(x => x.Id == id)).First();
 

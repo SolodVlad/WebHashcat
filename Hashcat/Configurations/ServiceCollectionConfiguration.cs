@@ -28,7 +28,7 @@ namespace WebHashcat.Configurations
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtConfig = configuration.GetSection("JWT");
-            var secretKey = jwtConfig["secret"];
+            var secretKey = configuration.GetValue<string>("JWTSecret");
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

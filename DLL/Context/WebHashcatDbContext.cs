@@ -6,9 +6,9 @@ using System.Text;
 
 namespace DLL.Context
 {
-    public class HashWorkDbContext : IdentityDbContext<User>
+    public class WebHashcatDbContext : IdentityDbContext<User>
     {
-        public HashWorkDbContext(DbContextOptions<HashWorkDbContext> options) : base(options)
+        public WebHashcatDbContext(DbContextOptions<WebHashcatDbContext> options) : base(options)
         {
             //Database.EnsureDeleted();
             Database.EnsureCreated();
@@ -45,7 +45,7 @@ namespace DLL.Context
             var sha512 = SHA512.Create();
 
             string? password;
-            using var streamReader = new StreamReader("hashcat-6.2.6\\example.dict");
+            using var streamReader = new StreamReader("hashcat-6.2.6\\test.txt");
             while ((password = streamReader.ReadLine()) != null)
                 builder.Entity<DataLookupTable>().HasData(new DataLookupTable()
                 {

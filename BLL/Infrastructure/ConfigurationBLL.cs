@@ -14,7 +14,7 @@ namespace BLL.Infrastructure
     {
         public static void Configure(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            serviceCollection.AddDbContext<HashWorkDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            serviceCollection.AddDbContext<WebHashcatDbContext>(opt => opt.UseSqlServer(configuration.GetValue<string>("DbConnection")));
 
             serviceCollection.AddTransient<LookupTableRepository>();
             serviceCollection.AddTransient<CurrencyRepository>();
@@ -25,7 +25,7 @@ namespace BLL.Infrastructure
             {
                 opt.SignIn.RequireConfirmedEmail = true;
                 opt.Password.RequiredLength = 12;
-            }).AddEntityFrameworkStores<HashWorkDbContext>()
+            }).AddEntityFrameworkStores<WebHashcatDbContext>()
               .AddDefaultTokenProviders();
         }
     }

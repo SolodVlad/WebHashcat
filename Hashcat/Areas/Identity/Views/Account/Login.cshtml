@@ -25,7 +25,7 @@
             <div class="form form_signin form_restore" id="restoreForm">
                 <h3 class="form_title">Напис</h3>
                 <p>
-                    <input asp-for="Email" name="Email" id="resetEmail" type="email" class="form_input" placeholder="Пошта" />
+                    <input asp-for="Email" id="resetEmail" type="email" class="form_input" placeholder="Пошта" />
                     <span asp-validation-for="Email" class="text-danger" id="message"></span>
                 </p>
                 <p>
@@ -39,15 +39,20 @@
             <div class="form form_signin" id="loginForm">
                 <h3 class="form_title">Вхід</h3>
                 <p>
-                    <input asp-for="Email" name="Email" id="Email" type="email" class="form_input" placeholder="Пошта" />
+                    <input asp-for="Email" id="email" type="email" class="form_input" placeholder="Пошта" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </p>
                 <p>
-                    <input asp-for="Password" name="Password" id="Password" type="password" class="form_input" placeholder="Пароль" />
+                    <input asp-for="Password" id="password" type="password" class="form_input" placeholder="Пароль" />
                     <span asp-validation-for="Email" class="text-danger" id="loginErrorMessage"></span>
                 </p>
                 <p>
-                    <input type="button" name="LoginBtn" id="LoginBtn" class="form_btn" value="Увійти"/>
+                    <label>
+                        <input type="checkbox" id="isRememberMe"/> Запам'ятати мене
+                    </label>
+                </p>
+                <p>
+                    <input type="button" id="loginBtn" class="form_btn" value="Увійти"/>
                 </p>
                 <p>
                     <a href="#" id="switchToRestore">Відновити пароль</a>
@@ -58,15 +63,15 @@
             <div id="registerForm" class="form form_signup">
                 <h3 class="form_title">Реєстрація</h3>
                 <p>
-                    <input asp-for="Email" name="Email" type="email" id="registerEmail" class="form_input" placeholder="Пошта" required />
+                    <input asp-for="Email" type="email" id="registerEmail" class="form_input" placeholder="Пошта" required />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </p>
                 <p>
-                    <input asp-for="Password" name="Password" type="password" id="registerPassword" class="form_input" placeholder="Пароль" required />
+                    <input asp-for="Password" type="password" id="registerPassword" class="form_input" placeholder="Пароль" required />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </p>
                 <p>
-                    <input asp-for="ConfirmPassword" name="ConfirmPassword" type="password" id="confirmPassword" class="form_input" placeholder="Підтвердіть пароль" required />
+                    <input asp-for="ConfirmPassword" type="password" id="confirmPassword" class="form_input" placeholder="Підтвердіть пароль" required />
                     <span asp-validation-for="ConfirmPassword" id="confirmPasswordErrorMessage" class="text-danger"></span>
                 </p>
                 <p>

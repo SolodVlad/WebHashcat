@@ -45,6 +45,72 @@ const hubConnection = new signalR.HubConnectionBuilder()
 //    }
 //});
 
+function validateToken() {
+    var token = Cookies.get('AuthCookie');
+    if (token) {
+        $.ajax({
+            url: 'api/AuthenticationApi/ValidateJWTToken',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(token),
+
+            success: function (response) {
+                if (response) {
+                    var email = response;
+
+                    //var cookieOptions = {
+                    //    path: "/",
+                    //    expires: 1,
+                    //    secure: true,
+                    //    sameSite: "strict",
+                    //    isEssential: true
+                    //};
+
+                    //document.cookie = "AuthCookie=" + response.Token + ";" + $.param(cookieOptions);
+
+                    document.getElementById('showEmail').innerText = email;
+                    document.getElementById('authenticatedNav').style.display = 'block';
+                    document.getElementById('logoutNav').style.display = 'block';
+                    document.getElementById('loginNav').style.display = 'none';
+                } else {
+                    document.cookie = 'AuthCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    document.getElementById('authenticatedNav').style.display = 'none';
+                    document.getElementById('logoutNav').style.display = 'none';
+                    document.getElementById('loginNav').style.display = 'block';
+                    alert('Сесія авторизації минула');
+                    window.location.replace('/');
+                }
+            },
+
+            error: function (jqXHR, exception) {
+                if (jqXHR.status === 0) {
+                    console.error('Not connect. Verify Network.');
+                } else if (jqXHR.status == 404) {
+                    console.error('Requested page not found (404).');
+                } else if (jqXHR.status == 500) {
+                    console.error('Internal Server Error (500).');
+                } else if (exception === 'parsererror') {
+                    console.error('Requested JSON parse failed.');
+                } else if (exception === 'timeout') {
+                    console.error('Time out error.');
+                } else if (exception === 'abort') {
+                    console.error('Ajax request aborted.');
+                } else {
+                    console.error('Uncaught Error. ' + jqXHR.responseText);
+                }
+            }
+        })
+    }
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+    validateToken();
+});
+
+document.addEventListener('click', function () {
+    validateToken();
+});
+
 const formBox = document.querySelector('#form-box');
 
 $("#signup-btn").on("click", function () {
@@ -83,29 +149,12 @@ $(function () {
         $.ajax({
             url: "api/LookupTableApi",
             type: "POST",
-            //processData: false,
             contentType: "application/json",
             data: JSON.stringify($("#hashes").val()),
-            //dataType: "json",
-
-            success: function () {
-                $("#table_search_db").html("")
-                loadData()
-            },
-            error: function (xhr, status, error) {
-                console.log("Error: " + error);
-            }
-        })
-    })
-
-    function loadData() {
-        $.ajax({
-            url: "api/LookupTableApi",
-            type: "GET",
-            contentType: "application/json",
-            //dataType: "json",
 
             success: function (data) {
+                $("#table_search_db").html("")
+
                 $("#table_search_db").append(headlines)
 
                 $.each(data, function (i, dataLookupTable) {
@@ -113,46 +162,47 @@ $(function () {
                     //Можливо це оптимізувати?
                     if (dataLookupTable.status == "Success")
                         row = '<tr>' +
-                                '<td class="td width_hash" style="background-color: green">' + dataLookupTable.hash + '</td>' +
-                                '<td class="td width_type" style="background-color: green">' + dataLookupTable.hashType + '</td>' +
-                                '<td class="td width_password" style="background-color: green">' + dataLookupTable.password + '</td>' +
+                            '<td class="td width_hash" style="background-color: green">' + dataLookupTable.hash + '</td>' +
+                            '<td class="td width_type" style="background-color: green">' + dataLookupTable.hashType + '</td>' +
+                            '<td class="td width_password" style="background-color: green">' + dataLookupTable.password + '</td>' +
                             '</tr>'
                     else if (dataLookupTable.status == "Failed")
                         if (dataLookupTable.hashType != "None")
                             row = '<tr>' +
-                                    '<td class="td width_hash" style="background-color: yellow">' + dataLookupTable.hash + '</td>' +
-                                    '<td class="td width_type" style="background-color: yellow">' + dataLookupTable.hashType + '</td>' +
-                                    '<td class="td width_password" style="background-color: yellow">' + "NOT FOUND" + '</td>' +
+                                '<td class="td width_hash" style="background-color: yellow">' + dataLookupTable.hash + '</td>' +
+                                '<td class="td width_type" style="background-color: yellow">' + dataLookupTable.hashType + '</td>' +
+                                '<td class="td width_password" style="background-color: yellow">' + "NOT FOUND" + '</td>' +
                                 '</tr>'
                         else
                             row = '<tr>' +
-                                    '<td class="td width_hash" style="background-color: red">' + dataLookupTable.hash + '</td>' +
-                                    '<td class="td width_type" style="background-color: red">' + dataLookupTable.hashType + '</td>' +
-                                    '<td class="td width_password" style="background-color: red">' + "NOT FOUND" + '</td>' +
-                                  '</tr>'
+                                '<td class="td width_hash" style="background-color: red">' + dataLookupTable.hash + '</td>' +
+                                '<td class="td width_type" style="background-color: red">' + dataLookupTable.hashType + '</td>' +
+                                '<td class="td width_password" style="background-color: red">' + "NOT FOUND" + '</td>' +
+                                '</tr>'
 
                     $("#table_search_db").append(row)
                 })
             },
+
             error: function (jqXHR, exception) {
                 if (jqXHR.status === 0) {
-                    alert('Not connect. Verify Network.');
+                    console.error('Not connect. Verify Network.');
                 } else if (jqXHR.status == 404) {
-                    alert('Requested page not found (404).');
+                    console.error('Requested page not found (404).');
                 } else if (jqXHR.status == 500) {
-                    alert('Internal Server Error (500).');
+                    console.error('Internal Server Error (500).');
                 } else if (exception === 'parsererror') {
-                    alert('Requested JSON parse failed.');
+                    console.error('Requested JSON parse failed.');
                 } else if (exception === 'timeout') {
-                    alert('Time out error.');
+                    console.error('Time out error.');
                 } else if (exception === 'abort') {
-                    alert('Ajax request aborted.');
+                    console.error('Ajax request aborted.');
                 } else {
-                    alert('Uncaught Error. ' + jqXHR.responseText);
+                    console.error('Uncaught Error. ' + jqXHR.responseText);
                 }
             }
         })
-    }
+    })
 
     function validatePassword() {
         var password = $("#registerPassword").val();
@@ -219,10 +269,11 @@ $(function () {
         });
     });
 
-    $("#LoginBtn").click(function () {
+    $("#loginBtn").click(function () {
         var login = {
-            Login_: $("#Email").val(),
-            Password: $("#Password").val()
+            Login_: $('#email').val(),
+            Password: $('#password').val(),
+            IsRememberMe: $('#isRememberMe').prop('checked')
         };
 
         $.ajax({
@@ -231,15 +282,15 @@ $(function () {
             data: JSON.stringify(login),
             contentType: "application/json",
             success: function (data) {
-                var cookieOptions = {
-                    path: "/",
-                    expires: 1,
-                    secure: true,
-                    sameSite: "strict",
-                    isEssential: true
-                };
+                //var cookieOptions = {
+                //    path: "/",
+                //    expires: 1,
+                //    secure: true,
+                //    sameSite: "strict",
+                //    isEssential: true
+                //};
 
-                document.cookie = "AuthCookie=" + data.token + ";" + $.param(cookieOptions);
+                //document.cookie = "AuthCookie=" + data.token + ";" + $.param(cookieOptions);
 
                 window.location.replace("Cabinet");
 
@@ -267,16 +318,16 @@ $(function () {
     })
 
     $('#forgotPasswordBtn').click(function () {
-        var model = { Email: $("#resetEmail").val() }
-
         $.ajax({
             url: "api/AuthenticationApi/ForgotPassword",
             type: "POST",
-            data: JSON.stringify(model),
+            data: JSON.stringify($("#resetEmail").val()),
             contentType: "application/json",
-            success: function (data) {
+
+            success: function () {
                 $("#message").text("Перейдіть за посиланням у електронній пошті")
             },
+
             error: function (jqXHR, exception) {
                 if (jqXHR.status === 0) {
                     console.error('Not connect. Verify Network.');
@@ -300,12 +351,60 @@ $(function () {
 
     $('#logoutBtn').click(function () {
         $.ajax({
-            url: "api/AuthenticationApi/Logout",
-            type: "GET",
-            success: function () {
-                window.location.replace("/");
+            url: 'api/AuthenticationApi/GetUserNameByAccessToken',
+            type: 'POST',
+            data: JSON.stringify(Cookies.get('AuthCookie')),
+            contentType: 'application/json',
+
+            success: function (userName) {
+                $.ajax({
+                    url: "api/AuthenticationApi/RevokeRefreshToken",
+                    type: "POST",
+                    data: JSON.stringify(userName),
+                    contentType: "application/json",
+
+                    success: function () {
+                        document.cookie = 'AuthCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+                        window.location.replace("/");
+                    },
+
+                    error: function (jqXHR, exception) {
+                        if (jqXHR.status === 0) {
+                            console.error('Not connect. Verify Network.');
+                        } else if (jqXHR.status == 404) {
+                            console.error('Requested page not found (404).');
+                        } else if (jqXHR.status == 500) {
+                            console.error('Internal Server Error.');
+                        } else if (exception === 'parsererror') {
+                            console.error('Requested JSON parse failed.');
+                        } else if (exception === 'timeout') {
+                            console.error('Time out error.');
+                        } else if (exception === 'abort') {
+                            console.error('Ajax request aborted.');
+                        } else {
+                            console.error('Uncaught Error. ' + jqXHR.responseText);
+                        }
+                    }
+                });
+            },
+            error: function (jqXHR, exception) {
+                if (jqXHR.status === 0) {
+                    console.error('Not connect. Verify Network.');
+                } else if (jqXHR.status == 404) {
+                    console.error('Requested page not found (404).');
+                } else if (jqXHR.status == 500) {
+                    console.error('Internal Server Error.');
+                } else if (exception === 'parsererror') {
+                    console.error('Requested JSON parse failed.');
+                } else if (exception === 'timeout') {
+                    console.error('Time out error.');
+                } else if (exception === 'abort') {
+                    console.error('Ajax request aborted.');
+                } else {
+                    console.error('Uncaught Error. ' + jqXHR.responseText);
+                }
             }
-        })
+        });
     })
 
     $('#startCrackBtn').click(function () {
@@ -314,32 +413,35 @@ $(function () {
             Hash: $("#hash").val()
         };
 
-        var token = getCookie("AuthCookie");
+        $.ajax({
+            url: "api/HashcatApi",
+            type: "POST",
+            data: JSON.stringify(hashcatArguments),
+            contentType: "application/json",
 
-        var httpClient = new XMLHttpRequest();
-        httpClient.open("POST", "api/HashcatApi", true);
-        //httpClient.setRequestHeader("Authorization", "Bearer " + token);
-        httpClient.setRequestHeader("Content-Type", "application/json");
+            success: function () {
+                console.log('success')
+            },
 
-        httpClient.onreadystatechange = function () {
-            if (httpClient.readyState === XMLHttpRequest.DONE) {
-                if (httpClient.status === 200) {
-                    console.log("success")
+            error: function (jqXHR, exception) {
+                if (jqXHR.status === 0) {
+                    console.error('Not connect. Verify Network.');
+                } else if (jqXHR.status == 404) {
+                    console.error('Requested page not found (404).');
+                } else if (jqXHR.status == 500) {
+                    console.error('Internal Server Error.');
+                } else if (exception === 'parsererror') {
+                    console.error('Requested JSON parse failed.');
+                } else if (exception === 'timeout') {
+                    console.error('Time out error.');
+                } else if (exception === 'abort') {
+                    console.error('Ajax request aborted.');
                 } else {
-                    console.error("Error: " + httpClient.status);
+                    console.error('Uncaught Error. ' + jqXHR.responseText);
                 }
             }
-        };
-
-        httpClient.send(JSON.stringify(hashcatArguments));
+        });
     });
-
-    function getCookie(name) {
-        var value = "; " + document.cookie;
-        var parts = value.split("; " + name + "=");
-        if (parts.length === 2) return parts.pop().split(";").shift();
-    }
-
 
     //$('#registerEmail, #registerPasssword, #confirmPassword').on('input', function () {
     //    var isValid = $('#registerForm').checkValidity();

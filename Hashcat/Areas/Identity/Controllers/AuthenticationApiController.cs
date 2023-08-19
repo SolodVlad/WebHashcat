@@ -8,10 +8,15 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using WebHashcat.Models;
+using WebHashcat.Areas.Identity.Services;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace WebHashcat.Areas.Identity.Controllers
 {
@@ -24,14 +29,18 @@ namespace WebHashcat.Areas.Identity.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _config;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment _environment;
+        private readonly TokenService _tokenService;
 
-        public AuthenticationApiController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, IConfiguration config, IEmailSender emailSender)
+        public AuthenticationApiController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, IConfiguration config, IEmailSender emailSender, IWebHostEnvironment environment, IDistributedCache cache)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _config = config;
             _emailSender = emailSender;
+            _environment = environment;
+            _tokenService = new TokenService(config, cache);
         }
 
         [HttpPost]
@@ -81,6 +90,40 @@ namespace WebHashcat.Areas.Identity.Controllers
             //return Ok(new Response() { Status = "Success", Message = "User created" });
         }
 
+        //[HttpPost]
+        //[Route("register-admin")]
+        //public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
+        //{
+        //    var userExists = await _userManager.FindByNameAsync(model.Username);
+        //    if (userExists != null)
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+
+        //    User user = new()
+        //    {
+        //        Email = model.Email,
+        //        SecurityStamp = Guid.NewGuid().ToString(),
+        //        UserName = model.Username
+        //    };
+        //    var result = await _userManager.CreateAsync(user, model.Password);
+        //    if (!result.Succeeded)
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+
+        //    if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+        //        await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+        //    if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+        //        await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+        //    if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+        //    {
+        //        await _userManager.AddToRoleAsync(user, UserRoles.Admin);
+        //    }
+        //    if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+        //    {
+        //        await _userManager.AddToRoleAsync(user, UserRoles.User);
+        //    }
+        //    return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+        //}
+
         [HttpPost]
         [Route("Login")]
         //[ValidateAntiForgeryToken]
@@ -95,34 +138,41 @@ namespace WebHashcat.Areas.Identity.Controllers
                     var authClaims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim("isRememberMe", login.IsRememberMe.ToString()),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                     };
 
                     foreach (var role in roles) authClaims.Add(new Claim(ClaimTypes.Role, role));
 
-                    var authStringKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:secret"]));
-                    var token = new JwtSecurityToken(issuer: _config["JWT:validIssuer"],
-                        audience: _config["JWT:validAudience"],
-                        expires: DateTime.Now.AddDays(1),
-                        claims: authClaims,
-                        signingCredentials: new SigningCredentials(authStringKey, SecurityAlgorithms.HmacSha512));
+                    var jwtAccessToken = new JwtSecurityTokenHandler().WriteToken(_tokenService.GenerateNewAccessToken(authClaims));
+                    var refreshToken = _tokenService.GenerateRefreshToken();
 
-                    return Ok(new
-                    {
-                        Token = new JwtSecurityTokenHandler().WriteToken(token),
-                        Response = new Response() { Status = "Success", Message = "Authenticated" }
-                    });
+                    var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(user.UserName));
+
+                    await _tokenService.SaveRefreshTokenToCacheAsync(userNameHash, refreshToken);
+
+                    AppendCookie("AuthCookie", jwtAccessToken, login.IsRememberMe);
+
+                    return Ok();
+
+
+                    //return Ok(new
+                    //{
+                    //    Token = new JwtSecurityTokenHandler().WriteToken(jwtAccessToken),
+                    //    //RefreshToken = refreshToken,
+                    //    //Expiration = token.ValidTo,
+                    //    //Response = new Response() { Status = "Success", Message = "Authenticated" }
+                    //});
                 }
             }
             return Unauthorized();
-            //return StatusCode(500, new Response() { Status = "Error", Message = "User authorization failed" });
         }
 
         [HttpPost]
         [Route("ForgotPassword")]
-        public async Task<IActionResult> ForgotPasswordAsync(ForgotPassword model)
+        public async Task<IActionResult> ForgotPasswordAsync([FromBody] string email)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
                 return BadRequest();
 
@@ -134,19 +184,133 @@ namespace WebHashcat.Areas.Identity.Controllers
             return Ok();
         }
 
-        //[Authorize]
-        [HttpGet]
-        [Route("Logout")]
-        public async Task<IActionResult> Logout(string returnUrl = "")
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[HttpGet]
+        //[Route("Logout")]
+        //public async Task<IActionResult> Logout()
+        //{
+        //    Response.Cookies.Delete("AuthCookie");
+
+        //    return Ok();
+        //}
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Route("ValidateJWTToken")]
+        public async Task<IActionResult> ValidateJwtToken([FromBody] string accessToken)
         {
-            returnUrl ??= Url.Content("~/");
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_config.GetValue<string>("JWTSecret"));
+            try
+            {
+                tokenHandler.ValidateToken(accessToken, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
 
-            Response.Cookies.Delete("AuthCookie");
+                var jwtSecurityToken = (JwtSecurityToken)validatedToken;
+                var userName = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
 
-            return Ok();
+                return Ok(userName);
+            }
+            catch (SecurityTokenExpiredException ex)
+            {
+                Debug.WriteLine(ex.Message);
 
-            //if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
-            //return RedirectToAction("Index", "Ad", new { Area = "" });
+                //var jwtSecurityToken = tokenHandler.ReadJwtToken(token.AccessToken);
+                //var userName = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
+
+                var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
+
+                var userName = principal.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
+                var isRememberMe = Convert.ToBoolean(principal.Claims.First(claim => claim.Type == "isRememberMe").Value);
+
+                var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(userName));
+
+                if (await _tokenService.IsRefreshTokenExistsAsync(userNameHash)) 
+                {
+                    var newJwtAccessSecurityToken = _tokenService.GenerateNewAccessToken(principal.Claims.ToList());
+                    AppendCookie("AuthCookie", new JwtSecurityTokenHandler().WriteToken(newJwtAccessSecurityToken), isRememberMe);
+
+                    return Ok(userName);
+                }
+
+                Response.Cookies.Delete("AuthCookie");
+                return NoContent();
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Route("RevokeRefreshToken")]
+        public async Task<IActionResult> RevokeRefreshToken([FromBody] string userName)
+        {
+            var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(userName));
+            if (!await _tokenService.IsRevokeRefreshToken(userNameHash)) return BadRequest("Invalid user name");
+
+            return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Route("RevokeAllRefreshTokens")]
+        public async Task<IActionResult> RevokeAllRefreshTokens()
+        {
+            var users = _userManager.Users.ToList();
+
+            var userNames = new List<string>();
+            var userNameHash = "";
+            foreach (var user in users)
+            {
+                userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(user.UserName));
+                userNames.Add(userNameHash);
+            }
+
+            await _tokenService.RevokeAllRefreshTokensAsync(userNames);
+
+            return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Route("GetUserNameByAccessToken")]
+        public string GetUserNameByAccessToken([FromBody] string accessToken)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = tokenHandler.ReadJwtToken(accessToken);
+            return jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
+        }
+
+        private void AppendCookie(string key, string value, bool isExpires)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = !_environment.IsDevelopment(),
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Path = "/",
+                IsEssential = true
+            };
+
+            if (isExpires) cookieOptions.Expires = DateTime.Now.AddDays(1);
+
+            Response.Cookies.Append(key, value, cookieOptions);
+        }
+
+        private static async Task<string> ComputeSha512Async(byte[] data)
+        {
+            using var stream = new MemoryStream(data);
+            var hashBytes = await SHA512.Create().ComputeHashAsync(stream);
+            return BitConverter.ToString(hashBytes).Replace("-", "");
         }
     }
 }

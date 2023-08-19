@@ -8,12 +8,12 @@ namespace DLL.Repository
 {
     public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected HashWorkDbContext _hashWorkDbContext;
+        protected WebHashcatDbContext _webHashcatDbContext;
         private DbSet<TEntity> _entities;
 
-        protected DbSet<TEntity> Entities => _entities ??= _hashWorkDbContext.Set<TEntity>();
+        protected DbSet<TEntity> Entities => _entities ??= _webHashcatDbContext.Set<TEntity>();
 
-        protected BaseRepository(HashWorkDbContext hashWorkDbContext) => _hashWorkDbContext = hashWorkDbContext;
+        protected BaseRepository(WebHashcatDbContext webHashcatDbContext) => _webHashcatDbContext = webHashcatDbContext;
 
         public virtual async Task<IReadOnlyCollection<TEntity>> GetAllAsync() => await Entities.ToListAsync().ConfigureAwait(false);
 
@@ -24,7 +24,7 @@ namespace DLL.Repository
             try
             {
                 await Entities.AddAsync(entity).ConfigureAwait(false);
-                await _hashWorkDbContext.SaveChangesAsync().ConfigureAwait(false);
+                await _webHashcatDbContext.SaveChangesAsync().ConfigureAwait(false);
                 return new OperationDetail { Message = "Created" };
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@ namespace DLL.Repository
             try
             {
                 Entities.Remove(entity);
-                await _hashWorkDbContext.SaveChangesAsync();
+                await _webHashcatDbContext.SaveChangesAsync();
                 return new OperationDetail { Message = "Remove" };
             }
             catch (Exception ex)

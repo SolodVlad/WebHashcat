@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WebHashcat.Controllers
 {
@@ -26,6 +27,18 @@ namespace WebHashcat.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            //var token = HttpContext.Request.Cookies["AuthCookie"];
+            //if (!string.IsNullOrEmpty(token))
+            //{
+            //    var httpClient = _httpClientFactory.CreateClient();
+            //    var jsonContent = new StringContent(JsonConvert.SerializeObject(token), Encoding.UTF8, "application/json");
+            //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
+            //    var response = await httpClient.PostAsync("https://localhost:7149/api/AuthenticationApi/ValidateJWTToken", jsonContent);
+            //    if (response.IsSuccessStatusCode)
+            //        if (await response.Content.ReadAsStringAsync() != null) ViewBag.email = await response.Content.ReadAsStringAsync();
+            //        else Response.Cookies.Delete("AuthCookie");
+            //}
+
             return View();
         }
 

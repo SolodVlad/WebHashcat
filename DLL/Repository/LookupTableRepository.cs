@@ -8,7 +8,7 @@ namespace DLL.Repository
 {
     public class LookupTableRepository : BaseRepository<DataLookupTable>
     {
-        public LookupTableRepository(HashWorkDbContext hashWorkDbContext) : base(hashWorkDbContext) { }
+        public LookupTableRepository(WebHashcatDbContext webHashcatDbContext) : base(webHashcatDbContext) { }
 
         public override async Task<IReadOnlyCollection<DataLookupTable>> GetAllAsync() => await Entities.ToListAsync().ConfigureAwait(false);
 

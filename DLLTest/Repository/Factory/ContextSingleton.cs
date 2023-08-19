@@ -5,8 +5,8 @@ namespace DLLTest.Repository.Factory
 {
     internal class ContextSingleton
     {
-        private static readonly Lazy<HashWorkDbContext> _context = new Lazy<HashWorkDbContext>(() => new HashWorkDbContext(new DbContextOptionsBuilder<HashWorkDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options));
+        private static readonly Lazy<WebHashcatDbContext> _context = new Lazy<WebHashcatDbContext>(() => new WebHashcatDbContext(new DbContextOptionsBuilder<WebHashcatDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options));
 
-        public static HashWorkDbContext Context { get { return _context.Value; } }
+        public static WebHashcatDbContext Context { get { return _context.Value; } }
     }
 }

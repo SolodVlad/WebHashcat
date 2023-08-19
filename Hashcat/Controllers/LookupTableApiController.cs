@@ -13,17 +13,12 @@ namespace WebHashcat.Controllers
     {
         private readonly LookupTableService _lookupTableService;
         private readonly CheckHashTypeService _checkHashTypeService;
-        private readonly IMemoryCache _cache;
 
         public LookupTableApiController(LookupTableService lookupTableService, IMemoryCache cache)
         {
             _lookupTableService = lookupTableService;
             _checkHashTypeService = new CheckHashTypeService();
-            _cache = cache;
         }
-
-        [HttpGet]
-        public IActionResult Get() => Ok((List<DataLookupTableViewModel>)_cache.Get("dataLookupTableCache"));
 
         [HttpPost]
         public async Task<IActionResult> SearchPasswords([FromBody] string hashesStr)
@@ -33,25 +28,34 @@ namespace WebHashcat.Controllers
 
             foreach (var hash in hashesArr)
             {
+                //var upperHash = hash.ToUpper();
+                var hashType = _checkHashTypeService.GetHashType(hash);
+                var password = "";
+
+                switch (hashType)
+                {
+                    case Enums.HashType.None: break;
+                    case Enums.HashType.MD5: password = (await _lookupTableService.FindAsync(x => x.MD5 == hash)).FirstOrDefault()?.Value; break;
+                    case Enums.HashType.SHA1: password = (await _lookupTableService.FindAsync(x => x.SHA1 == hash)).FirstOrDefault()?.Value; break;
+                    case Enums.HashType.SHA256: password = (await _lookupTableService.FindAsync(x => x.SHA256 == hash)).FirstOrDefault()?.Value; break;
+                    case Enums.HashType.SHA384: password = (await _lookupTableService.FindAsync(x => x.SHA384 == hash)).FirstOrDefault()?.Value; break;
+                    case Enums.HashType.SHA512: password = (await _lookupTableService.FindAsync(x => x.SHA512 == hash)).FirstOrDefault()?.Value; break;
+                }
+
                 var dataLookupTable = new DataLookupTableViewModel
                 {
                     Hash = hash,
-                    Password = (await _lookupTableService.FindAsync(x => x.MD5 == hash || x.SHA1 == hash || x.SHA256 == hash || x.SHA384 == hash || x.SHA512 == hash)).FirstOrDefault()?.Value,
-                    HashType = _checkHashTypeService.GetHashType(hash)
+                    Password = password,
+                    HashType = hashType
                 };
 
-                if (dataLookupTable.Password != null) dataLookupTable.Status = Status.Success;
+                if (!string.IsNullOrEmpty(dataLookupTable.Password)) dataLookupTable.Status = Status.Success;
                 else dataLookupTable.Status = Status.Failed;
 
                 datas.Add(dataLookupTable);
             }
 
-            _cache.Set("dataLookupTableCache", datas);
-
-            return Ok();
+            return Ok(datas);
         }
-        //Пост запит відправляється правильно, коли робимо ретьорн дата? Коли спрацьовує метод гет, дата була пуста.
-        //Тому довелося робити кєшування. Чи правильний такий підхід?
-        //Чому а апі відображається словами а в джс цифрами?
     }
 }

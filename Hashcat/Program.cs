@@ -10,11 +10,16 @@ using Microsoft.Extensions.Options;
 using WebHashcat.Configurations;
 using WebHashcat.SignalR;
 using System.Security.Claims;
+using Azure.Identity;
+using Microsoft.AspNetCore.Mvc;
 //using SignalRAuthenticationSample.Data;
 //using SignalRAuthenticationSample.Hubs;
 //using SignalRAuthenticationSample;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 // Add services to the container.
 builder.Services.AddTransient<CurrencyService>();
@@ -69,6 +74,25 @@ ConfigurationBll.Configure(builder.Services, builder.Configuration);
 builder.Services.AddRazorPages();
 
 builder.Services.AddHttpClient();
+builder.Services.AddMvc(options => { options.Filters.Add(new RequireHttpsAttribute()); });
+
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+    options.MaxAge = TimeSpan.FromDays(365);
+});
+
+builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
+//builder.Services.AddDistributedRedisCache(option =>
+//{
+//    option.Configuration = builder.Configuration["LocalRedisConnectionString"];
+//});
+builder.Services.AddDistributedRedisCache(option =>
+{
+    option.Configuration = builder.Configuration["CacheConnection"];
+});
 
 var app = builder.Build();
 
@@ -85,6 +109,13 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("X-Xss-Protection", "1; mode=block");
+    context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+    await next();
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -106,7 +137,7 @@ app.MapRazorPages();
 //        .AllowCredentials();
 //});
 
-app.MapHub<CabinetHub>("/Cabinet");
+//app.MapHub<CabinetHub>("/Cabinet");
 
 app.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}");
 

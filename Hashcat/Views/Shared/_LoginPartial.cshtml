@@ -2,10 +2,10 @@
 @using Microsoft.AspNetCore.Identity
 @using System.Security.Claims;
 @using System.IdentityModel.Tokens.Jwt;
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+@*@inject SignInManager<User> SignInManager*@
+@*@inject UserManager<User> UserManager*@
 
-@{
+@*@{
     var token = Context.Request.Cookies["AuthCookie"];
     if (!string.IsNullOrEmpty(token))
     {
@@ -27,4 +27,33 @@
             <a href="@Url.Action("Login", "Account", new {Area = "Identity"})">Авторизація</a>
         </li>
     }
-}
+}*@
+
+@*@{
+    string email = ViewBag.email;
+    if (!string.IsNullOrEmpty(email))
+    {
+        <li class="nav-item">
+            <a id="showEmail" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@email</a>
+        </li>
+        <li class="nav-item">
+            <input type="button" id="logoutBtn" class="nav-link btn btn-link text-dark" value="Вихід" />
+        </li>
+    }
+    else
+    {
+        <li>
+            <a href="@Url.Action("Login", "Account", new {Area = "Identity"})">Авторизація</a>
+        </li>
+    }
+}*@
+
+<li class="nav-item" id="authenticatedNav" style="display: none;">
+    <a id="showEmail" class="nav-link text-dark" href="@Url.Action("Index", "Home", new {Area = "Cabinet"})" title="Manage"></a>
+</li>
+<li class="nav-item" id="logoutNav" style="display: none;">
+    <input type="button" id="logoutBtn" class="nav-link btn btn-link text-dark" value="Вихід" />
+</li>
+<li class="nav-item" id="loginNav">
+    <a href="@Url.Action("Login", "Account", new {Area = "Identity"})">Авторизація</a>
+</li>

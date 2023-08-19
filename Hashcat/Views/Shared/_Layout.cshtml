@@ -13,12 +13,12 @@
 </head>
 <body>
     <header>
-         <a href="#" class="logo">LOGOTIPE</a>
+        <a href="@Url.Action("Index", "Home", new {Area = ""})" class="logo">LOGOTIPE</a>
          <nav>
              <ul>
-                 <li>
+                 @*<li>
                     <a href="@Url.Action("Index", "Home", new {Area = "Cabinet"})">Кабінет</a>
-                 </li>
+                 </li>*@
                 <li>
                     <a href="#">Послуги</a>
                     <ul>
@@ -52,6 +52,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" defer asp-append-version="true"></script>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>

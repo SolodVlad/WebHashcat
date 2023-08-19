@@ -7,7 +7,7 @@ namespace DLL.Repository
 {
     public class CurrencyRepository : BaseRepository<Currency>
     {
-        public CurrencyRepository(HashWorkDbContext hashWorkDbContext) : base(hashWorkDbContext) {}
+        public CurrencyRepository(WebHashcatDbContext webHashcatDbContext) : base(webHashcatDbContext) {}
 
         public override async Task<IReadOnlyCollection<Currency>> GetAllAsync() => await Entities.ToListAsync().ConfigureAwait(false);
 

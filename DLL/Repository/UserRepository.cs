@@ -7,7 +7,7 @@ namespace DLL.Repository
 {
     public class UserRepository : BaseRepository<User>
     {
-        public UserRepository(HashWorkDbContext hashWorkDbContext) : base(hashWorkDbContext) { }
+        public UserRepository(WebHashcatDbContext webHashcatDbContext) : base(webHashcatDbContext) { }
 
         public override async Task<IReadOnlyCollection<User>> GetAllAsync() => await Entities.Include(user => user.HashCrackInfos).ToListAsync().ConfigureAwait(false);
 
