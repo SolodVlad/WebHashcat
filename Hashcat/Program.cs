@@ -121,7 +121,7 @@ app.Use(async (context, next) =>
 app.UseFileServer();
 app.UseAzureSignalR(routes =>
 {
-    routes.MapHub<HashcatHub>("/Cabinet");
+    routes.MapHub<HashcatHub>("/hubs/hashcat");
 });
 
 app.UseHttpsRedirection();
@@ -143,8 +143,6 @@ app.MapRazorPages();
 //        .WithMethods("GET", "POST")
 //        .AllowCredentials();
 //});
-
-app.MapHub<CabinetHub>("/Cabinet");
 
 app.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}");
 
