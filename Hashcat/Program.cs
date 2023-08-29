@@ -12,6 +12,7 @@ using WebHashcat.SignalR;
 using System.Security.Claims;
 using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 //using SignalRAuthenticationSample.Data;
 //using SignalRAuthenticationSample.Hubs;
 //using SignalRAuthenticationSample;
@@ -57,10 +58,10 @@ builder.Services.ConfigureSwagger();
 //    options.LoginPath = "/Login";
 //});
 
-builder.Services.AddSignalR();
+builder.Services.AddSignalR().AddAzureSignalR();
 //builder.Services.AddAuthentication().AddIdentityServerJwt();
 //builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>());
-builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+//builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 builder.Services.Configure<SendGridEmailSenderOptions>(option =>
 {
@@ -117,6 +118,12 @@ app.Use(async (context, next) =>
     await next();
 });
 
+app.UseFileServer();
+app.UseAzureSignalR(routes =>
+{
+    routes.MapHub<HashcatHub>("/Cabinet");
+});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -137,7 +144,7 @@ app.MapRazorPages();
 //        .AllowCredentials();
 //});
 
-//app.MapHub<CabinetHub>("/Cabinet");
+app.MapHub<HashcatHub>("/hubs/hashcat");
 
 app.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}");
 

@@ -261,7 +261,7 @@ KERNEL_FQ void m28000_m04 (KERN_ATTR_ESALT (crc64_t))
     const u32 pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32 wordl0[4] = { 0 };
@@ -445,7 +445,7 @@ KERNEL_FQ void m28000_s04 (KERN_ATTR_ESALT (crc64_t))
     const u32 pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32 wordl0[4] = { 0 };

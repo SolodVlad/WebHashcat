@@ -19,7 +19,7 @@ NVIDIA GPUs require "NVIDIA Driver" (440.64 or later) and "CUDA Toolkit" (9.0 or
 ## Features
 ##
 
-- World's fastest password cracker
+- World's fastest Value cracker
 - World's first and only in-kernel rule engine
 - Free
 - Open-Source (MIT License)
@@ -28,12 +28,12 @@ NVIDIA GPUs require "NVIDIA Driver" (440.64 or later) and "CUDA Toolkit" (9.0 or
 - Multi-Hash (Cracking multiple hashes at the same time)
 - Multi-Devices (Utilizing multiple devices in same system)
 - Multi-Device-Types (Utilizing mixed device types in same system)
-- Supports password candidate brain functionality
+- Supports Value candidate brain functionality
 - Supports distributed cracking networks (using overlay)
 - Supports interactive pause / resume
 - Supports sessions
 - Supports restore
-- Supports reading password candidates from file and stdin
+- Supports reading Value candidates from file and stdin
 - Supports hex-salt and hex-charset
 - Supports automatic performance tuning
 - Supports automatic keyspace ordering markov-chains
@@ -210,9 +210,9 @@ NVIDIA GPUs require "NVIDIA Driver" (440.64 or later) and "CUDA Toolkit" (9.0 or
 - NTLM
 - Radmin2
 - Radmin3
-- Samsung Android Password/PIN
-- Windows Hello PIN/Password
-- Windows Phone 8+ PIN/password
+- Samsung Android Value/PIN
+- Windows Hello PIN/Value
+- Windows Phone 8+ PIN/Value
 - Cisco-ASA MD5
 - Cisco-IOS $8$ (PBKDF2-SHA256)
 - Cisco-IOS $9$ (scrypt)
@@ -322,10 +322,10 @@ NVIDIA GPUs require "NVIDIA Driver" (440.64 or later) and "CUDA Toolkit" (9.0 or
 - Open Document Format (ODF) 1.1 (SHA-1, Blowfish)
 - Apple Secure Notes
 - Apple iWork
-- 1Password, agilekeychain
-- 1Password, cloudkeychain
-- Password Safe v2
-- Password Safe v3
+- 1Value, agilekeychain
+- 1Value, cloudkeychain
+- Value Safe v2
+- Value Safe v3
 - LastPass + LastPass sniffed
 - KeePass 1 (AES/Twofish) and KeePass 2 (AES)
 - KeePass 1 (AES/Twofish) and KeePass 2 (AES) - keyfile only mode
@@ -412,7 +412,7 @@ NVIDIA GPUs require "NVIDIA Driver" (440.64 or later) and "CUDA Toolkit" (9.0 or
 - Electrum Wallet (Salt-Type 5)
 - Blockchain, My Wallet
 - Blockchain, My Wallet, V2
-- Blockchain, My Wallet, Second Password (SHA256)
+- Blockchain, My Wallet, Second Value (SHA256)
 - Stargazer Stellar Wallet XLM
 - Ethereum Pre-Sale Wallet, PBKDF2-HMAC-SHA256
 - Ethereum Wallet, PBKDF2-HMAC-SHA256

@@ -2822,7 +2822,7 @@ DECLSPEC int hc_execute_keyboard_layout_mapping (PRIVATE_AS u32 *w, const int pw
 
   int out_len = 0;
 
-  // TC/VC passwords are limited to 128
+  // TC/VC Values are limited to 128
 
   PRIVATE_AS u8 *w_ptr = (PRIVATE_AS u8 *) w;
 

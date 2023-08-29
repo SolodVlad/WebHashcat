@@ -112,7 +112,7 @@ KERNEL_FQ void m10420_m04 (KERN_ATTR_ESALT (pdf_t))
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -202,7 +202,7 @@ KERNEL_FQ void m10420_m04 (KERN_ATTR_ESALT (pdf_t))
 
     switch_buffer_by_offset_le (p0, p1, p2, p3, pw_len);
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 
@@ -345,7 +345,7 @@ KERNEL_FQ void m10420_s04 (KERN_ATTR_ESALT (pdf_t))
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -435,7 +435,7 @@ KERNEL_FQ void m10420_s04 (KERN_ATTR_ESALT (pdf_t))
 
     switch_buffer_by_offset_le (p0, p1, p2, p3, pw_len);
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 

@@ -9,7 +9,6 @@ namespace WebHashcat.ViewModels
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Enums.HashType HashType { get; set; }
         public string? Password { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Status Status { get; set; }
+        public bool IsSuccess { get; set; }
     }
 }

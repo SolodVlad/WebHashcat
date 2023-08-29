@@ -1,8 +1,32 @@
-﻿let token;      // токен
-let username;   // имя пользователя
-const hubConnection = new signalR.HubConnectionBuilder()
-    .withUrl("/Cabinet", { accessTokenFactory: () => token })
-    .build();
+﻿//let token;      // токен
+//let username;   // имя пользователя
+//const hubConnection = new signalR.HubConnectionBuilder()
+//    .withUrl("/Cabinet", { accessTokenFactory: () => token })
+//    .build();
+
+//function bindConnectionMessage(connection) {
+//    var messageCallback = function (name, message) {
+//        if (!message) return;
+//        // deal with the message
+//        alert("message received:" + message);
+//    };
+//    // Create a function that the hub can call to broadcast messages.
+//    connection.on('broadcastMessage', messageCallback);
+//    connection.on('echo', messageCallback);
+//}
+
+//var connection = new signalR.HubConnectionBuilder()
+//    .withUrl('/Cabinet', { accessTokenFactory: () => Cookies.get('AuthCookie') })
+//    .build();
+
+//bindConnectionMessage(connection);
+//connection.start()
+//    .then(function () {
+//        onConnected(connection);
+//    })
+//    .catch(function (error) {
+//        console.error(error.message);
+//    });
 
 // аутентификация
 //document.getElementById("LoginBtn").addEventListener("click", async () => {
@@ -14,7 +38,7 @@ const hubConnection = new signalR.HubConnectionBuilder()
 //        headers: { "Content-Type": "application/json" },
 //        body: JSON.stringify({
 //            email: document.getElementById("Email").value,
-//            password: document.getElementById("Password").value
+//            Value: document.getElementById("Value").value
 //        })
 //    });
 
@@ -142,7 +166,7 @@ $(function () {
     var headlines = '<tr>' +
                         '<th class="th width_hash">Хеш</th>' +
                         '<th class="th width_type">Тип</th>' +
-                        '<th class="th width_password">Пароль</th>' +
+                        '<th class="th width_Value">Пароль</th>' +
                     '</tr>'
 
     $("#searchPass").click(function () {
@@ -160,13 +184,14 @@ $(function () {
                 $.each(data, function (i, dataLookupTable) {
                     var row = ''
                     //Можливо це оптимізувати?
-                    if (dataLookupTable.status == "Success")
+                    if (dataLookupTable.isSuccess)
                         row = '<tr>' +
                             '<td class="td width_hash" style="background-color: green">' + dataLookupTable.hash + '</td>' +
                             '<td class="td width_type" style="background-color: green">' + dataLookupTable.hashType + '</td>' +
                             '<td class="td width_password" style="background-color: green">' + dataLookupTable.password + '</td>' +
                             '</tr>'
-                    else if (dataLookupTable.status == "Failed")
+                    else
+                    {
                         if (dataLookupTable.hashType != "None")
                             row = '<tr>' +
                                 '<td class="td width_hash" style="background-color: yellow">' + dataLookupTable.hash + '</td>' +
@@ -179,6 +204,7 @@ $(function () {
                                 '<td class="td width_type" style="background-color: red">' + dataLookupTable.hashType + '</td>' +
                                 '<td class="td width_password" style="background-color: red">' + "NOT FOUND" + '</td>' +
                                 '</tr>'
+                    }
 
                     $("#table_search_db").append(row)
                 })
@@ -204,21 +230,21 @@ $(function () {
         })
     })
 
-    function validatePassword() {
-        var password = $("#registerPassword").val();
-        var confirmPassword = $("#confirmPassword").val();
+    //function validateValue() {
+    //    var Value = $("#registerValue").val();
+    //    var confirmValue = $("#confirmValue").val();
 
-        if (password !== confirmPassword) {
-            $("#confirmPasswordErrorMessage").text("Паролі не співпадають");
-            $("#registerBtn").prop("disabled", true);
-        } else {
-            $("#confirmPasswordErrorMessage").text("");
-            $("#registerBtn").prop("disabled", false);
-        }
-    }
+    //    if (Value !== confirmValue) {
+    //        $("#confirmValueErrorMessage").text("Паролі не співпадають");
+    //        $("#registerBtn").prop("disabled", true);
+    //    } else {
+    //        $("#confirmValueErrorMessage").text("");
+    //        $("#registerBtn").prop("disabled", false);
+    //    }
+    //}
 
-    // При вводе данных в поля пароля и его подтверждения вызываем функцию validatePassword()
-    $("#registerPassword, #confirmPassword").on("input", validatePassword);
+    //// При вводе данных в поля пароля и его подтверждения вызываем функцию validateValue()
+    //$("#registerValue, #confirmValue").on("input", validateValue);
 
     $("#registerBtn").click(function () {
         // Получаем значения полей формы
@@ -238,7 +264,7 @@ $(function () {
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(register),
-            success: function (response) {
+            success: function () {
                 $("#confirmPasswordErrorMessage").text("Підтвердіть реєстрацію за допомогою пошти")
             },
             error: function (jqXHR, exception) {
@@ -294,7 +320,7 @@ $(function () {
 
                 window.location.replace("Cabinet");
 
-                hubConnection.start().catch(err => console.error(err.toString()));
+                //hubConnection.start().catch(err => console.error(err.toString()));
             },
             error: function (jqXHR, exception) {
                 if (jqXHR.status === 0) {
@@ -319,13 +345,13 @@ $(function () {
 
     $('#forgotPasswordBtn').click(function () {
         $.ajax({
-            url: "api/AuthenticationApi/ForgotPassword",
-            type: "POST",
-            data: JSON.stringify($("#resetEmail").val()),
-            contentType: "application/json",
+            url: 'api/AuthenticationApi/ForgotPassword',
+            type: 'POST',
+            data: JSON.stringify($('#resetEmail').val()),
+            contentType: 'application/json',
 
             success: function () {
-                $("#message").text("Перейдіть за посиланням у електронній пошті")
+                window.location.replace("/Login");
             },
 
             error: function (jqXHR, exception) {
@@ -343,7 +369,7 @@ $(function () {
                     console.error('Ajax request aborted.');
                 } else {
                     console.error('Uncaught Error. ' + jqXHR.responseText);
-                    $("#message").text(jqXHR.responseText)
+                    $('#message').text(jqXHR.responseText)
                 }
             }
         });
@@ -365,7 +391,7 @@ $(function () {
 
                     success: function () {
                         document.cookie = 'AuthCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-                        window.location.replace("/");
+                        window.location.replace('/');
                     },
 
                     error: function (jqXHR, exception) {
@@ -407,20 +433,21 @@ $(function () {
         });
     })
 
-    $('#startCrackBtn').click(function () {
-        var hashcatArguments = {
-            AttackMode: $("#attackModeSelect option:selected").text(),
-            Hash: $("#hash").val()
+    $('#resetPasswordBtn').click(function () {
+        var resetPassword = {
+            Email: $('#resetEmail').val(),
+            NewPassword: $('#newPassword').val(),
+            Token: $('#resetToken').val()
         };
 
         $.ajax({
-            url: "api/HashcatApi",
-            type: "POST",
-            data: JSON.stringify(hashcatArguments),
-            contentType: "application/json",
+            url: 'ResetPassword',
+            type: 'POST',
+            data: JSON.stringify(resetPassword),
+            contentType: 'application/json',
 
             success: function () {
-                console.log('success')
+                window.location.replace('/');
             },
 
             error: function (jqXHR, exception) {
@@ -440,16 +467,104 @@ $(function () {
                     console.error('Uncaught Error. ' + jqXHR.responseText);
                 }
             }
-        });
+        })
+    })
+
+    $('#startCrackBtn').click(function () {
+        var hashcatArguments = {
+            AttackMode: $("#attackModeSelect option:selected").text(),
+            Hash: $("#hash").val()
+        };
+
+        hashcatOnClient(hashcatArguments);
+
+        //$.ajax({
+        //    url: "api/HashcatApi",
+        //    type: "POST",
+        //    data: JSON.stringify(hashcatArguments),
+        //    contentType: "application/json",
+
+        //    success: function () {
+        //        console.log('success')
+        //    },
+
+        //    error: function (jqXHR, exception) {
+        //        if (jqXHR.status === 0) {
+        //            console.error('Not connect. Verify Network.');
+        //        } else if (jqXHR.status == 404) {
+        //            console.error('Requested page not found (404).');
+        //        } else if (jqXHR.status == 500) {
+        //            console.error('Internal Server Error.');
+        //        } else if (exception === 'parsererror') {
+        //            console.error('Requested JSON parse failed.');
+        //        } else if (exception === 'timeout') {
+        //            console.error('Time out error.');
+        //        } else if (exception === 'abort') {
+        //            console.error('Ajax request aborted.');
+        //        } else {
+        //            console.error('Uncaught Error. ' + jqXHR.responseText);
+        //        }
+        //    }
+        //});
     });
 
-    //$('#registerEmail, #registerPasssword, #confirmPassword').on('input', function () {
-    //    var isValid = $('#registerForm').checkValidity();
+    //$('#registerEmail, #registerPasssword, #confirmValue').on('input', function () {
+    //    var validationResult = ValidateField($('#registerEmail'));
+    //    if (typeof validationResult === 'string') $('#registerEmailValidationError').text(validationResult);
+    //    else $('#registerEmailValidationError').text(validationResult);
+
 
     //    var registerBtn = $('#registerBtn');
-    //    if (isValid) registerBtn.prop('disabled', true);
+    //    if (typeof validationResult === 'boolean') registerBtn.prop('disabled', true);
     //    else registerBtn.prop('disabled', false);
     //});
+
+    //function ValidateField(element) {
+    //    var isValid = element[0].checkValidity();
+    //    if (isValid) return isValid;
+    //    return element[0].validationMessage;
+    //}
+
+    var registerEmail = $('#registerEmail');
+    var registerPassword = $('registerPassword');
+    var confirmPassword = $('confirmPassword');
+    var registerEmailValidationError = $('registerEmailValidationError');
+    var registerPasswordValidationError = $('registerPasswordValidationError');
+    var confirmPasswordErrorMessage = $('confirmPasswordErrorMessage');
+    var registerBtn = $('registerBtn');
+
+    registerEmail.on('input', function () {
+        if (!this.checkValidity()) {
+            registerEmailValidationError.text(this.validationMessage);
+            registerBtn.prop('disabled', true);
+        }
+        else {
+            registerEmailValidationError.text('');
+            registerBtn.prop('disabled', false);
+        } 
+    })
+
+    registerPassword.on('input', function () {
+        if (!this.checkValidity()) {
+            registerPasswordValidationError.text(this.validationMessage);
+            registerBtn.prop('disabled', true);
+        }
+        else {
+            registerPasswordValidationError.text('');
+            registerBtn.prop('disabled', false);
+        }
+    })
+
+    confirmPassword.on('input', function () {
+        if (!this.checkValidity()) {
+            confirmPasswordErrorMessage.text(this.validationMessage);
+            registerBtn.prop('disabled', true);
+        }
+        else {
+            confirmPasswordErrorMessage.text('');
+            registerBtn.prop('disabled', false);
+        }
+    })
 
     //$("#attackModeSelect, #hash").on("input", function () {
     //    var isValid = $('#hashcatForm').checkValidity();
@@ -488,12 +603,12 @@ $(function () {
     //    $('#profile_1, a[href="#Menu_1"]').addClass('active');
     //});
 
-    //// Обработчик события клика по ссылке с классом "Password"
-    //$('a[href="#Password"]').click(function () {
+    //// Обработчик события клика по ссылке с классом "Value"
+    //$('a[href="#Value"]').click(function () {
     //    // Удаление класса "active" у всех элементов с классом "profile_content"
     //    $('.profile_content').removeClass('active');
-    //    // Добавление класса "active" к элементам с id "profile_3" и ссылке с href "#Password"
-    //    $('#profile_3, a[href="#Password"]').addClass('active');
+    //    // Добавление класса "active" к элементам с id "profile_3" и ссылке с href "#Value"
+    //    $('#profile_3, a[href="#Value"]').addClass('active');
     //});
     // Обработчик события клика по ссылке с классом "Payment"
     $('li[href="#Payment"]').click(function () {
@@ -515,13 +630,13 @@ $(function () {
         $('#profile_1, li[href="#Menu_1"]').addClass('active');
     });
 
-    // Обработчик события клика по ссылке с классом "Password"
-    $('li[href="#Password"]').click(function () {
+    // Обработчик события клика по ссылке с классом "Value"
+    $('li[href="#Value"]').click(function () {
         // Удаление класса "active" у всех элементов с классом ".profile_menu"
         $('.profile_menu').removeClass('active');
         // Удаление класса "active" у всех элементов с классом "profile_content"
         $('.profile_content').removeClass('active');
-        // Добавление класса "active" к элементам с id "profile_3" и ссылке с href "#Password"
-        $('#profile_3, li[href="#Password"]').addClass('active');
+        // Добавление класса "active" к элементам с id "profile_3" и ссылке с href "#Value"
+        $('#profile_3, li[href="#Value"]').addClass('active');
     });
 })

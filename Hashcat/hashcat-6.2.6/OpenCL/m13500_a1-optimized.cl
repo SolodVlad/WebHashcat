@@ -106,7 +106,7 @@ KERNEL_FQ void m13500_m04 (KERN_ATTR_ESALT (pstoken_t))
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -595,7 +595,7 @@ KERNEL_FQ void m13500_s04 (KERN_ATTR_ESALT (pstoken_t))
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };

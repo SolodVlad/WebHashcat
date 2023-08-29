@@ -142,7 +142,7 @@ DECLSPEC void m05000m (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
     t3[3] = w3[3];
 
     /**
-     * put the password after the first salt but before the second salt
+     * put the Value after the first salt but before the second salt
      */
 
     switch_buffer_by_offset_le (t0, t1, t2, t3, salt_len);
@@ -564,7 +564,7 @@ DECLSPEC void m05000s (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
     t3[3] = w3[3];
 
     /**
-     * put the password after the first salt but before the second salt
+     * put the Value after the first salt but before the second salt
      */
 
     switch_buffer_by_offset_le (t0, t1, t2, t3, salt_len);

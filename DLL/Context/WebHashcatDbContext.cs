@@ -22,21 +22,23 @@ namespace DLL.Context
             builder.Entity<Currency>().ToTable(nameof(Currency));
             builder.Entity<Currency>().HasKey(currency => currency.Code);
             builder.Entity<Currency>().Property(currency => currency.Code).HasColumnType("char").HasMaxLength(3).IsFixedLength();
-            builder.Entity<Currency>().Property(currency => currency.Name).HasMaxLength(100);
+            builder.Entity<Currency>().Property(currency => currency.Name).HasColumnType("varchar").HasMaxLength(100);
 
-            //HashCrackInfo
-            builder.Entity<HashCrackInfo>().HasKey(hashCrackInfo => hashCrackInfo.Hash);
-            builder.Entity<HashCrackInfo>().Property(hashCrackInfo => hashCrackInfo.Hash).HasColumnType("varchar").HasMaxLength(8000);
-            builder.Entity<HashCrackInfo>().Property(hashCrackInfo => hashCrackInfo.Progress).HasColumnType("tinyint");
+            //HashcatResult
+            builder.Entity<HashcatResult>().HasKey(hashcatResult => new { hashcatResult.Hash, hashcatResult.UserId });
+            builder.Entity<HashcatResult>().Property(hashcatResult => hashcatResult.Hash).HasColumnType("varchar").HasMaxLength(8000);
+            builder.Entity<HashcatResult>().Property(hashcatResult => hashcatResult.HashType).HasColumnType("varchar").HasMaxLength(100);
+            builder.Entity<HashcatResult>().Property(hashcatResult => hashcatResult.TimePassed).HasColumnType("varchar").HasMaxLength(50);
+            builder.Entity<HashcatResult>().Property(hashcatResult => hashcatResult.TimeLeft).HasColumnType("varchar").HasMaxLength(50);
 
             //LookupTable
             builder.Entity<DataLookupTable>().ToTable("LookupTable");
             builder.Entity<DataLookupTable>().HasKey(lookupTable => lookupTable.SHA512);
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.MD5).HasColumnType("varchar(max)");
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA1).HasColumnType("varchar(max)");
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA256).HasColumnType("varchar(max)");
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA384).HasColumnType("varchar(max)");
-            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA512).HasColumnType("varchar").HasMaxLength(8000);
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.MD5).HasColumnType("varchar").HasMaxLength(32).IsFixedLength();
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA1).HasColumnType("varchar").HasMaxLength(40).IsFixedLength();
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA256).HasColumnType("varchar").HasMaxLength(64).IsFixedLength();
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA384).HasColumnType("varchar").HasMaxLength(96).IsFixedLength();
+            builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA512).HasColumnType("varchar").HasMaxLength(128).IsFixedLength();
 
             var md5 = MD5.Create();
             var sha1 = SHA1.Create();
@@ -44,17 +46,17 @@ namespace DLL.Context
             var sha384 = SHA384.Create();
             var sha512 = SHA512.Create();
 
-            string? password;
+            string? value;
             using var streamReader = new StreamReader("hashcat-6.2.6\\test.txt");
-            while ((password = streamReader.ReadLine()) != null)
+            while ((value = streamReader.ReadLine()) != null)
                 builder.Entity<DataLookupTable>().HasData(new DataLookupTable()
                 {
-                    Value = password,
-                    MD5 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), md5),
-                    SHA1 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha1),
-                    SHA256 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha256),
-                    SHA384 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha384),
-                    SHA512 = await ComputeHashAsync(Encoding.UTF8.GetBytes(password), sha512),
+                    Value = value,
+                    MD5 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), md5),
+                    SHA1 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha1),
+                    SHA256 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha256),
+                    SHA384 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha384),
+                    SHA512 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha512),
                 });
         }
 

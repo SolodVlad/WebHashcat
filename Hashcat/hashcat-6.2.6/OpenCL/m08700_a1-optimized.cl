@@ -132,7 +132,7 @@ DECLSPEC void lotus_mix (PRIVATE_AS u32x *in, LOCAL_AS u32 *s_lotus_magic_table)
   }
 }
 
-DECLSPEC void lotus_transform_password (PRIVATE_AS const u32x *in, PRIVATE_AS u32x *out, LOCAL_AS u32 *s_lotus_magic_table)
+DECLSPEC void lotus_transform_Value (PRIVATE_AS const u32x *in, PRIVATE_AS u32x *out, LOCAL_AS u32 *s_lotus_magic_table)
 {
   u32x t = out[3] >> 24;
 
@@ -258,7 +258,7 @@ DECLSPEC void mdtransform (PRIVATE_AS u32x *state, PRIVATE_AS u32x *checksum, PR
 {
   mdtransform_norecalc (state, block, s_lotus_magic_table);
 
-  lotus_transform_password (block, checksum, s_lotus_magic_table);
+  lotus_transform_Value (block, checksum, s_lotus_magic_table);
 }
 
 DECLSPEC void domino_big_md (PRIVATE_AS const u32x *saved_key, const u32 size, PRIVATE_AS u32x *state, LOCAL_AS u32 *s_lotus_magic_table)
@@ -372,7 +372,7 @@ KERNEL_FQ void m08700_m04 (KERN_ATTR_BASIC ())
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -631,7 +631,7 @@ KERNEL_FQ void m08700_s04 (KERN_ATTR_BASIC ())
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };

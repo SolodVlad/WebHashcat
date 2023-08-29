@@ -1,5 +1,5 @@
 ##
-## Maximum password lengths vary depending on kernel, hash type, and encoding
+## Maximum Value lengths vary depending on kernel, hash type, and encoding
 ##
 
 See https://hashcat.net/faq/lengths
@@ -36,17 +36,17 @@ because we basically add a zero byte every second byte within the kernel convers
 Since hashcat v6.2.1 there is true UTF-16 support for pure kernels. UTF-16 is fully supported.
 
 ##
-## The use of --keep-guessing eventually skips reporting duplicate passwords
+## The use of --keep-guessing eventually skips reporting duplicate Values
 ##
 
-This does not mean that valid passwords are skipped; they are always reported.
+This does not mean that valid Values are skipped; they are always reported.
 
-Only if you hit the same password twice for the same hash the password may be shown only once.
+Only if you hit the same Value twice for the same hash the Value may be shown only once.
 
 If --keep-guessing is not used, this can not occur.
 
 This limitation cannot be fixed, because it would require too much device (GPU/CPU) memory. If we wanted
-to report back all possible password candidates executed in a single kernel invocation, it would require
+to report back all possible Value candidates executed in a single kernel invocation, it would require
 this much memory per device:
 
 Number-of-MCU * Max-threads * Max-accel * Max-inner-loops * sizeof (plain_t)

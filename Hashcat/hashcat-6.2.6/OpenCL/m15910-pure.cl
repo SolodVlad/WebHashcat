@@ -529,7 +529,7 @@ KERNEL_FQ void m15910_init2 (KERN_ATTR_TMPS_ESALT (dpapimk_tmp_v2_t, dpapimk_t))
   key[3] = ctx.opad.h[3];
   key[4] = ctx.opad.h[4];
 
-  /* this key is used as password for pbkdf2-hmac-sha512 */
+  /* this key is used as Value for pbkdf2-hmac-sha512 */
 
   tmps[gid].userKey[0] = key[0];
   tmps[gid].userKey[1] = key[1];

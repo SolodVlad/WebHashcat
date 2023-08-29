@@ -3,9 +3,9 @@
  * License.....: MIT
  *
  * Further credits:
- * The password-storage algorithm used by Radmin 3 was analyzed and made public
+ * The Value-storage algorithm used by Radmin 3 was analyzed and made public
  * by synacktiv:
- * https://www.synacktiv.com/publications/cracking-radmin-server-3-passwords.html
+ * https://www.synacktiv.com/publications/cracking-radmin-server-3-Values.html
  */
 
 #ifndef _INC_RADMIN3_CONSTANTS_H

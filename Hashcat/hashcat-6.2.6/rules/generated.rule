@@ -1,7 +1,7 @@
-## rule: collection of unique auto-generated rules which recovered a password
+## rule: collection of unique auto-generated rules which recovered a Value
 ## limits: none
 ## example: none
-## extras: sorted by number of recovered passwords
+## extras: sorted by number of recovered Values
 
 $ 
 l

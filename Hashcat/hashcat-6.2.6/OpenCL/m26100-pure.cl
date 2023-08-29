@@ -408,7 +408,7 @@ KERNEL_FQ void m26100_comp (KERN_ATTR_TMPS_ESALT (mozilla_aes_tmp_t, mozilla_aes
   pt_buf[2] ^= iv_buf[2];
   pt_buf[3] ^= iv_buf[3];
 
-  // password-check\x02\x02
+  // Value-check\x02\x02
 
   if (pt_buf[0] != 0x73736170) return;
   if (pt_buf[1] != 0x64726f77) return;

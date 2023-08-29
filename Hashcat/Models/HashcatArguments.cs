@@ -8,7 +8,7 @@ namespace WebHashcat.Models
     {
         [Required(ErrorMessage = "Це обов'язкове поле")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public AttackMode AttackMode { get; set; }
+        public HashType HashType { get; set; }
         [Required(ErrorMessage = "Це обов'язкове поле")]
         public string Hash { get; set; }
     }

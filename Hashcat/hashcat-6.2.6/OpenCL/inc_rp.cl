@@ -271,7 +271,7 @@ DECLSPEC int mangle_toggle_at (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u8 p
 
 DECLSPEC int mangle_toggle_at_sep (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u8 p1, PRIVATE_AS u32 *buf, const int len)
 {
-  if (len >= RP_PASSWORD_SIZE) return (len);
+  if (len >= RP_Value_SIZE) return (len);
 
   u8 occurence = 0;
 
@@ -314,7 +314,7 @@ DECLSPEC int mangle_dupeword (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u8 p1
 {
   const int out_len = len * 2;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   append_block (buf, 0, buf, len, len);
 
@@ -325,7 +325,7 @@ DECLSPEC int mangle_dupeword_times (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const
 {
   const int out_len = (len * p0) + len;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   int out_pos = len;
 
@@ -346,7 +346,7 @@ DECLSPEC int mangle_reflect (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u8 p1,
 {
   const int out_len = len * 2;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   append_block (buf, 0, buf, len, len);
 
@@ -364,7 +364,7 @@ DECLSPEC int mangle_append (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u8 p1, 
 {
   const int out_len = len + 1;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   buf[len] = p0;
 
@@ -375,7 +375,7 @@ DECLSPEC int mangle_prepend (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u8 p1,
 {
   const int out_len = len + 1;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   for (int pos = len - 1; pos >= 0; pos--)
   {
@@ -477,7 +477,7 @@ DECLSPEC int mangle_insert (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u8 p1, 
 
   const int out_len = len + 1;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   for (int pos = len - 1; pos > p0 - 1; pos--)
   {
@@ -548,7 +548,7 @@ DECLSPEC int mangle_dupechar_first (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const
   const int out_len = len + p0;
 
   if (len     ==                0) return (len);
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   const u8 c = buf[0];
 
@@ -565,7 +565,7 @@ DECLSPEC int mangle_dupechar_last (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const 
   const int out_len = len + p0;
 
   if (len     ==                0) return (len);
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   const u8 c = buf[len - 1];
 
@@ -581,7 +581,7 @@ DECLSPEC int mangle_dupechar_all (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u
 {
   const int out_len = len + len;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   for (int pos = len - 1; pos >= 0; pos--)
   {
@@ -685,7 +685,7 @@ DECLSPEC int mangle_dupeblock_first (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED cons
 
   const int out_len = len + p0;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   for (int i = 0; i < p0; i++)
   {
@@ -703,7 +703,7 @@ DECLSPEC int mangle_dupeblock_last (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const
 
   const int out_len = len + p0;
 
-  if (out_len >= RP_PASSWORD_SIZE) return (len);
+  if (out_len >= RP_Value_SIZE) return (len);
 
   for (int i = 0; i < p0; i++)
   {
@@ -717,7 +717,7 @@ DECLSPEC int mangle_dupeblock_last (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const
 
 DECLSPEC int mangle_title_sep (MAYBE_UNUSED const u8 p0, MAYBE_UNUSED const u8 p1, PRIVATE_AS u32 *buf, const int len)
 {
-  if (len >= RP_PASSWORD_SIZE) return (len);
+  if (len >= RP_Value_SIZE) return (len);
 
   u32 rem = 0xff;
 

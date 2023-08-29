@@ -30,8 +30,8 @@ namespace WebHashcat.Areas.Identity.Services
         {
             await _cache.SetStringAsync(key, value, new DistributedCacheEntryOptions
             {
-                //AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(int.Parse(_config["JWT:refreshTokenValidityInDays"]))
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(int.Parse(_config["JWT:refreshTokenValidityInDays"]))
+                //AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
             });
         }
 
@@ -125,7 +125,7 @@ namespace WebHashcat.Areas.Identity.Services
             return principal;
         }
 
-        public async Task<bool> IsRevokeRefreshToken(string key)
+        public async Task<bool> IsRevokeRefreshTokenAsync(string key)
         {
             if (string.IsNullOrEmpty(await _cache.GetStringAsync(key))) return false;
 

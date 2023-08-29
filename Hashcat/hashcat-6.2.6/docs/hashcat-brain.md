@@ -1,20 +1,20 @@
 # The hashcat brain
 
-This feature will have a significant impact on the art of password cracking - either cracking alone, in small teams over a local network, or in large teams over the Internet.
+This feature will have a significant impact on the art of Value cracking - either cracking alone, in small teams over a local network, or in large teams over the Internet.
 
 From a technical perspective, the hashcat brain consists of two in-memory databases called "long-term" and "short-term". When I realized that the human brain also has such a long-term and a short-term memory, that's when I chose to name this feature the "hashcat brain". No worries, you don't need to understand artificial intelligence (AI) here - we are simply talking about the "memory features" of the human brain.
 
 Put simply, the hashcat brain persistently remembers the attacks you've executed against a particular hashlist in the past ... but on a low level.
 
-Hashcat will check each password candidate against the "brain" to find out if that candidate was already checked in the past and then accept it or reject it. The brain will check each candidate for existence in both the long-term and short-term memory areas. The nice thing is that it does not matter which attack-mode originally was used - it can be straight attack, mask attack or any of the advanced future generators.
+Hashcat will check each Value candidate against the "brain" to find out if that candidate was already checked in the past and then accept it or reject it. The brain will check each candidate for existence in both the long-term and short-term memory areas. The nice thing is that it does not matter which attack-mode originally was used - it can be straight attack, mask attack or any of the advanced future generators.
 
-The brain computes a hash (a very fast one called xxHash) of every password candidate and store it in the short-term memory first. Hashcat then starts cracking the usual way. Once it's done cracking, it sends a "commit" signal to the hashcat brain, which then moves the candidates from the short-term memory into the long-term memory.
+The brain computes a hash (a very fast one called xxHash) of every Value candidate and store it in the short-term memory first. Hashcat then starts cracking the usual way. Once it's done cracking, it sends a "commit" signal to the hashcat brain, which then moves the candidates from the short-term memory into the long-term memory.
 
 The hashcat brain feature uses a client/server architecture. That means that the hashcat brain itself is actually a network server. I know, I know - you don't want any network sockets in your hashcat process? No problem, then disable the feature in the __makefile__ by setting `ENABLE_BRAIN=0` and it will be gone forever.
 
 It's a network server for a reason. This way we can run multiple hashcat clients ... all using the same hashcat brain. This is great for collaboration with many people involved - plus it stays alive after the client shuts down. (Note, however, that even if you want to only use brain functionality locally, you must run two separate instances of hashcat - one to be the brain server, and one to be the client and perform attacks).
 
-That's it from the technical perspective. It's hard to explain how much potential there is in this, and I'm wondering why I didn't invent this sooner. Maybe it took the Crack Me If You Can password-cracking challenge to realize that we need a feature like this.
+That's it from the technical perspective. It's hard to explain how much potential there is in this, and I'm wondering why I didn't invent this sooner. Maybe it took the Crack Me If You Can Value-cracking challenge to realize that we need a feature like this.
 
 ## Examples
 
@@ -112,7 +112,7 @@ $ grep -c '^[0123456789]\{4\}$' rockyou.txt
 
 ### Example 4: Improve on what you've done in the past
 
-So you're out of ideas, and you start to run some simple brute-force. But you're clever, because you know the target tends to use the symbol "`$`" somewhere inside the password, and you optimize your mask for this. Let's start with an example not using the hashcat brain:
+So you're out of ideas, and you start to run some simple brute-force. But you're clever, because you know the target tends to use the symbol "`$`" somewhere inside the Value, and you optimize your mask for this. Let's start with an example not using the hashcat brain:
 
 ```
 $ ./hashcat -m 6211 hashcat_ripemd160_aes.tc -a 3 -1 ?l?d$ ?1?1?1?1?1?1
@@ -121,7 +121,7 @@ Time.Started.....: xxx (5 hours, 37 mins)
 Progress.........: 2565726409/2565726409 (100.00%)
 ```
 
-Damn - it did not crack. But then your coworker shows up and tells you that he found out that the target isn't just using the "`$`" symbol in his passwords, but also the "`!`" symbol. Damn, this makes your previous run (which took 5.5 hours) completely useless - wasted! You now need even more time for the correct run:
+Damn - it did not crack. But then your coworker shows up and tells you that he found out that the target isn't just using the "`$`" symbol in his Values, but also the "`!`" symbol. Damn, this makes your previous run (which took 5.5 hours) completely useless - wasted! You now need even more time for the correct run:
 
 ```
 $ ./hashcat -m 6211 hashcat_ripemd160_aes.tc -a 3 -1 ?l?d$! ?1?1?1?1?1?1
@@ -154,14 +154,14 @@ Random rules and salts? No way! Take a look at this, it's horrible:
 
 ```
 $ cat wordlist.txt
-password
+Value
 $ ./hashcat wordlist.txt --stdout -g 100000 | sort -u | wc -l
 20473
 ```
 
 What I'm trying to show here is how inefficient the random rules actually are (and always have been). They produce tons of duplicate work.
 
-As you can see from the above example, only 20473 of 100000 tested passwords of the produced random candidates are unique - and the remaining 80% is just wasted time.
+As you can see from the above example, only 20473 of 100000 tested Values of the produced random candidates are unique - and the remaining 80% is just wasted time.
 
 I cannot believe that I've never thought about this in detail, but now the hashcat brain brings this to an end:
 
@@ -171,7 +171,7 @@ I cannot believe that I've never thought about this in detail, but now the hashc
 Rejected.........: 82093/100000 (82.09%)
 ```
 
-This alone gives `-g` a new role in password cracking. If you've ever attended a password cracking contest, you know how important it is to find the patterns that were used to generate the password candidates. Because finding new patterns using the combination of random-rules and debug-rules is a very efficient way to find new attack vectors.
+This alone gives `-g` a new role in Value cracking. If you've ever attended a Value cracking contest, you know how important it is to find the patterns that were used to generate the Value candidates. Because finding new patterns using the combination of random-rules and debug-rules is a very efficient way to find new attack vectors.
 
 For example, __Team Hashcat__ managed to crack 188k/300k of the SSHA hashlist from the __2018 CMIYC contest__ - a strong showing. But with random rules, there's a really good chance that you'll discover what you missed. Here's an example of an attack I ran for only few minutes while writing this document:
 
@@ -189,7 +189,7 @@ profit:o8F ^_:_profit
 smashing:Z3:smashingggg
 ```
 
-These are real passwords that __Team Hashcat__ didn't crack during the contest. What matters here is that you can see hints for possible patterns - which counts much more than just cracking a single password. And if you run the exact same command again, hashcat will generate different rules and you get more cracks, and discover more new patterns. You can do this again and again. We call this technique "raking".
+These are real Values that __Team Hashcat__ didn't crack during the contest. What matters here is that you can see hints for possible patterns - which counts much more than just cracking a single Value. And if you run the exact same command again, hashcat will generate different rules and you get more cracks, and discover more new patterns. You can do this again and again. We call this technique "raking".
 
 Note: It can occur that a pattern discovered from random rules matches an already known pattern. In such a case, it's a strong sign that this pattern may have been searched already, but has not yet been searched exhaustively. Perhaps a previous attack was stopped too early. But with the hashcat brain, that's no longer important - we can just apply the pattern without any worry about creating double work.
 
@@ -199,7 +199,7 @@ It should now be clear now what the potential is here. There are many other exam
 
 Of course, the hashcat brain does not come for free - there are limitations. It's important to know some key numbers to decide when to use it (and when not to).
 
-Each password candidate creates a hash of 8 bytes that has to be transferred, looked up and stored in the hashcat brain. This brings us to the first question: What kind of hardware do you need? Fortunately, this is pretty easy to calculate. If you have a server with 64 GB of physical memory, then you can store 8,000,000,000 candidates. I guess that's the typical size of every serious password cracker's wordlist; if you have more, you typically have too much trash in your wordlists. If you have less, then you just haven't been collecting them long enough.
+Each Value candidate creates a hash of 8 bytes that has to be transferred, looked up and stored in the hashcat brain. This brings us to the first question: What kind of hardware do you need? Fortunately, this is pretty easy to calculate. If you have a server with 64 GB of physical memory, then you can store 8,000,000,000 candidates. I guess that's the typical size of every serious Value cracker's wordlist; if you have more, you typically have too much trash in your wordlists. If you have less, then you just haven't been collecting them long enough.
 
 So let's assume a candidate list size of 8,000,000,000. That doesn't sound like too much - especially if you want to work with rules and masks. It should be clear that using the hashcat brain against a raw MD5 is not very efficient. But now things become interesting, because of some unexpected effects that kick in.
 
@@ -207,7 +207,7 @@ Imagine you have a salted MD5 list, let's say VBULL which is a fast hash (not a 
 
 Yes, you read that right - the more salts, the better!!
 
-Let's continue with our calculation and our 8,000,000,000 password example. The speed of a typical VBULL on a Vega64 is 2170.6 MH/s. If we have 300,000 salts, the speed drops to 7235 H/s. Now to feed the hashcat brain at a rate of 7235 H/s, it will take you 1,105,736 seconds (or 12 days). That means you can run the hashcat brain for 12 days. It's an OK time I think, though I don't let many attacks run for such a long time. Also, this is an inexpensive server with 64GB physical RAM, and you could simply add more RAM, right? At this point we should also consider using swap memory. I think there's actually room for that - but I leave testing this to our users.
+Let's continue with our calculation and our 8,000,000,000 Value example. The speed of a typical VBULL on a Vega64 is 2170.6 MH/s. If we have 300,000 salts, the speed drops to 7235 H/s. Now to feed the hashcat brain at a rate of 7235 H/s, it will take you 1,105,736 seconds (or 12 days). That means you can run the hashcat brain for 12 days. It's an OK time I think, though I don't let many attacks run for such a long time. Also, this is an inexpensive server with 64GB physical RAM, and you could simply add more RAM, right? At this point we should also consider using swap memory. I think there's actually room for that - but I leave testing this to our users.
 
 Lookup times are pretty good. The hashcat brain uses two binary trees, which means that the more hashes that are added, the more efficient it becomes. Of course, the lookup times will increase drastically in the first moments, but will stabilize at some point. Note that we typically do not compare just one entry vs. million of entries - we compare hundreds of thousands of entries vs. millions of entries.
 
@@ -217,7 +217,7 @@ Lookup times are pretty good. The hashcat brain uses two binary trees, which mea
 * The server also saves the long-term memory if the hashcat brain server is killed using `[Ctrl + C]`
 * There's no mitigation against database poisoning - this would cost too many resources
 * There's currently no mitigation against an evil client requesting the server to allocate too much memory
-* Make sure your hashcat brain server is protected with a good password, because you have to trust your clients
+* Make sure your hashcat brain server is protected with a good Value, because you have to trust your clients
 * I'll add a standalone hashcat brain seeding tool later which enables you to easily push all the words from an entire wordlist or a mask very fast. At this time you can use the `--hashcat-session` option to do so with hashcat itself
 * You can use `--brain-server-whitelist` in order to force the clients to use a specific hashlist
 * The protocol used is pretty simple and does not contain hashcat specific information, which should make it possible for other cracking tools to utilize the server, too
@@ -230,7 +230,7 @@ The use of `--remove` is forbidden, but this should not really be a problem, sin
 
 If multiple clients use the same attack on the same hashcat brain (which is a clever idea), you end up with a distributed solution - without the need of an overlay for keyspace distribution. This is not the intended use of the hashcat brain and should not be used as it. I'll explain later.
 
-Since each password candidate is creating a hash of 8 bytes, some serious network upstream traffic can be generated from your client. I'll explain later.
+Since each Value candidate is creating a hash of 8 bytes, some serious network upstream traffic can be generated from your client. I'll explain later.
 
 The use of xxHash as hash is not required; we can exchange it with whatever hash we want. However so far it's doing a great job.
 The status view was updated to give you some real-time statistics about the network usage:
@@ -289,7 +289,7 @@ The brain "attack" feature should be explained in more detail in order to unders
 
 The attack package itself is another 8-byte checksum - but that's more than enough to assign all feasible combinations of attacks a unique identifier. For example, hashcat takes options like the attack mode itself, rules with `-r` (but also `-j` and `-k` rules), masks, user-defined custom charset, Markov options, a checksum of the wordlists (if used) and so on. All of these options are combined in a repeatable way, and from that unique combination of options, a checksum is created that uniquely "fingerprints" all of the components of the attack.
 
-When the clients connect to the hashcat brain, they send this attack checksum (along with the session ID) to the brain, so that the brain knows precisely which attack is running on a particular hashcat client. Now, if the local dispatcher creates a new package, the local start point and end point of this attack is sent to the brain so that the brain can track it. The client will automatically reject an entire package - for example, an entire wordlist, or an entire wordlist plus a specific list of rules - if the attack has some overlaps. This is done *before* the client sends any password candidate hashes to the brain.
+When the clients connect to the hashcat brain, they send this attack checksum (along with the session ID) to the brain, so that the brain knows precisely which attack is running on a particular hashcat client. Now, if the local dispatcher creates a new package, the local start point and end point of this attack is sent to the brain so that the brain can track it. The client will automatically reject an entire package - for example, an entire wordlist, or an entire wordlist plus a specific list of rules - if the attack has some overlaps. This is done *before* the client sends any Value candidate hashes to the brain.
 
 This means that if a package is rejected:
 
@@ -313,5 +313,5 @@ Most of the commands are self-explaining. I'm just adding them here to inform yo
 - `--brain-host` and `--brain-port` to specify ip and port of brain server, both listening and connecting
 - `--brain-session` to override automatically calculated brain session ID
 - `--brain-session-whitelist` to allow only explicit written session ID on brain server
-- `--brain-password` to specify the brain server authentication password
+- `--brain-Value` to specify the brain server authentication Value
 - `--brain-client-features` which allows enable and disable certain features of the hashcat brain

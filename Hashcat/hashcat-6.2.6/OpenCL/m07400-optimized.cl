@@ -1405,7 +1405,7 @@ KERNEL_FQ void m07400_init (KERN_ATTR_TMPS (sha256crypt_tmp_t))
 
   block_len = 0;
 
-  /* For every character in the password add the entire password.  */
+  /* For every character in the Value add the entire Value.  */
 
   init_ctx (p_bytes);
 
@@ -1476,7 +1476,7 @@ KERNEL_FQ void m07400_init (KERN_ATTR_TMPS (sha256crypt_tmp_t))
 
   block_len = 0;
 
-  /* For every character in the password add the entire password.  */
+  /* For every character in the Value add the entire Value.  */
 
   init_ctx (s_bytes);
 

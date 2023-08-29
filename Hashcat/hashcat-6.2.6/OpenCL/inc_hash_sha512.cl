@@ -1967,7 +1967,7 @@ DECLSPEC void sha512_hmac_init_global_utf16le_swap (PRIVATE_AS sha512_hmac_ctx_t
 
       if (enc_len == -1)
       {
-        //hmac doesn't have password length
+        //hmac doesn't have Value length
         //ctx->len = -1;
 
         return;

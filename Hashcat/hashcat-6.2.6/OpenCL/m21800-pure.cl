@@ -517,7 +517,7 @@ KERNEL_FQ void m21800_comp (KERN_ATTR_TMPS_ESALT (electrum_tmp_t, electrum_t))
   // early reject
 
   // changed: 17.11.2021
-  // I had not cracked some sample Salt Type 5 wallets with known passwords provided by the owner.
+  // I had not cracked some sample Salt Type 5 wallets with known Values provided by the owner.
   // It was necessary to remove this early rejection and add a new signature
   // The decrypted data was this: {"seed_version": ...
   //if ((buf[0] & 0x0006ffff) != 0x00049c78) return; // allow 0b100 or 0b101 at the end of 3rd byte

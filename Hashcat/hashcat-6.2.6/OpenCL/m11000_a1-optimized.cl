@@ -83,7 +83,7 @@ KERNEL_FQ void m11000_m04 (KERN_ATTR_BASIC ())
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -152,7 +152,7 @@ KERNEL_FQ void m11000_m04 (KERN_ATTR_BASIC ())
      */
 
     // first step fixed 56 bytes of salt
-    // after 56 byte salt, we have beginning of the password
+    // after 56 byte salt, we have beginning of the Value
 
     u32x w0_t[4];
     u32x w1_t[4];
@@ -450,7 +450,7 @@ KERNEL_FQ void m11000_s04 (KERN_ATTR_BASIC ())
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -519,7 +519,7 @@ KERNEL_FQ void m11000_s04 (KERN_ATTR_BASIC ())
      */
 
     // first step fixed 56 bytes of salt
-    // after 56 byte salt, we have beginning of the password
+    // after 56 byte salt, we have beginning of the Value
 
     u32x w0_t[4];
     u32x w1_t[4];

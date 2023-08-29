@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Domain.Models;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Security.Cryptography;
+using WebHashcat.Areas.Identity.Services;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace WebHashcat.Areas.Identity.Controllers
 {
@@ -19,8 +22,13 @@ namespace WebHashcat.Areas.Identity.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private readonly TokenService _tokenService;
 
-        public AccountController(UserManager<User> userManager) => _userManager = userManager;
+        public AccountController(UserManager<User> userManager, IConfiguration config, IDistributedCache cache)
+        {
+            _userManager = userManager;
+            _tokenService = new TokenService(config, cache);
+        }
 
         //private readonly IHttpClientFactory _httpClientFactory;
 
@@ -30,9 +38,9 @@ namespace WebHashcat.Areas.Identity.Controllers
         //[Route("Register")]
         //public async Task<IActionResult> RegisterAsync(RegisterViewModel registerViewModel)
         //{
-        //    if (registerViewModel.Password != registerViewModel.ConfirmPassword) return Json("Password != confirm password");
+        //    if (registerViewModel.Value != registerViewModel.ConfirmValue) return Json("Value != confirm Value");
 
-        //    var register = new Register() { Email = registerViewModel.Email, Login = registerViewModel.Email, Password = registerViewModel.Password };
+        //    var register = new Register() { Email = registerViewModel.Email, Login = registerViewModel.Email, Value = registerViewModel.Value };
 
         //    var httpClient = _httpClientFactory.CreateClient();
         //    var jsonContent = new StringContent(JsonConvert.SerializeObject(register), Encoding.UTF8, "application/json");
@@ -48,32 +56,42 @@ namespace WebHashcat.Areas.Identity.Controllers
 
         [HttpGet]
         [Route("ResetPassword")]
-        public IActionResult ResetPassword(string userEmail, string token = null)
+        public IActionResult ResetPassword(string userEmail, string? token)
         {
-            if (token == null) return BadRequest("A code must be supplied for password reset");
+            if (string.IsNullOrEmpty(token)) return BadRequest("Invalid link");
             return View(new ResetPassword { Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token)), Email = userEmail });
         }
 
         [HttpPost]
         [Route("ResetPassword")]
-        public async Task<IActionResult> ResetPasswordAsync(ResetPassword resetPassword)
+        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPassword resetPassword)
         {
             var user = await _userManager.FindByEmailAsync(resetPassword.Email);
-            if (user == null) return Json("This user is not exist");
+            if (user == null) return BadRequest("This user is not exist");
 
             var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.NewPassword);
 
-            if (result.Succeeded) return Redirect(Url.Action("Login", "Account", new { Area = "Identity" }));
-            return Json(result.Errors);
+            if (result.Succeeded)
+            {
+                var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(user.UserName));
+                await _tokenService.IsRevokeRefreshTokenAsync(userNameHash);
+                return Ok();
+            }
+            return BadRequest(result.Errors);
         }
 
-
+        private static async Task<string> ComputeSha512Async(byte[] data)
+        {
+            using var stream = new MemoryStream(data);
+            var hashBytes = await SHA512.Create().ComputeHashAsync(stream);
+            return BitConverter.ToString(hashBytes).Replace("-", "");
+        }
 
         //[HttpPost]
         //[Route("Login")]
         //public async Task<IActionResult> LoginAsync(RegisterViewModel loginViewModel)
         //{
-        //    var login = new Login() { Login_ = loginViewModel.Email, Password = loginViewModel.Password };
+        //    var login = new Login() { Login_ = loginViewModel.Email, Value = loginViewModel.Value };
 
         //    var httpClient = _httpClientFactory.CreateClient();
         //    var jsonContent = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");

@@ -69,7 +69,7 @@
 #define RULE_OP_MANGLE_DUPEBLOCK_LAST   'Y'
 #define RULE_OP_MANGLE_TITLE            'E'
 
-#define RP_PASSWORD_SIZE 256
+#define RP_Value_SIZE 256
 
 DECLSPEC u32 generate_cmask (const u32 value);
 DECLSPEC void append_four_byte (PRIVATE_AS const u32 *buf_src, const int off_src, PRIVATE_AS u32 *buf_dst, const int off_dst);

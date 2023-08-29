@@ -139,7 +139,7 @@ DECLSPEC void m10420m (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
     u32 w2_t[4];
     u32 w3_t[4];
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 
@@ -301,7 +301,7 @@ DECLSPEC void m10420s (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
     u32 w2_t[4];
     u32 w3_t[4];
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 

@@ -184,7 +184,7 @@ header nav ul li:hover > ul {
     width: 5%;
     text-align: center;
 }
-.width_password {
+.width_Value {
     max-width: 100px;
     width: 25%;
     word-wrap: break-word;

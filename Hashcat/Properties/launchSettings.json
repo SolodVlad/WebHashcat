@@ -16,7 +16,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "VaultUri": "https://webhashcatvault.vault.azure.net/",
-        "AZURE_USERNAME": "Kras_vc76@student.itstep.org"
+        "AZURE_USERNAME": "Kras_vc76@student.itstep.org",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
       }
     },
     "https": {
@@ -27,7 +28,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "VaultUri": "https://webhashcatvault.vault.azure.net/",
-        "AZURE_USERNAME": "Kras_vc76@student.itstep.org"
+        "AZURE_USERNAME": "Kras_vc76@student.itstep.org",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
       }
     },
     "IIS Express": {
@@ -36,7 +38,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "VaultUri": "https://webhashcatvault.vault.azure.net/",
-        "AZURE_USERNAME": "Kras_vc76@student.itstep.org"
+        "AZURE_USERNAME": "Kras_vc76@student.itstep.org",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
       }
     }
   }

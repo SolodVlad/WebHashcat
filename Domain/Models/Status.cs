@@ -2,8 +2,8 @@
 {
     public enum Status
     {
-        InProgress,
-        Success,
-        Failed
+        Running,
+        Exhausted,
+        Cracked
     }
 }

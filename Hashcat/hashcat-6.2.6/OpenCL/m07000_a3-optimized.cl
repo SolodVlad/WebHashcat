@@ -115,7 +115,7 @@ DECLSPEC void m07000m (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
     u32x t3[4];
 
     /**
-     * put the password after the first salt (12 bytes) but before the second salt
+     * put the Value after the first salt (12 bytes) but before the second salt
      */
 
     t0[0] = 0;
@@ -397,7 +397,7 @@ DECLSPEC void m07000s (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
     u32x t3[4];
 
     /**
-     * put the password after the first salt (12 bytes) but before the second salt
+     * put the Value after the first salt (12 bytes) but before the second salt
      */
 
     t0[0] = 0;

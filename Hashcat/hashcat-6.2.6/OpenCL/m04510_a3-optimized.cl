@@ -77,7 +77,7 @@ DECLSPEC void m04510m (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
     * sha1
     */
 
-    // Contains the password
+    // Contains the Value
 
     u32x w0_t = w0lr;
     u32x w1_t = w0[1];
@@ -1039,7 +1039,7 @@ DECLSPEC void m04510s (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
     * sha1
     */
 
-    // Contains the password
+    // Contains the Value
 
     u32x w0_t = w0lr;
     u32x w1_t = w0[1];

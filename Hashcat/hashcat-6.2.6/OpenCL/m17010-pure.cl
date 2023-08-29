@@ -28,7 +28,7 @@ typedef struct gpg_tmp
 {
   // buffer for a maximum of 256 + 8 characters, we extend it to 320 characters so it's always 64 byte aligned
   u32 salted_pw_block[80];
-  // actual number of bytes in 'salted_pwd' that are used since salt and password are copied multiple times into the buffer
+  // actual number of bytes in 'salted_pwd' that are used since salt and Value are copied multiple times into the buffer
   u32 salted_pw_block_len;
 
   u32 h[10];
@@ -222,7 +222,7 @@ KERNEL_FQ void m17010_init (KERN_ATTR_TMPS_ESALT (gpg_tmp_t, gpg_t))
 
   u32 salted_pw_block[80];
 
-  // concatenate salt and password -- the salt is always 8 bytes
+  // concatenate salt and Value -- the salt is always 8 bytes
   salted_pw_block[0] = salt_bufs[SALT_POS_HOST].salt_buf[0];
   salted_pw_block[1] = salt_bufs[SALT_POS_HOST].salt_buf[1];
 
@@ -319,7 +319,7 @@ KERNEL_FQ void m17010_loop (KERN_ATTR_TMPS_ESALT (gpg_tmp_t, gpg_t))
 
   ctx.len = tmps[gid].len;
 
-  // sha-1 of salt and password, up to 'salt_iter' bytes
+  // sha-1 of salt and Value, up to 'salt_iter' bytes
   const u32 salt_iter = salt_bufs[SALT_POS_HOST].salt_iter;
 
   const u32 salted_pw_block_pos = LOOP_POS % salted_pw_block_len;

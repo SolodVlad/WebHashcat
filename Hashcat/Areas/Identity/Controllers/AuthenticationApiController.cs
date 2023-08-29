@@ -104,7 +104,7 @@ namespace WebHashcat.Areas.Identity.Controllers
         //        SecurityStamp = Guid.NewGuid().ToString(),
         //        UserName = model.Username
         //    };
-        //    var result = await _userManager.CreateAsync(user, model.Password);
+        //    var result = await _userManager.CreateAsync(user, model.Value);
         //    if (!result.Succeeded)
         //        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
@@ -195,7 +195,6 @@ namespace WebHashcat.Areas.Identity.Controllers
         //}
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("ValidateJWTToken")]
         public async Task<IActionResult> ValidateJwtToken([FromBody] string accessToken)
         {
@@ -255,7 +254,7 @@ namespace WebHashcat.Areas.Identity.Controllers
         public async Task<IActionResult> RevokeRefreshToken([FromBody] string userName)
         {
             var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(userName));
-            if (!await _tokenService.IsRevokeRefreshToken(userNameHash)) return BadRequest("Invalid user name");
+            if (!await _tokenService.IsRevokeRefreshTokenAsync(userNameHash)) return BadRequest("Invalid user name");
 
             return NoContent();
         }

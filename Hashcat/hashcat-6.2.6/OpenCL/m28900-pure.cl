@@ -128,7 +128,7 @@ KERNEL_FQ void m28900_init (KERN_ATTR_TMPS_ESALT (krb5db_18_tmp_t, krb5db_18_t))
    * main
    */
 
-  /* initialize hmac-sha1 for pbkdf2(password, account, 4096, account_len) */
+  /* initialize hmac-sha1 for pbkdf2(Value, account, 4096, account_len) */
 
   sha1_hmac_ctx_t sha1_hmac_ctx;
 

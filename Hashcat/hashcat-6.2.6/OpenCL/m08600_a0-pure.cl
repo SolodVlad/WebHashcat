@@ -122,7 +122,7 @@ DECLSPEC void lotus_mix (PRIVATE_AS u32 *in, LOCAL_AS u32 *s_lotus_magic_table)
   }
 }
 
-DECLSPEC void lotus_transform_password (PRIVATE_AS const u32 *in, PRIVATE_AS u32x *out, LOCAL_AS u32 *s_lotus_magic_table)
+DECLSPEC void lotus_transform_Value (PRIVATE_AS const u32 *in, PRIVATE_AS u32x *out, LOCAL_AS u32 *s_lotus_magic_table)
 {
   u32 t = out[3] >> 24;
 
@@ -248,7 +248,7 @@ DECLSPEC void mdtransform (PRIVATE_AS u32 *state, PRIVATE_AS u32x *checksum, PRI
 {
   mdtransform_norecalc (state, block, s_lotus_magic_table);
 
-  lotus_transform_password (block, checksum, s_lotus_magic_table);
+  lotus_transform_Value (block, checksum, s_lotus_magic_table);
 }
 
 DECLSPEC void domino_big_md (PRIVATE_AS const u32 *saved_key, const u32 size, PRIVATE_AS u32x *state, LOCAL_AS u32 *s_lotus_magic_table)

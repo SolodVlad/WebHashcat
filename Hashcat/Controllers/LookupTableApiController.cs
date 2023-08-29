@@ -14,14 +14,14 @@ namespace WebHashcat.Controllers
         private readonly LookupTableService _lookupTableService;
         private readonly CheckHashTypeService _checkHashTypeService;
 
-        public LookupTableApiController(LookupTableService lookupTableService, IMemoryCache cache)
+        public LookupTableApiController(LookupTableService lookupTableService)
         {
             _lookupTableService = lookupTableService;
             _checkHashTypeService = new CheckHashTypeService();
         }
 
         [HttpPost]
-        public async Task<IActionResult> SearchPasswords([FromBody] string hashesStr)
+        public async Task<IActionResult> SearchValues([FromBody] string hashesStr)
         {
             var hashesArr = hashesStr.Split("\n");
             var datas = new List<DataLookupTableViewModel>();
@@ -49,8 +49,7 @@ namespace WebHashcat.Controllers
                     HashType = hashType
                 };
 
-                if (!string.IsNullOrEmpty(dataLookupTable.Password)) dataLookupTable.Status = Status.Success;
-                else dataLookupTable.Status = Status.Failed;
+                if (!string.IsNullOrEmpty(dataLookupTable.Password)) dataLookupTable.IsSuccess = true;
 
                 datas.Add(dataLookupTable);
             }

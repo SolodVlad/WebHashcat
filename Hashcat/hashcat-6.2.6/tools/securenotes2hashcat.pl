@@ -15,11 +15,11 @@ die "usage: $0 NoteStore.sqlite\n" unless (scalar @ARGV == 1);
 my $database = shift @ARGV;
 my $dsn      = "DBI:SQLite:dbname=$database";
 my $userid   = "";
-my $password = "";
+my $Value = "";
 
-my $dbh = DBI->connect ($dsn, $userid, $password, { RaiseError => 1 }) or die $DBI::errstr;
+my $dbh = DBI->connect ($dsn, $userid, $Value, { RaiseError => 1 }) or die $DBI::errstr;
 
-my $sth = $dbh->prepare ("SELECT Z_PK,ZCRYPTOITERATIONCOUNT,ZCRYPTOSALT,ZCRYPTOWRAPPEDKEY FROM ZICCLOUDSYNCINGOBJECT WHERE ZISPASSWORDPROTECTED=1");
+my $sth = $dbh->prepare ("SELECT Z_PK,ZCRYPTOITERATIONCOUNT,ZCRYPTOSALT,ZCRYPTOWRAPPEDKEY FROM ZICCLOUDSYNCINGOBJECT WHERE ZISValuePROTECTED=1");
 
 $sth->execute () or die $DBI::errstr;
 

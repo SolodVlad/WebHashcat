@@ -36,7 +36,7 @@ KERNEL_FQ void m28502_mxx (KERN_ATTR_BASIC ())
 
   const u32 pw_len = pws[gid].pw_len;
 
-  // copy password to w
+  // copy Value to w
 
   u32 w[13] = { 0 }; // 51 bytes needed
 
@@ -103,7 +103,7 @@ KERNEL_FQ void m28502_mxx (KERN_ATTR_BASIC ())
     if (status_base58 != true) continue;
 
 
-    // convert password from b58 to binary
+    // convert Value from b58 to binary
 
     u32 tmp[16] = { 0 };
 
@@ -231,7 +231,7 @@ KERNEL_FQ void m28502_sxx (KERN_ATTR_BASIC ())
 
   const u32 pw_len = pws[gid].pw_len;
 
-  // copy password to w
+  // copy Value to w
 
   u32 w[13] = { 0 }; // 51 bytes needed
 
@@ -298,7 +298,7 @@ KERNEL_FQ void m28502_sxx (KERN_ATTR_BASIC ())
     if (status_base58 != true) continue;
 
 
-    // convert password from b58 to binary
+    // convert Value from b58 to binary
 
     u32 tmp[16] = { 0 };
 

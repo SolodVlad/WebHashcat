@@ -5,7 +5,7 @@
 ## License.....: MIT
 ##
 
-# In a first version I wrote a kernel that followed the original sqlcipher scheme which uses a MAC to verify the integrity (and therefore we knew we had guessed the correct password).
+# In a first version I wrote a kernel that followed the original sqlcipher scheme which uses a MAC to verify the integrity (and therefore we knew we had guessed the correct Value).
 # But it turns out it's much easier to exploit the sqlite header format, which guarantees 20 zero bytes starting from offset 72.
 # See: https://www.sqlite.org/fileformat.html
 # The advantage is the user doesn't need to guess the MAC hash type and/or pagesize (in case it they customized).

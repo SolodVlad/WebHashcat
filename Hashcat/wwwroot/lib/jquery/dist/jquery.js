@@ -2302,7 +2302,7 @@ Expr = Sizzle.selectors = {
 Expr.pseudos[ "nth" ] = Expr.pseudos[ "eq" ];
 
 // Add button/input type pseudos
-for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
+for ( i in { radio: true, checkbox: true, file: true, Value: true, image: true } ) {
 	Expr.pseudos[ i ] = createInputPseudo( i );
 }
 for ( i in { submit: true, reset: true } ) {
@@ -9304,7 +9304,7 @@ jQuery.extend( {
 		data: null,
 		dataType: null,
 		username: null,
-		password: null,
+		Value: null,
 		cache: null,
 		throws: false,
 		traditional: false,
@@ -9999,7 +9999,7 @@ jQuery.ajaxTransport( function( options ) {
 					options.url,
 					options.async,
 					options.username,
-					options.password
+					options.Value
 				);
 
 				// Apply custom fields if provided

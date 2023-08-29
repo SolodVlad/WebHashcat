@@ -11,6 +11,10 @@
     "redis1": {
       "type": "redis",
       "connectionId": "CacheConnection"
+    },
+    "signalr1": {
+      "type": "signalr",
+      "connectionId": "Azure:SignalR:ConnectionString"
     }
   }
 }

@@ -96,7 +96,7 @@ KERNEL_FQ void m11000_m04 (KERN_ATTR_RULES ())
      */
 
     // first step fixed 56 bytes of salt
-    // after 56 byte salt, we have beginning of the password
+    // after 56 byte salt, we have beginning of the Value
 
     u32x w0_t[4];
     u32x w1_t[4];
@@ -405,7 +405,7 @@ KERNEL_FQ void m11000_s04 (KERN_ATTR_RULES ())
      */
 
     // first step fixed 56 bytes of salt
-    // after 56 byte salt, we have beginning of the password
+    // after 56 byte salt, we have beginning of the Value
 
     u32x w0_t[4];
     u32x w1_t[4];

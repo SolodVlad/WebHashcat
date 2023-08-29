@@ -49,7 +49,7 @@ KERNEL_FQ void m00600_m04 (KERN_ATTR_BASIC ())
     const u32x out_len = pw_l_len + pw_r_len;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -207,7 +207,7 @@ KERNEL_FQ void m00600_s04 (KERN_ATTR_BASIC ())
     const u32x out_len = pw_l_len + pw_r_len;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };

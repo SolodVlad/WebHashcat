@@ -17,8 +17,8 @@ import base64
 ks_re = '.+phrase/(.*?)/pass2key=(.*?):cipher=(.*?):rounds=(.*?):salt=(.*?),(.*?),(.*?)\)'
 
 ks_struct = {
-    'password_hash': None,
-    'password_cipher': None,
+    'Value_hash': None,
+    'Value_cipher': None,
     'hash_round': None,
     'salt': None,
     'dict': None
@@ -44,14 +44,14 @@ def parse_keysafe(file):
 
     vmx_ks = ks_struct
 
-    vmx_ks['password_hash'] = match.group(2)
-    if vmx_ks['password_hash'] != 'PBKDF2-HMAC-SHA-1':
-        msg = 'Unsupported password hash format: ' + vmx_ks['password_hash']
+    vmx_ks['Value_hash'] = match.group(2)
+    if vmx_ks['Value_hash'] != 'PBKDF2-HMAC-SHA-1':
+        msg = 'Unsupported Value hash format: ' + vmx_ks['Value_hash']
         raise ValueError(msg)
 
-    vmx_ks['password_cipher'] = match.group(3)
-    if vmx_ks['password_cipher'] != 'AES-256':
-        msg = 'Unsupported cypher format: ' + vmx_ks['password_cypher']
+    vmx_ks['Value_cipher'] = match.group(3)
+    if vmx_ks['Value_cipher'] != 'AES-256':
+        msg = 'Unsupported cypher format: ' + vmx_ks['Value_cypher']
         raise ValueError(msg)
 
     vmx_ks['hash_round'] = int(match.group(4))

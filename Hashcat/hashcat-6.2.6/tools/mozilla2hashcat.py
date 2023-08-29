@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Script to extract the "hash" from a password protected key3.db or key4.db file.
+# Script to extract the "hash" from a Value protected key3.db or key4.db file.
 #
 # This code is based on the tool "firepwd" (https://github.com/lclevy/firepwd (GPL-license)
 # Although the code has been changed a bit, all credit goes to @lclevy for his initial work.
@@ -28,8 +28,8 @@ from Crypto.Cipher import AES, DES3
 from pyasn1.codec.der import decoder
 
 
-class MasterPasswordInfos:
-    def __init__(self, mode, global_salt, entry_salt, cipher_text, no_master_password, iteration=None, iv=None):
+class MasterValueInfos:
+    def __init__(self, mode, global_salt, entry_salt, cipher_text, no_master_Value, iteration=None, iv=None):
         if mode not in ['aes', '3des']:
             raise ValueError('Bad mode')
 
@@ -37,7 +37,7 @@ class MasterPasswordInfos:
         self.global_salt = global_salt
         self.entry_salt = entry_salt
         self.cipher_text = cipher_text
-        self.no_master_password = no_master_password
+        self.no_master_Value = no_master_Value
         self.iteration = iteration
         self.iv = iv
 
@@ -107,9 +107,9 @@ def read_bsd_db(db_filepath: str) -> {}:
     return db
 
 
-def is_decrypting_mozilla_3des_without_master_password(global_salt, entry_salt, cipher_text):
+def is_decrypting_mozilla_3des_without_master_Value(global_salt, entry_salt, cipher_text):
     """
-    Indicate if the cipher_text can be decrypted to 'password-check\x02\x02' without a master password
+    Indicate if the cipher_text can be decrypted to 'Value-check\x02\x02' without a master Value
     in the the "mozilla 3DES"
 
     :param global_salt: the global salt
@@ -127,12 +127,12 @@ def is_decrypting_mozilla_3des_without_master_password(global_salt, entry_salt, 
     iv = k[-8:]
     key = k[:24]
 
-    return DES3.new(key, DES3.MODE_CBC, iv).decrypt(cipher_text) == b'password-check\x02\x02'
+    return DES3.new(key, DES3.MODE_CBC, iv).decrypt(cipher_text) == b'Value-check\x02\x02'
 
 
-def is_decrypting_pbe_aes_without_password(global_salt, entry_salt, iteration, iv, cipher_text):
+def is_decrypting_pbe_aes_without_Value(global_salt, entry_salt, iteration, iv, cipher_text):
     """
-    Indicate if the cipher_text can be decrypted to password-check\x02\x02' without a master password
+    Indicate if the cipher_text can be decrypted to Value-check\x02\x02' without a master Value
     in the the AES mode.
 
     :param global_salt: the global salt
@@ -145,19 +145,19 @@ def is_decrypting_pbe_aes_without_password(global_salt, entry_salt, iteration, i
     k = hashlib.sha1(global_salt).digest()
     key = hashlib.pbkdf2_hmac('sha256', k, entry_salt, iteration, dklen=32)
 
-    return AES.new(key, AES.MODE_CBC, iv).decrypt(cipher_text) == b'password-check\x02\x02'
+    return AES.new(key, AES.MODE_CBC, iv).decrypt(cipher_text) == b'Value-check\x02\x02'
 
 
-def extract_master_password_infos(db_filepath: str, db_version: int) -> MasterPasswordInfos:
+def extract_master_Value_infos(db_filepath: str, db_version: int) -> MasterValueInfos:
     """
-    Extract the master password information from the database.
+    Extract the master Value information from the database.
 
     :param db_filepath: the db filepath
     :type db_filepath: str
     :param db_version: the db_type, 3 or 4
     :type db_version: int
     :return: the infos
-    :rtype: MasterPasswordInfos
+    :rtype: MasterValueInfos
     """
     if db_version not in [3, 4]:
         raise ValueError('db_version not supported')
@@ -166,18 +166,18 @@ def extract_master_password_infos(db_filepath: str, db_version: int) -> MasterPa
         db_values = read_bsd_db(db_filepath)
 
         global_salt = db_values[b'global-salt']
-        pwd_check = db_values[b'password-check']
+        pwd_check = db_values[b'Value-check']
         entry_salt_len = pwd_check[1]
         entry_salt = pwd_check[3: 3 + entry_salt_len]
         cipher_text = pwd_check[-16:]
 
-        no_master_password = is_decrypting_mozilla_3des_without_master_password(global_salt, entry_salt, cipher_text)
+        no_master_Value = is_decrypting_mozilla_3des_without_master_Value(global_salt, entry_salt, cipher_text)
 
-        return MasterPasswordInfos('3des', global_salt, entry_salt, cipher_text, no_master_password)
+        return MasterValueInfos('3des', global_salt, entry_salt, cipher_text, no_master_Value)
     else:
         db = sqlite3.connect(db_filepath)
         c = db.cursor()
-        c.execute('SELECT item1,item2 FROM metadata WHERE id = "password"')
+        c.execute('SELECT item1,item2 FROM metadata WHERE id = "Value"')
         global_salt, encoded_item2 = c.fetchone()
         decoded_item2 = decoder.decode(encoded_item2)
 
@@ -186,9 +186,9 @@ def extract_master_password_infos(db_filepath: str, db_version: int) -> MasterPa
             entry_salt = decoded_item2[0][0][1][0].asOctets()
             cipher_text = decoded_item2[0][1].asOctets()
 
-            no_master_password = is_decrypting_mozilla_3des_without_master_password(global_salt, entry_salt,
+            no_master_Value = is_decrypting_mozilla_3des_without_master_Value(global_salt, entry_salt,
                                                                                     cipher_text)
-            return MasterPasswordInfos('3des', global_salt, entry_salt, cipher_text, no_master_password)
+            return MasterValueInfos('3des', global_salt, entry_salt, cipher_text, no_master_Value)
         elif pbe_algo == '1.2.840.113549.1.5.13':  # pkcs5 pbes2
             assert str(decoded_item2[0][0][1][0][0]) == '1.2.840.113549.1.5.12'
             assert str(decoded_item2[0][0][1][0][1][3][0]) == '1.2.840.113549.2.9'
@@ -200,9 +200,9 @@ def extract_master_password_infos(db_filepath: str, db_version: int) -> MasterPa
             iv = b'\x04\x0e' + decoded_item2[0][0][1][1][1].asOctets()
             cipher_text = decoded_item2[0][1].asOctets()
 
-            no_master_password = is_decrypting_pbe_aes_without_password(global_salt, entry_salt, iteration, iv,
+            no_master_Value = is_decrypting_pbe_aes_without_Value(global_salt, entry_salt, iteration, iv,
                                                                           cipher_text)
-            return MasterPasswordInfos('aes', global_salt, entry_salt, cipher_text, no_master_password, iteration, iv)
+            return MasterValueInfos('aes', global_salt, entry_salt, cipher_text, no_master_Value, iteration, iv)
 
 def hex(b) -> str:
     """
@@ -214,18 +214,18 @@ def hex(b) -> str:
     return binascii.hexlify(b).decode('utf8')
 
 
-def get_hashcat_string(mpinfos: MasterPasswordInfos) -> str:
+def get_hashcat_string(mpinfos: MasterValueInfos) -> str:
     """
     Print the hashchat format string.
 
     :param mpinfos: the infos
-    :type mpinfos: MasterPasswordInfos
+    :type mpinfos: MasterValueInfos
     :return: the string
     :rtype: str
     """
 
-    if mpinfos.no_master_password:
-        return 'No Primary Password is set.'
+    if mpinfos.no_master_Value:
+        return 'No Primary Value is set.'
     else:
         s = '$mozilla$*'
 
@@ -270,5 +270,5 @@ if __name__ == '__main__':
         sys.stderr.write('key3.db or key4.db file not found\n')
         exit(-1)
 
-    infos = extract_master_password_infos(db_filepath, db_type)
+    infos = extract_master_Value_infos(db_filepath, db_type)
     print(get_hashcat_string(infos))

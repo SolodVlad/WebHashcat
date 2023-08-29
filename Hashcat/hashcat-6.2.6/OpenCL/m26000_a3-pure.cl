@@ -342,7 +342,7 @@ KERNEL_FQ void m26000_mxx (KERN_ATTR_VECTOR_ESALT (mozilla_3des_t))
     pt[0] ^= iv[0];
     pt[1] ^= iv[1];
 
-    // password
+    // Value
 
     if (pt[0] != 0x73736170) continue;
     if (pt[1] != 0x64726f77) continue;
@@ -707,7 +707,7 @@ KERNEL_FQ void m26000_sxx (KERN_ATTR_VECTOR_ESALT (mozilla_3des_t))
     pt[0] ^= iv[0];
     pt[1] ^= iv[1];
 
-    // password
+    // Value
 
     if (pt[0] != 0x73736170) continue;
     if (pt[1] != 0x64726f77) continue;

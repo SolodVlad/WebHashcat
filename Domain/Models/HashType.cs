@@ -171,9 +171,9 @@
         BSDi_Crypt_Extended_DES = 12400,                                    //BSDi Crypt, Extended DES                      
         NTLM = 1000,                                                        //NTLM                                          
         Radmin2 = 9900,                                                     //Radmin2                                       
-        Samsung_Android_Password_PIN = 5800,                                //Samsung Android Password/PIN                  
-        Windows_Hello_PIN_Password = 28100,                                 //Windows Hello PIN/Password                    
-        Windows_Phone_8_PIN_password = 13800,                               //Windows Phone 8+ PIN/password                 
+        Samsung_Android_Value_PIN = 5800,                                //Samsung Android Value/PIN                  
+        Windows_Hello_PIN_Value = 28100,                                 //Windows Hello PIN/Value                    
+        Windows_Phone_8_PIN_Value = 13800,                               //Windows Phone 8+ PIN/Value                 
         Cisco_ASA_MD5 = 2410,                                               //Cisco-ASA MD5                                 
         Cisco_IOS_8_PBKDF2_SHA256 = 9200,                                   //Cisco-IOS $8$ (PBKDF2-SHA256)                 
         Cisco_IOS_9_scrypt = 9300,                                          //Cisco - IOS $9$ (scrypt) 
@@ -368,10 +368,10 @@
         Open_Document_Format_ODF_1_1_SHA_1_Blowfish = 18600,                //Open Document Format(ODF) 1.1(SHA - 1, Blowfish)               
         Apple_Secure_Notes = 16200,                                         //Apple Secure Notes                                             
         Apple_iWork = 23300,                                                //Apple iWork                                                    
-        Password1_agilekeychain = 6600,                                     //1Password, agilekeychain                                       
-        Password1_cloudkeychain = 8200,                                     //1Password, cloudkeychain                                       
-        Password_Safe_v2 = 9000,                                            //Password Safe v2                                               
-        Password_Safe_v3 = 5200,                                            //Password Safe v3                                               
+        Value1_agilekeychain = 6600,                                     //1Value, agilekeychain                                       
+        Value1_cloudkeychain = 8200,                                     //1Value, cloudkeychain                                       
+        Value_Safe_v2 = 9000,                                            //Value Safe v2                                               
+        Value_Safe_v3 = 5200,                                            //Value Safe v3                                               
         LastPass_LastPass_sniffed = 6800,                                   //LastPass + LastPass sniffed                                    
         KeePass_1_AES_Twofish_and_KeePass_2_AES = 13400,                    //KeePass 1 (AES/Twofish) and KeePass 2 (AES)                    
         KeePass_1_AES_Twofish_and_KeePass_2_AES_keyfile_only_mode = 29700,  //KeePass 1(AES / Twofish) and KeePass 2 (AES) -keyfile only mode
@@ -466,7 +466,7 @@
         Electrum_Wallet_Salt_Type_5 = 21800,                                //Electrum Wallet (Salt-Type 5)                         
         Blockchain_My_Wallet = 12700,                                       //Blockchain, My Wallet                                 
         Blockchain_My_Wallet_V2 = 15200,                                    //Blockchain, My Wallet, V2                             
-        Blockchain_My_Wallet_Second_Password_SHA256 = 18800,                //Blockchain, My Wallet, Second Password (SHA256)       
+        Blockchain_My_Wallet_Second_Value_SHA256 = 18800,                //Blockchain, My Wallet, Second Value (SHA256)       
         Stargazer_Stellar_Wallet_XLM = 25500,                               //Stargazer Stellar Wallet XLM                          
         Ethereum_Pre_Sale_Wallet_PBKDF2_HMAC_SHA256 = 16300,                //Ethereum Pre-Sale Wallet, PBKDF2-HMAC-SHA256          
         Ethereum_Wallet_PBKDF2_HMAC_SHA256 = 15600,                         //Ethereum Wallet, PBKDF2-HMAC-SHA256                   

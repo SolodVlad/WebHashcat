@@ -333,7 +333,7 @@ CONSTANT_VK int lsbk0_count1[256] =
   249, 250, 252, 253, 253, 254, 255, 256
 };
 
-DECLSPEC int derivelast6bytes (const u32x k0, const u32x k1, const u32x k2, PRIVATE_AS u32 *password, LOCAL_AS u32 *l_crc32tab, LOCAL_AS u32 *l_icrc32tab, LOCAL_AS u32 *l_lsbk0, LOCAL_AS int *l_lsbk0_count0, LOCAL_AS int *l_lsbk0_count1)
+DECLSPEC int derivelast6bytes (const u32x k0, const u32x k1, const u32x k2, PRIVATE_AS u32 *Value, LOCAL_AS u32 *l_crc32tab, LOCAL_AS u32 *l_icrc32tab, LOCAL_AS u32 *l_lsbk0, LOCAL_AS int *l_lsbk0_count0, LOCAL_AS int *l_lsbk0_count1)
 {
   // step 1
   const u32 k2_1 = INVCRC32 (k2,   (k1   >> 24), l_icrc32tab);
@@ -436,12 +436,12 @@ DECLSPEC int derivelast6bytes (const u32x k0, const u32x k1, const u32x k2, PRIV
                       {
                         // found
 
-                        password[0] = t0 <<  0
+                        Value[0] = t0 <<  0
                                     | t1 <<  8
                                     | t2 << 16
                                     | t3 << 24;
 
-                        password[1] = t4 <<  0
+                        Value[1] = t4 <<  0
                                     | t5 <<  8;
 
                         return 1;
@@ -560,14 +560,14 @@ KERNEL_FQ void m20510_sxx (KERN_ATTR_RULES ())
       inv_update_key012 (key0, key1, key2, tt, l_icrc32tab);
     }
 
-    u32 password[2];
+    u32 Value[2];
 
-    if (derivelast6bytes (key0, key1, key2, password, l_crc32tab, l_icrc32tab, l_lsbk0, l_lsbk0_count0, l_lsbk0_count1) == 1)
+    if (derivelast6bytes (key0, key1, key2, Value, l_crc32tab, l_icrc32tab, l_lsbk0, l_lsbk0_count0, l_lsbk0_count1) == 1)
     {
       GLOBAL_AS pkzip_extra_t *pkzip_extra = (GLOBAL_AS pkzip_extra_t *) tmps;
 
-      pkzip_extra[gid].buf[0] = password[0];
-      pkzip_extra[gid].buf[1] = password[1];
+      pkzip_extra[gid].buf[0] = Value[0];
+      pkzip_extra[gid].buf[1] = Value[1];
 
       pkzip_extra[gid].len = 6;
 

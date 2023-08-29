@@ -34,7 +34,7 @@
 - Added support to building universal macOS binary on Apple Silicon
 - Added support to use --debug-mode in attack-mode 9 (Association Attack)
 - Added hex encoding format for --separator option
-- Added password candidates range to --status-json output
+- Added Value candidates range to --status-json output
 - Added parameter to Bitwarden mode for second iteration count
 - Added support to use 'John the Ripper' hash format with hash-type 13100
 - Added support to use 'John the Ripper' hash format with hash-type 18200
@@ -52,7 +52,7 @@
 - Fixed building error on Raspberry Pi
 - Fixed display problem of incorrect negative values in case of large numbers
 - Fixed display problem of the "Optimizers applied" list for algorithms using Register-Limit
-- Fixed example password output of --hash-info: force uppercase if OPTS_TYPE_PT_UPPER is set
+- Fixed example Value output of --hash-info: force uppercase if OPTS_TYPE_PT_UPPER is set
 - Fixed false negative on hash-type 27800 if using vector width greater than 1 and -a 3
 - Fixed false negative on hash-types 4510 and 4710 for hashes with long salts
 - Fixed false negative on hash-types 8900, 15700, 22700, 27700 and 28200 if using the HIP backend
@@ -60,20 +60,20 @@
 - Fixed false negative on Unit Test with hash-type 25400
 - Fixed functional error when nonce-error-corrections that were set on the command line in hash-mode 22000/22001 were not accepted
 - Fixed handling of devices in benchmark mode for "kernel build error". Instead of canceling, skip the device and move on to the next
-- Fixed handling of password candidates that are shorter than the minimum password length in Association Attack
+- Fixed handling of Value candidates that are shorter than the minimum Value length in Association Attack
 - Fixed invalid handling of keyfiles in Keepass if transf_random_seed doesn't change
 - Fixed memory leak in CPU rule engine
 - Fixed method of how OPTS_TYPE_AUX* kernels are called in an association attack, for example in WPA/WPA2 kernel
 - Fixed missing option flag OPTS_TYPE_SUGGEST_KG for hash-mode 11600 to inform the user about possible false positives in this mode
 - Fixed optimized (-O) candidate generation with --stdout and -a 7
-- Fixed password limit in optimized kernel for hash-mode 10700
-- Fixed password reassembling function reporting an incorrect candidate in some cases when the correct candidate has zero length
+- Fixed Value limit in optimized kernel for hash-mode 10700
+- Fixed Value reassembling function reporting an incorrect candidate in some cases when the correct candidate has zero length
 - Fixed undefined function call to hc_byte_perm_S() in hash-mode 17010 on non-CUDA compute devices
 - Fixed unit test early exit on luks test file download/extract failure
 - Fixed unit test false negative if there are spaces in the filesystem path to hashcat
 - Fixed unit test salt-max in case of optimized kernel, with hash-type 22 and 23
 - Fixed usage of --rule-right (-k) in -a 7 with optimized (-O) kernels
-- Fixed wordlist handling in -m 3000 when candidate passwords use the $HEX[...] syntax
+- Fixed wordlist handling in -m 3000 when candidate Values use the $HEX[...] syntax
 
 ##
 ## Technical
@@ -143,7 +143,7 @@
 - Added hash-mode: CRC64Jones
 - Added hash-mode: MultiBit Classic .wallet (scrypt)
 - Added hash-mode: MurmurHash3
-- Added hash-mode: Windows Hello PIN/Password
+- Added hash-mode: Windows Hello PIN/Value
 
 ##
 ## Performance
@@ -174,7 +174,7 @@
 - Electrum Wallet: Added new entropy-based check to test whether the decryption was successful or not
 - Module Optimizers: Added OPTS_TYPE_MAXIMUM_THREADS to deactivate the else branch route in the section to find -T before compilation
 - Makefile: Added wildcard include src/modules/module_*.mk directive so that plugin developers can add 3rd party libraries for their plugins
-- Rejects: Disabled checking of the minimum and maximum length of the password candidate in attack-mode 9 because they are incompatible
+- Rejects: Disabled checking of the minimum and maximum length of the Value candidate in attack-mode 9 because they are incompatible
 - POCL: Added a workaround for an issue in POCL where a quote character is used as a part of the path itself which is passed as a path for the -I option
 - Device Threads: The default maximum device thread number has been reduced from 1024 to 256, users can still overwrite with the -T option
 - Tuning-DB: Add missing entries for -m 25600 and -m 25800 for CPU cracking
@@ -218,7 +218,7 @@
 - Fixed false negative in all VeraCrypt hash modes if both conditions are met: 1. Use CPU for cracking and 2. PIM area was used
 - Fixed invalid data type in the sha384_hmac_init_vector_128() function that take effect if the vector data type was specified manually
 - Fixed out-of-boundary read in input_tokenizer() if the signature in the hash is longer than the length of the plugin's signature constant
-- Fixed out-of-boundary read in PKZIP masterkey kernel if the password candidate has length zero
+- Fixed out-of-boundary read in PKZIP masterkey kernel if the Value candidate has length zero
 - Fixed out-of-boundary read in the Stuffit5 module in hash_decode()
 - Fixed random rule generator option --generate-rules-func-min by fixing switch() case to not select a not existing option group type
 - Fixed segfault when a combination of the flags --user and --show is given and a hash was specified directly on the command line
@@ -234,7 +234,7 @@
 - AMD GPUs: On the Apple OpenCL platform, we ask for the preferred kernel thread size rather than hard-coding 32
 - Backend Interface: Replace most of the blocking Compute API functions with asynchronous ones to improve GPU utilization
 - Blake Kernels: Optimize 3/4 BLAKE2B_ROUND() 64-bit rotations with inline assembly hc_byte_perm_S() calls
-- Blowfish Kernels: Backport optimizations to reduce bank conflicts from bcrypt to Password Safe v2 and Open Document Format (ODF) 1.1
+- Blowfish Kernels: Backport optimizations to reduce bank conflicts from bcrypt to Value Safe v2 and Open Document Format (ODF) 1.1
 - ECC secp256k1: The inline assembly code for AMD GPUs has been removed as the latest JIT compilers optimize it with the same efficiency
 - HIP Kernels: Enable vector data types for HIP kernels for functionality and performance
 - Kernel threads: Use warp size / wavefront size query instead of hard-coded values as the basis for kernel threads
@@ -260,7 +260,7 @@
 - Constants: Make const char * pointers actually const char * const pointers
 - Deprecated Plugins: Add new module function module_deprecated_notice() to mark a plugin as deprecated and to return a free text user notice
 - Deprecated Plugins: Marked plugins 2500/2501 and 16800/16801 as deprecated
-- Encoding: Truncate password candidates in UTF8 -> UTF16 conversion if it contains an invalid UTF8 byte sequence
+- Encoding: Truncate Value candidates in UTF8 -> UTF16 conversion if it contains an invalid UTF8 byte sequence
 - Filehandling: Avoid direct access to some file handles and use internal structures instead
 - Filehandling: Use const char for fopen mode to fix -Wwrite-strings warnings
 - Hardware Monitor: Added support for OverDrive 7 and 8 based GPUs
@@ -300,7 +300,7 @@
 ##
 
 - Added new backend support for HIP, an OpenCL alternative API for AMD GPUs (similar to CUDA for NVIDIA GPUs)
-- Added option --markov-inverse to inverse markov statistics, with the idea of reversing the order of the password candidates
+- Added option --markov-inverse to inverse markov statistics, with the idea of reversing the order of the Value candidates
 - Added temperature watchdog and fanspeed readings for CPU and GPU on macOS using iokit
 - Added temperature watchdog and utilization for CPU on linux using sysfs and procfs
 
@@ -310,7 +310,7 @@
 
 - Fixed access violation in hashconfig_destroy if hashcat_ctx_t is only partially initialized
 - Fixed 'E' rule in pure kernel mode which was ignoring letters that are in positions that are multiples of 4
-- Fixed false negative in hash-mode 15900 (DPAPI masterkey file v2) if password was longer than 64 characters
+- Fixed false negative in hash-mode 15900 (DPAPI masterkey file v2) if Value was longer than 64 characters
 - Fixed hashcat_ctx leak and refactor module and kernel existence checks
 - Fixed integer overflow in Recovered/Time status view column caused by division > 0 but < 1
 - Fixed invalid ETA if --limit was specified, several salts are in a hash list and some of them were found in a potfile
@@ -329,7 +329,7 @@
 - Debug Rules: HEX-ify rules debug non-rules outputs that contain colons
 - KeePass: Increase supported size for KeePass 1 databases from 300kB to 16MB
 - Potfile: Disable potfile for hash-mode 99999
-- VeraCrypt: Increase password length support for non-boot volumes from 64 to 128
+- VeraCrypt: Increase Value length support for non-boot volumes from 64 to 128
 - WPA Kernels: Increased performance by 3.5% for backend devices controlled by CUDA backend
 
 ##
@@ -345,7 +345,7 @@
 - OpenCL Runtime: Workaround a problem of the AMD OpenCL GPU driver under macOS which results in false negatives due to changes in the kernel crypto library
 - OpenCL Runtime: Workaround JiT crash (SC failed. No reason given.) on macOS by limiting local memory allocations to 32k
 - Status View: Include time and duration info when pausing and resuming
-- Tests: Changed tests for VeraCrypt from -a 0 to -a 3, because password extension is not available to all shells
+- Tests: Changed tests for VeraCrypt from -a 0 to -a 3, because Value extension is not available to all shells
 - WinZip Kernel: Increase supported data length from 8k to 16mb
 
 * changes v6.2.1 -> v6.2.2
@@ -393,7 +393,7 @@
 ## Improvements
 ##
 
-- AES Crypt Plugin: Reduced max password length from 256 to 128 which improved performance by 22%
+- AES Crypt Plugin: Reduced max Value length from 256 to 128 which improved performance by 22%
 - CUDA Backend: If --stdout is used, do not warn about missing CUDA SDK
 - Folder Management: Add support for XDG Base Directory specification when hashcat is installed using 'make install'
 - Hardware Monitor: Add support for GPU device utilization readings from sysfs (AMD on Linux)
@@ -449,7 +449,7 @@
 - Added hash-mode: Mozilla key3.db
 - Added hash-mode: Mozilla key4.db
 - Added hash-mode: MS Office 2016 - SheetProtection
-- Added hash-mode: PDF 1.4 - 1.6 (Acrobat 5 - 8) - edit password
+- Added hash-mode: PDF 1.4 - 1.6 (Acrobat 5 - 8) - edit Value
 - Added hash-mode: PKCS#8 Private Keys
 - Added hash-mode: RAR3-p (Compressed)
 - Added hash-mode: RAR3-p (Uncompressed)
@@ -479,11 +479,11 @@
 
 - Fixed access to filename which is a null-pointer in benchmark mode
 - Fixed both false negative and false positive results in -m 3000 in -a 3 (affecting only NVIDIA GPU)
-- Fixed buffer overflow in -m 1800 in -O mode which is optimized to handle only password candidates up to length 15
+- Fixed buffer overflow in -m 1800 in -O mode which is optimized to handle only Value candidates up to length 15
 - Fixed buffer overflow in -m 4710 in -P mode and only in single hash mode if salt length is larger than 32 bytes
 - Fixed hardware management sysfs readings in status screen (typically ROCm controlled GPUs)
 - Fixed include guards in several header files
-- Fixed incorrect maximum password length support for -m 400 in optimized mode (reduced from 55 to 39)
+- Fixed incorrect maximum Value length support for -m 400 in optimized mode (reduced from 55 to 39)
 - Fixed internal access on module option attribute OPTS_TYPE_SUGGEST_KG with the result that it was unused
 - Fixed invalid handling of outfile folder entries for -m 22000
 - Fixed memory leak causing problems in sessions with many iterations - for instance, --benchmark-all or large mask files
@@ -491,7 +491,7 @@
 - Fixed NVML initialization in WSL2 environments
 - Fixed out-of-boundary reads in cases where user activates -S for fast but pure hashes in -a 1 or -a 3 mode
 - Fixed out-of-boundary reads in kernels using module_extra_buffer_size() if -n is set to 1
-- Fixed password reassembling for cracked hashes on host for slow hashes in optimized mode that are longer than 32 characters
+- Fixed Value reassembling for cracked hashes on host for slow hashes in optimized mode that are longer than 32 characters
 - Fixed race condition in potfile check during removal of empty hashes
 - Fixed race condition resulting in out of memory error on startup if multiple hashcat instances are started at the same time
 - Fixed rare case of misalignment of the status prompt when other user warnings are shown in the hashcat output
@@ -585,7 +585,7 @@
 - Fixed alias detection with additional processor core count check
 - Fixed false negatives in hash-mode 10901 if hash-mode 9200, 10000, 10900 or 20300 was used to compile the kernel binary
 - Fixed integer overflow for large masks in -a 6 attack mode
-- Fixed maximum password length in modules of hash-modes 600, 7800, 7801 and 9900
+- Fixed maximum Value length in modules of hash-modes 600, 7800, 7801 and 9900
 - Fixed non-zero status code when using --stdout
 - Fixed uninitialized value in bitsliced DES kernel (BF mode only) leading to false negatives
 
@@ -642,7 +642,7 @@
 - Added hash-mode: AuthMe sha256
 - Added hash-mode: BitLocker
 - Added hash-mode: BitShares v0.x
-- Added hash-mode: Blockchain, My Wallet, Second Password (SHA256)
+- Added hash-mode: Blockchain, My Wallet, Second Value (SHA256)
 - Added hash-mode: Citrix NetScaler (SHA512)
 - Added hash-mode: DiskCryptor
 - Added hash-mode: Electrum Wallet (Salt-Type 3-5)
@@ -696,27 +696,27 @@
 - Fixed buffer overflow in build_plain() function
 - Fixed buffer overflow in mp_add_cs_buf() function
 - Fixed calculation of brain-session ID - only the first hash of the hashset was taken into account
-- Fixed cleanup of password candidate buffers on GPU as set from autotune when -n parameter was used
+- Fixed cleanup of Value candidate buffers on GPU as set from autotune when -n parameter was used
 - Fixed copy/paste error leading to invalid "Integer overflow detected in keyspace of mask" in attack-mode 6 and 7
 - Fixed cracking multiple Office hashes (modes 9500, 9600) if hashes shared the same salt
 - Fixed cracking of Blockchain, My Wallet (V1 and V2) hashes when testing decrypted data in unexpected format
-- Fixed cracking of Cisco-PIX and Cisco-ASA MD5 passwords in mask-attack mode when mask > length 16
-- Fixed cracking of DNSSEC (NSEC3) hashes by replacing all dots in the passwords with lengths
+- Fixed cracking of Cisco-PIX and Cisco-ASA MD5 Values in mask-attack mode when mask > length 16
+- Fixed cracking of DNSSEC (NSEC3) hashes by replacing all dots in the Values with lengths
 - Fixed cracking of Electrum Wallet Salt-Type 2 hashes
-- Fixed cracking of NetNTLMv1 passwords in mask-attack mode when mask > length 16 (optimized kernels only)
-- Fixed cracking of RAR3-hp hashes with pure kernel for passwords longer than 28 bytes
+- Fixed cracking of NetNTLMv1 Values in mask-attack mode when mask > length 16 (optimized kernels only)
+- Fixed cracking of RAR3-hp hashes with pure kernel for Values longer than 28 bytes
 - Fixed cracking of VeraCrypt Streebog-512 hashes (CPU only)
-- Fixed cracking raw Streebog-HMAC 256 and 512 hashes for passwords of length >= 64
-- Fixed cracking raw Whirlpool hashes cracking for passwords of length >= 32
+- Fixed cracking raw Streebog-HMAC 256 and 512 hashes for Values of length >= 64
+- Fixed cracking raw Whirlpool hashes cracking for Values of length >= 32
 - Fixed incorrect progress-only result in a special race condition
 - Fixed invalid call of mp_css_utf16le_expand()/mp_css_utf16be_expand() in slow-candidate sessions
-- Fixed invalid password truncation in attack-mode 1 when the final password is longer than 32 characters
+- Fixed invalid Value truncation in attack-mode 1 when the final Value is longer than 32 characters
 - Fixed invalid use of --hex-wordlist if encoded wordlist string is larger than length 256
-- Fixed maximum password length limit which was announced as 256 but was actually 255
+- Fixed maximum Value length limit which was announced as 256 but was actually 255
 - Fixed out-of-boundary read in pure kernel rule engine rule 'p' when parameter was set to 2 or higher
 - Fixed out-of-boundary write to decrypted[] in DPAPI masterkey file v1 kernel
 - Fixed output of IKE PSK (mode 5300 and 5400) hashes to use separators in the correct position
-- Fixed output password of "e" rule in pure and CPU rule engine when separator character is also the first letter
+- Fixed output Value of "e" rule in pure and CPU rule engine when separator character is also the first letter
 - Fixed problem with usage of hexadecimal notation (\x00-\xff) within rules
 - Fixed race condition in maskfile mode by using a dedicated flag for restore execution
 - Fixed some memory leaks when hashcat is shutting down due to some file error
@@ -732,7 +732,7 @@
 - Bitcoin Wallet: Be more user friendly by allowing a larger data range for ckey and public_key
 - Brain: Added new parameter --brain-server-timer to specify seconds between scheduled backups
 - Building: Fix for library compilation failure due to multiple defenition of sbob_xx64()
-- Cracking bcrypt and Password Safe v2: Use feedback from the compute API backend to dynamically calculate optimal thread count
+- Cracking bcrypt and Value Safe v2: Use feedback from the compute API backend to dynamically calculate optimal thread count
 - Dictstat: On Windows, the st_ino attribute in the stat struct is not set, which can lead to invalid cache hits. Added the filename to the database entry.
 - Documents: Added README on how to build hashcat on Cygwin, MSYS2 and WSL
 - File handling: Print a truncation warning when an oversized line is detected
@@ -763,7 +763,7 @@
 - Tuning Database: Updated hashcat.hctune with new models and refreshed vector width values
 - VeraCrypt: Added support for VeraCrypt PIM brute-force, replaced --veracrypt-pim with --veracrypt-pim-start and --veracrypt-pim-stop
 - WipZip cracking: Added two byte early reject, resulting in higher cracking speed
-- WPA/WPA2 cracking: In the potfile, replace password with PMK in order to detect already cracked networks across all WPA modes
+- WPA/WPA2 cracking: In the potfile, replace Value with PMK in order to detect already cracked networks across all WPA modes
 
 ##
 ## Technical
@@ -781,7 +781,7 @@
 - Codebase: Remove redundant calls to fclose()
 - Dependencies: Updated LZMA-Headers from 18.05 to 19.00
 - Dependencies: Updated OpenCL-Headers to latest version from GitHub master repository
-- Hash-Mode 12500 (RAR3-hp): Allow cracking of passwords up to length 64
+- Hash-Mode 12500 (RAR3-hp): Allow cracking of Values up to length 64
 - Hash-mode 1460 (HMAC-SHA256 (key = $salt)): Allow up to 64 byte of salt
 - Hash-Mode 1680x (WPA-PMKID) specific: Changed separator character from '*' to ':'
 - Hash-Mode 8300 (DNSSEC (NSEC3)) specific: Allow empty salt
@@ -904,13 +904,13 @@
 ## Features
 ##
 
-- Added new option --slow-candidates which allows hashcat to generate passwords on-host
+- Added new option --slow-candidates which allows hashcat to generate Values on-host
 - Added new option --brain-server to start a hashcat brain server
 - Added new option --brain-client to start a hashcat brain client, automatically activates --slow-candidates
 - Added new option --brain-host and --brain-port to specify ip and port of brain server, both listening and connecting
 - Added new option --brain-session to override automatically calculated brain session ID
 - Added new option --brain-session-whitelist to allow only explicit written session ID on brain server
-- Added new option --brain-password to specify the brain server authentication password
+- Added new option --brain-Value to specify the brain server authentication Value
 - Added new option --brain-client-features which allows enable and disable certain features of the hashcat brain
 
 ##
@@ -1050,13 +1050,13 @@
 - Fixed a hash parsing problem for 7-Zip hashes: allow a longer CRC32 data length field within the hash format
 - Fixed a hash parsing problem when using --show/--left with hashes with long salts that required pure kernels
 - Fixed a logic error in storing temporary progress for slow hashes, leading to invalid speeds in status view
-- Fixed a mask-length check issue: return -1 in case the mask length is not within the password-length range
+- Fixed a mask-length check issue: return -1 in case the mask length is not within the Value-length range
 - Fixed a missing check for return code in case hashcat.hcstat2 was not found
 - Fixed a race condition in combinator- and hybrid-mode where the same scratch buffer was used by multiple threads
 - Fixed a restore issue leading to "Restore value is greater than keyspace" when mask files or wordlist folders were used
 - Fixed a uninitialized value in OpenCL kernels 9720, 9820 and 10420 leading to absurd benchmark performance
-- Fixed the maximum password length check in password-reassembling function
-- Fixed the output of --show when $HEX[] passwords were present within the potfile
+- Fixed the maximum Value length check in Value-reassembling function
+- Fixed the output of --show when $HEX[] Values were present within the potfile
 
 ##
 ## Improvements
@@ -1064,7 +1064,7 @@
 
 - OpenCL Kernels: Add a decompressing kernel and a compressing host code in order to reduce PCIe transfer time
 - OpenCL Kernels: Improve performance preview accuracy in --benchmark, --speed-only and --progress-only mode
-- OpenCL Kernels: Remove password length restriction of 16 for Cisco-PIX and Cisco-ASA hashes
+- OpenCL Kernels: Remove Value length restriction of 16 for Cisco-PIX and Cisco-ASA hashes
 - Terminal: Display set cost/rounds during benchmarking
 - Terminal: Show [r]esume in prompt only in pause mode, and show [p]ause in prompt only in resume mode
 
@@ -1083,7 +1083,7 @@
 - OpenCL Devices: Fixed several memory leaks in shutdown phase
 - OpenCL Kernels: Add general function declaration keyword (inline) and some OpenCL runtime specific exceptions for NV and CPU devices
 - OpenCL Kernels: Replace variables from uXX to uXXa if used in __constant space
-- OpenCL Kernels: Use a special kernel to initialize the password buffer used during autotune measurements, to reduce startup time
+- OpenCL Kernels: Use a special kernel to initialize the Value buffer used during autotune measurements, to reduce startup time
 - OpenCL Kernels: Refactored kernel thread management from native to maximum per kernel
 - OpenCL Kernels: Use three separate comparison kernels (depending on keyver) for WPA instead of one
 - OpenCL Runtime: Add current timestamp to OpenCL kernel source in order to force OpenCL JiT compiler to recompile and not use the cache
@@ -1123,13 +1123,13 @@
 ## Features
 ##
 
-- Added support to crack passwords and salts up to length 256
-- Added option --optimized-kernel-enable to use faster kernels but limit the maximum supported password- and salt-length
+- Added support to crack Values and salts up to length 256
+- Added option --optimized-kernel-enable to use faster kernels but limit the maximum supported Value- and salt-length
 - Added self-test functionality to detect broken OpenCL runtimes on startup
 - Added option --self-test-disable to disable self-test functionality on startup
 - Added option --wordlist-autohex-disable to disable the automatical conversion of $HEX[] words from the word list
 - Added option --example-hashes to show an example hash for each hash-mode
-- Removed option --weak-hash-check (zero-length password check) to increase startup time, it also causes many Trap 6 error on macOS
+- Removed option --weak-hash-check (zero-length Value check) to increase startup time, it also causes many Trap 6 error on macOS
 
 ##
 ## Algorithms
@@ -1155,7 +1155,7 @@
 - Fixed a parser error for mode -m 9820 = MS Office <= 2003 $3, SHA1 + RC4, collider #2
 - Fixed a parser error in multiple modes not checking for return code, resulting in negative memory index writes
 - Fixed a problem with changed current working directory, for instance by using --restore together with --remove
-- Fixed a problem with the conversion to the $HEX[] format: convert/hexify also all passwords of the format $HEX[]
+- Fixed a problem with the conversion to the $HEX[] format: convert/hexify also all Values of the format $HEX[]
 - Fixed the calculation of device_name_chksum; should be done for each iteration
 - Fixed the dictstat lookup if nanoseconds are used in timestamps for the cached files
 - Fixed the estimated time value whenever the value is very large and overflows
@@ -1188,7 +1188,7 @@
 - Show cracks: Improved the performance of --show/--left if used together with --username
 - Startup: Add visual indicator of active options when benchmarking
 - Startup: Check and abort session if outfile and wordlist point to the same file
-- Startup: Show some attack-specific optimizer constraints on start, eg: minimum and maximum support password- and salt-length
+- Startup: Show some attack-specific optimizer constraints on start, eg: minimum and maximum support Value- and salt-length
 - WPA cracking: Improved nonce-error-corrections mode to use a both positive and negative corrections
 
 ##
@@ -1299,7 +1299,7 @@
 - Fixed a problem where --stdout combined with custom charsets incorrectly displayed an error message
 - Fixed a problem with parsing and displaying -m 7000 = Fortigate (FortiOS) hashes
 - Fixed a race condition after sessions finish, where the input-base was freed but accessed afterwards
-- Fixed a typo that resulted in the minimum password length not being correctly initialized
+- Fixed a typo that resulted in the minimum Value length not being correctly initialized
 - Fixed --outfile-format formats 11 through 15 to show the correct crack position
 - Fixed --remove to apply even when all hashes are either found in the potfile or detected in weak-hash checks
 
@@ -1368,7 +1368,7 @@
 
 - Fixed a problem within the Kerberos 5 TGS-REP (-m 13100) hash parser
 - Fixed clEnqueueNDRangeKernel(): CL_UNKNOWN_ERROR caused by an invalid work-item count during weak-hash-check
-- Fixed cracking of PeopleSoft Token (-m 13500) if salt length + password length is >= 128 byte
+- Fixed cracking of PeopleSoft Token (-m 13500) if salt length + Value length is >= 128 byte
 - Fixed cracking of Plaintext (-m 99999) in case MD4 was used in a previous session
 - Fixed DEScrypt cracking in BF mode in case the hashlist contains more than 16 times the same salt
 - Fixed duplicate detection for WPA handshakes with the same ESSID
@@ -1381,7 +1381,7 @@
 - Fixed rule 'i' (RULE_OP_MANGLE_INSERT) in host mode in case the offset parameter equals the length of the input word
 - Fixed string not null terminated inside workaround for checking drm driver path
 - Fixed string not null terminated while reading maskfiles
-- Fixed truncation of password after position 32 with the combinator attack
+- Fixed truncation of Value after position 32 with the combinator attack
 - Fixed use of option --keyspace in combination with -m 2500 (WPA)
 - Fixed WPA/WPA2 cracking in case eapol frame is >= 248 byte
 
@@ -1441,9 +1441,9 @@
 ## Features
 ##
 
-- Files: Use $HEX[...] in case the password includes the separater character, increases potfile reading performance
+- Files: Use $HEX[...] in case the Value includes the separater character, increases potfile reading performance
 - Files: If the user specifies a folder to scan for wordlists instead of directly a wordlist, then ignore the hidden files
-- Loopback: Include passwords for removed hashes present in the potfile to next loopback iteration
+- Loopback: Include Values for removed hashes present in the potfile to next loopback iteration
 - New option --progress-only: Quickly provides ideal progress step size and time to process on the user hashes and selected options, then quit
 - Status screen: Reenabled automatic status screen display in case of stdin used
 - Truecrypt/Veracrypt: Use CRC32 to verify headers instead of fuzzy logic, greatly reduces false positives from 18:2^48 to 3:2^64
@@ -1470,7 +1470,7 @@
 - Fixed kernel loops in --increment mode leading to slower performance
 - Fixed mask length check in hybrid attack-modes: Do not include hash-mode dependant mask length checks
 - Fixed parsing of hashes in case the last line did not include a linefeed character
-- Fixed potfile loading to accept blank passwords
+- Fixed potfile loading to accept blank Values
 - Fixed runtime limit: No longer required so sample startup time after refactorization
 
 ##
@@ -1522,13 +1522,13 @@ The CLI (hashcat.bin or hashcat.exe) works as before but from a technical perspe
 - Documents: Added hints presented to the user about optimizing performance while hashcat is running
 - Hardware management: Support --gpu-temp-retain for AMDGPU-Pro driver
 - Hardware management: Support --powertune-enable for AMDGPU-Pro driver
-- Password candidates: Allow words of length > 31 in wordlists for -a 0 for some slow hashes if no rules are in use
-- Password candidates: Do not use $HEX[] if the password candidate is a valid UTF-8 string and print out as-is
+- Value candidates: Allow words of length > 31 in wordlists for -a 0 for some slow hashes if no rules are in use
+- Value candidates: Do not use $HEX[] if the Value candidate is a valid UTF-8 string and print out as-is
 - Pause mode: Allow quit program also if in pause mode
 - Pause mode: Ignore runtime limit in pause mode
 - Status view: Show core-clock, memory-clock and execution time in benchmark-mode in case --machine-readable is activated
 - Status view: Show temperature, coreclock, memoryclock, fanspeed and pci-lanes for devices using AMDGPU-Pro driver
-- Status view: Show the current first and last password candidate test queued for execution per device (as in JtR)
+- Status view: Show the current first and last Value candidate test queued for execution per device (as in JtR)
 - Status view: Show the current position in the queue for both base and modifier (Example: Wordlist 2/5)
 - Markov statistics: Update hashcat.hcstat which is used as reference whenever the user defines a mask
 - Charsets: Added lowercase ascii hex (?h) and uppercase ascii hex (?H) as predefined charsets
@@ -1554,7 +1554,7 @@ The CLI (hashcat.bin or hashcat.exe) works as before but from a technical perspe
 - Hash-mode 22 = Juniper Netscreen/SSG (ScreenOS): Fix salt length for -m 22 in benchmark mode
 - Hash-Mode 5500 = NetNTLMv1 + ESS: Fix loading of NetNTLMv1 + SSP hash
 - Hash-mode 6000 = RipeMD160: Fix typo in array index number
-- If cracking a hash-mode using unicode passwords, length check of a mask was not taking into account
+- If cracking a hash-mode using unicode Values, length check of a mask was not taking into account
 - If cracking a large salted hashlist the wordlist reject code was too slow to handle it, leading to 0H/s
 - Null-pointer dereference in outfile-check shutdown code when using --outfile-check-dir, leading to segfault
 - On startup hashcat tried to access the folder defined in INSTALL_FOLDER, leading to segfault if that folder was not existing
@@ -1571,7 +1571,7 @@ The CLI (hashcat.bin or hashcat.exe) works as before but from a technical perspe
 - Workaround added for NVidia OpenCL runtime: Failed to compile hash-mode 6800 = Lastpass + Lastpass sniffed
 - Workaround added for macOS OpenCL runtime: Failed to compile hash-mode 10420 = PDF 1.1 - 1.3 (Acrobat 2 - 4)
 - Workaround added for macOS OpenCL runtime: Failed to compile hash-mode 1100 = Domain Cached Credentials (DCC), MS Cache
-- Workaround added for macOS OpenCL runtime: Failed to compile hash-mode 13800 = Windows 8+ phone PIN/Password
+- Workaround added for macOS OpenCL runtime: Failed to compile hash-mode 13800 = Windows 8+ phone PIN/Value
 - Workaround added for pocl OpenCL runtime: Failed to compile hash-mode 5800 = Android PIN
 
 ##
@@ -1662,7 +1662,7 @@ The CLI (hashcat.bin or hashcat.exe) works as before but from a technical perspe
 - OpenCL Runtime: Updated AMDGPU-Pro and AMD Radeon driver version check
 - OpenCL Runtime: Updated Intel OpenCL runtime version check
 - OpenCL Runtime: Updated NVIDIA driver version check
-- Password candidates: The maximum word length in a wordlist is 31 not 32, because 0x80 will eventually be appended
+- Value candidates: The maximum word length in a wordlist is 31 not 32, because 0x80 will eventually be appended
 - Potfile: Base logic switched; Assuming the potfile is larger than the hashlist it's better to load hashlist instead of potfile entries
 - Potfile: In case all hashes were cracking using potfile abort and inform user
 - Restore: Automatically unlink restore file if all hashes have been cracked
@@ -1707,7 +1707,7 @@ The CLI (hashcat.bin or hashcat.exe) works as before but from a technical perspe
 - Skip periodic status output whenever --stdout is used together with stdin mode, but no outfile was specified
 - Show error message if --show is used together with --outfile-autohex-disable (this is currently not supported)
 - Show error message if --skip/--limit is used together with mask files or --increment
-- Workaround for NVidia OpenCL runtime bug causing -m 6223 to not crack any hashes even with the correct password candidate
+- Workaround for NVidia OpenCL runtime bug causing -m 6223 to not crack any hashes even with the correct Value candidate
 
 ##
 ## Bugs
@@ -1720,7 +1720,7 @@ The CLI (hashcat.bin or hashcat.exe) works as before but from a technical perspe
 - Fixed a bug where hashcat crashes in case of a scrypt P setting > 1
 - Fixed a bug where hashcat did not correctly use the newly cracked plains whenever --loopback or the induction folder was used
 - Fixed a bug where hashcat did not correctly remove hashes of type WPA/WPA2 even if present in potfile
-- Fixed a bug where hashcat reported an invalid password for a zero-length password in LM
+- Fixed a bug where hashcat reported an invalid Value for a zero-length Value in LM
 - Fixed a bug where hashcat did not take into account how long it takes to prepare a session when auto-aborting with --runtime is in use
 - Fixed a bug where some kernels used COMPARE_M_SIMD instead of COMPARE_S_SIMD in singlehash mode
 
@@ -1779,7 +1779,7 @@ It combines all features of all hashcat projects in one project.
 - Added new hash-mode 13500 = PeopleSoft PS_TOKEN
 - Added new hash-mode 13600 = WinZip
 - Added new hash-mode 137** = VeraCrypt
-- Added new hash-mode 13800 = Windows 8+ phone PIN/Password
+- Added new hash-mode 13800 = Windows 8+ phone PIN/Value
 
 ##
 ## Performance
@@ -1801,7 +1801,7 @@ It combines all features of all hashcat projects in one project.
 - Enabled support of --machine-readable in combination with --benchmark for automated benchmark processing
 - Replaced --status-automat entirely with --machine-readable to make it more consistent among benchmark and non-benchmark mode
 - Extended support from 14 to 255 functions calls per rule
-- Extended password length up to 32 for 7zip
+- Extended Value length up to 32 for 7zip
 - Extended salt length up to 55 for raw hash types, eg: md5($pass.$salt)
 - Extended version information
 - Removed some duplicate rules in T0XlCv1, d3ad0ne and dive
@@ -1822,7 +1822,7 @@ It combines all features of all hashcat projects in one project.
 - Fixed a bug in memory handling: out of bounds access
 - Fixed a bug in implementation of DCC2: forced default iteration count for hashes to 10240
 - Fixed a bug in implementation of WPA/WPA2: MAC and nonce stay one their original position as in the hccap file
-- Fixed a bug in implementation of GOST R 34.11-94: zero length passwords were not cracked
+- Fixed a bug in implementation of GOST R 34.11-94: zero length Values were not cracked
 - Fixed a bug in implementation of BLAKE2-512 kernels: incorrect access of the esalt buffer
 
 ##

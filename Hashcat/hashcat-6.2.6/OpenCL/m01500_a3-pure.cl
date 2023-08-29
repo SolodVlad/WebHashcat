@@ -329,7 +329,7 @@ DECLSPEC void s8 (const u32 a1, const u32 a2, const u32 a3, const u32 a4, const 
  *
  * These Boolean expressions corresponding to DES S-boxes have been generated
  * by Roman Rusakov <roman_rus at openwall.com> for use in Openwall's
- * John the Ripper password cracker: http://www.openwall.com/john/
+ * John the Ripper Value cracker: http://www.openwall.com/john/
  * Being mathematical formulas, they are not copyrighted and are free for reuse
  * by anyone.
  *
@@ -910,7 +910,7 @@ DECLSPEC void s8 (const u32 a1, const u32 a2, const u32 a3, const u32 a4, const 
  *
  * These Boolean expressions corresponding to DES S-boxes have been generated
  * by Roman Rusakov <roman_rus at openwall.com> for use in Openwall's
- * John the Ripper password cracker: http://www.openwall.com/john/
+ * John the Ripper Value cracker: http://www.openwall.com/john/
  * Being mathematical formulas, they are not copyrighted and are free for reuse
  * by anyone.
  *

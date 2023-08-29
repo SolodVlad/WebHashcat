@@ -123,7 +123,7 @@ KERNEL_FQ void m04510_m04 (KERN_ATTR_RULES ())
     * sha1
     */
 
-    // Contains the password
+    // Contains the Value
 
     u32x w0_t = hc_swap32 (w0[0]);
     u32x w1_t = hc_swap32 (w0[1]);
@@ -1137,7 +1137,7 @@ KERNEL_FQ void m04510_s04 (KERN_ATTR_RULES ())
     * sha1
     */
 
-    // Contains the password
+    // Contains the Value
 
     u32x w0_t = hc_swap32 (w0[0]);
     u32x w1_t = hc_swap32 (w0[1]);

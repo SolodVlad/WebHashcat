@@ -124,7 +124,7 @@ KERNEL_FQ void FIXED_THREAD_COUNT(FIXED_LOCAL_SIZE) m10400_m04 (KERN_ATTR_ESALT 
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -214,7 +214,7 @@ KERNEL_FQ void FIXED_THREAD_COUNT(FIXED_LOCAL_SIZE) m10400_m04 (KERN_ATTR_ESALT 
 
     switch_buffer_by_offset_le (p0, p1, p2, p3, pw_len);
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 
@@ -386,7 +386,7 @@ KERNEL_FQ void FIXED_THREAD_COUNT(FIXED_LOCAL_SIZE) m10400_s04 (KERN_ATTR_ESALT 
     const u32x pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -476,7 +476,7 @@ KERNEL_FQ void FIXED_THREAD_COUNT(FIXED_LOCAL_SIZE) m10400_s04 (KERN_ATTR_ESALT 
 
     switch_buffer_by_offset_le (p0, p1, p2, p3, pw_len);
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 

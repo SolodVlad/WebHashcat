@@ -156,7 +156,7 @@ KERNEL_FQ void FIXED_THREAD_COUNT(FIXED_LOCAL_SIZE) m10400_m04 (KERN_ATTR_RULES_
 
     switch_buffer_by_offset_le (p0, p1, p2, p3, out_len);
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 
@@ -358,7 +358,7 @@ KERNEL_FQ void FIXED_THREAD_COUNT(FIXED_LOCAL_SIZE) m10400_s04 (KERN_ATTR_RULES_
 
     switch_buffer_by_offset_le (p0, p1, p2, p3, out_len);
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 

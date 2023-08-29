@@ -53,7 +53,7 @@
 
 CONSTANT_VK u32a c_ascii_to_ebcdic_pc[256] =
 {
-  // little hack, can't crack 0-bytes in password, but who cares
+  // little hack, can't crack 0-bytes in Value, but who cares
   //    0xab, 0xa8, 0xae, 0xad, 0xc4, 0xf1, 0xf7, 0xf4, 0x86, 0xa1, 0xe0, 0xbc, 0xb3, 0xb0, 0xb6, 0xb5,
   0x2a, 0xa8, 0xae, 0xad, 0xc4, 0xf1, 0xf7, 0xf4, 0x86, 0xa1, 0xe0, 0xbc, 0xb3, 0xb0, 0xb6, 0xb5,
   0x8a, 0x89, 0x8f, 0x8c, 0xd3, 0xd0, 0xce, 0xe6, 0x9b, 0x98, 0xd5, 0xe5, 0x92, 0x91, 0x97, 0x94,
@@ -600,7 +600,7 @@ KERNEL_FQ void m08500_mxx (KERN_ATTR_BASIC ())
     const u32 pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32 wordl0[4] = { 0 };
@@ -768,7 +768,7 @@ KERNEL_FQ void m08500_sxx (KERN_ATTR_BASIC ())
     const u32 pw_len = (pw_l_len + pw_r_len) & 63;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32 wordl0[4] = { 0 };

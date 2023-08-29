@@ -29,7 +29,7 @@
                     <span asp-validation-for="Email" class="text-danger" id="message"></span>
                 </p>
                 <p>
-                    <input type="button" id="forgotPasswordBtn" class="form_btn" value="Відправити"/>
+                    <input type="button" id="forgotValueBtn" class="form_btn" value="Відправити"/>
                 </p>
                 <p>
                     <a href="#" id="switchToLogin">Повернутися до авторизації</a>
@@ -64,11 +64,11 @@
                 <h3 class="form_title">Реєстрація</h3>
                 <p>
                     <input asp-for="Email" type="email" id="registerEmail" class="form_input" placeholder="Пошта" required />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <span asp-validation-for="Email" id="registerEmailValidationError" class="text-danger"></span>
                 </p>
                 <p>
                     <input asp-for="Password" type="password" id="registerPassword" class="form_input" placeholder="Пароль" required />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <span asp-validation-for="Password" id="registerPasswordValidationError" class="text-danger"></span>
                 </p>
                 <p>
                     <input asp-for="ConfirmPassword" type="password" id="confirmPassword" class="form_input" placeholder="Підтвердіть пароль" required />
@@ -99,9 +99,9 @@
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <input asp-for="Input.Value" class="form-control" autocomplete="current-Value" aria-required="true" placeholder="Value" />
+                    <label asp-for="Input.Value" class="form-label">Value</label>
+                    <span asp-validation-for="Input.Value" class="text-danger"></span>
                 </div>
                 <div class="checkbox mb-3">
                     <label asp-for="Input.RememberMe" class="form-label">
@@ -114,7 +114,7 @@
                 </div>
                 <div>
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        <a id="forgot-Value" asp-page="./ForgotValue">Forgot your Value?</a>
                     </p>
                     <p>
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>

@@ -21,7 +21,7 @@ namespace WebHashcat.Controllers
             string scriptPath = "hashcat-6.2.6\\hashcat.exe";
             string workingDirectory = "hashcat-6.2.6";
 
-            string arguments = @$"-m {(int)hashcatArguments.AttackMode} -a 0 {hashcatArguments.Hash} example.dict";
+            string arguments = @$"-m {(int)hashcatArguments.HashType} -a 0 {hashcatArguments.Hash} example.dict";
 
             ProcessStartInfo startInfo = new()
             {

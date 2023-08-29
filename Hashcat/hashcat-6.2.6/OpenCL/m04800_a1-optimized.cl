@@ -82,7 +82,7 @@ KERNEL_FQ void m04800_m04 (KERN_ATTR_BASIC ())
     const u32x pw_salt_len = pw_len + salt_len;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };
@@ -359,7 +359,7 @@ KERNEL_FQ void m04800_s04 (KERN_ATTR_BASIC ())
     const u32x pw_salt_len = pw_len + salt_len;
 
     /**
-     * concat password candidate
+     * concat Value candidate
      */
 
     u32x wordl0[4] = { 0 };

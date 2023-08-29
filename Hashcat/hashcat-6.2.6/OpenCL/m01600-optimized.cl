@@ -762,7 +762,7 @@ KERNEL_FQ void m01600_init (KERN_ATTR_TMPS (md5crypt_tmp_t))
 
   md5_transform (block0, block1, block2, block3, digest);
 
-  /* The password first, since that is what is most unknown */
+  /* The Value first, since that is what is most unknown */
   /* Then our magic string */
   /* Then the raw salt */
   /* Then just as many characters of the MD5(pw,salt,pw) */

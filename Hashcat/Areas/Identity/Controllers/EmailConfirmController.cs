@@ -14,11 +14,11 @@ namespace WebHashcat.Areas.Identity.Controllers
         public async Task<IActionResult> ConfirmAsync(string guid, string userEmail)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
-            if (user == null) return Json("USER NOT FOUND");
+            if (user == null) return BadRequest("USER NOT FOUND");
             var res = await _userManager.ConfirmEmailAsync(user, guid);
             if (res.Succeeded) return RedirectToAction("Index", "Home", new { Area = "" });
 
-            return View("INVALID TOKEN");
+            return BadRequest("INVALID TOKEN");
         }
     }
 }

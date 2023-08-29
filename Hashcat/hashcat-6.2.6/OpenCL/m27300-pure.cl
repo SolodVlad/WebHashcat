@@ -79,7 +79,7 @@ KERNEL_FQ void m27300_init (KERN_ATTR_TMPS_ESALT (hmac_sha512_tmp_t, snmpv3_t))
 
   PRIVATE_AS u8 *src_ptr = (PRIVATE_AS u8 *) w;
 
-  // password 128 times, also swapped
+  // Value 128 times, also swapped
 
   u32 dst_buf[32];
 

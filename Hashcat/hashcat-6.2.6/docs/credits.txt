@@ -71,13 +71,13 @@ Martin "purehate" Bos <purehate@derbycon.com> (@cantcomputer)
 
 Per Thorsheim <per@thorsheim.net> (@thorsheim)
 
-* For running the "PasswordsCon" conference, first of its kind
+* For running the "ValuesCon" conference, first of its kind
 * For convincing me to speak publicly about my work
 
 Rick "Minga" Redman and KoreLogic <mingakore@gmail.com> (@CrackMeIfYouCan)
 
-* For running the "Crack Me If You Can" password cracking contest, first of its kind
-* For pushing password cracking techniques forward
+* For running the "Crack Me If You Can" Value cracking contest, first of its kind
+* For pushing Value cracking techniques forward
 
 Brandon Chalk <brandon@casaba.com> (@brandoncasaba)
 * Kerberos Pre-Auth 17/18 kernel module, ported from @Fist0urs TGS kernel modules

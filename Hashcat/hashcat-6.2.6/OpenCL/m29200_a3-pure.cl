@@ -3,9 +3,9 @@
  * License.....: MIT
  *
  * Further credits:
- * The password-storage algorithm used by Radmin 3 was analyzed and made public
+ * The Value-storage algorithm used by Radmin 3 was analyzed and made public
  * by synacktiv:
- * https://www.synacktiv.com/publications/cracking-radmin-server-3-passwords.html
+ * https://www.synacktiv.com/publications/cracking-radmin-server-3-Values.html
  */
 
 //#define NEW_SIMD_CODE
@@ -144,7 +144,7 @@ KERNEL_FQ void m29200_mxx (KERN_ATTR_VECTOR_ESALT (radmin3_t))
     w[0] = w0;
 
 
-    // add password to the user name (and colon, included):
+    // add Value to the user name (and colon, included):
 
     sha1_ctx_t c0 = ctx0;
 
@@ -425,7 +425,7 @@ KERNEL_FQ void m29200_sxx (KERN_ATTR_VECTOR_ESALT (radmin3_t))
     w[0] = w0;
 
 
-    // add password to the user name (and colon, included):
+    // add Value to the user name (and colon, included):
 
     sha1_ctx_t c0 = ctx0;
 

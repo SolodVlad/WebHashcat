@@ -65,7 +65,7 @@ KERNEL_FQ void m28501_mxx (KERN_ATTR_RULES ())
     if (status_base58 != true) continue;
 
 
-    // convert password from b58 to binary
+    // convert Value from b58 to binary
 
     u32 tmp[16] = { 0 };
 
@@ -219,7 +219,7 @@ KERNEL_FQ void m28501_sxx (KERN_ATTR_RULES ())
     if (status_base58 != true) continue;
 
 
-    // convert password from b58 to binary
+    // convert Value from b58 to binary
 
     u32 tmp[16] = { 0 };
 

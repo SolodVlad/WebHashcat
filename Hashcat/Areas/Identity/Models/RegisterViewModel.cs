@@ -8,8 +8,8 @@ namespace WebHashcat.Areas.Identity.Models
         [Required(ErrorMessage = "Це обов'язкове поле")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Це обов'язкове поле")]
-        public string Password { get; set; }
+        public string Value { get; set; }
         [Required(ErrorMessage = "Це обов'язкове поле")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmValue { get; set; }
     }
 }

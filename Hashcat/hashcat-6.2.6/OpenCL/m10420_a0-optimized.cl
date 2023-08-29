@@ -144,7 +144,7 @@ KERNEL_FQ void m10420_m04 (KERN_ATTR_RULES_ESALT (pdf_t))
 
     switch_buffer_by_offset_le (p0, p1, p2, p3, out_len);
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 
@@ -317,7 +317,7 @@ KERNEL_FQ void m10420_s04 (KERN_ATTR_RULES_ESALT (pdf_t))
 
     switch_buffer_by_offset_le (p0, p1, p2, p3, out_len);
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 

@@ -145,7 +145,7 @@ DECLSPEC void m10400m (LOCAL_AS u32 *S, PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, 
     u32 w2_t[4];
     u32 w3_t[4];
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 
@@ -330,7 +330,7 @@ DECLSPEC void m10400s (LOCAL_AS u32 *S, PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, 
     u32 w2_t[4];
     u32 w3_t[4];
 
-    // add password
+    // add Value
     // truncate at 32 is wanted, not a bug!
     // add o_buf
 

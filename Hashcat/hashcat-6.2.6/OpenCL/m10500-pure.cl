@@ -170,7 +170,7 @@ KERNEL_FQ void m10500_init (KERN_ATTR_TMPS_ESALT (pdf14_tmp_t, pdf_t))
 
   switch_buffer_by_offset_le (w0_t, w1_t, w2_t, w3_t, pw_len);
 
-  // add password
+  // add Value
   // truncate at 32 is wanted, not a bug!
   // add o_buf
 

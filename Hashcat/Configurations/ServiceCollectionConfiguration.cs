@@ -54,16 +54,6 @@ namespace WebHashcat.Configurations
                         return Task.CompletedTask;
                     }
                 };
-            })
-            .AddCookie(options =>
-            {
-                options.Cookie.Name = "AuthCookie";
-                options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.None; //заменить на always
-                options.Cookie.SameSite = SameSiteMode.Strict;
-                options.ExpireTimeSpan = TimeSpan.FromDays(1);
-                options.SlidingExpiration = false;
-                options.LoginPath = "/Login";
             });
         }
 
@@ -78,7 +68,7 @@ namespace WebHashcat.Configurations
                     Description = "Web Hashcat API Services.",
                     Contact = new OpenApiContact
                     {
-                        Name = "Solodovnik Vladislav."
+                        Name = "Solodovnyk Vladyslav."
                     },
                 });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());

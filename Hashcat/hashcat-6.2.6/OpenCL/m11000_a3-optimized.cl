@@ -67,7 +67,7 @@ DECLSPEC void m11000m (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
      */
 
     // first step fixed 56 bytes of salt
-    // after 56 byte salt, we have beginning of the password
+    // after 56 byte salt, we have beginning of the Value
 
     u32x w0_t[4];
     u32x w1_t[4];
@@ -341,7 +341,7 @@ DECLSPEC void m11000s (PRIVATE_AS u32 *w0, PRIVATE_AS u32 *w1, PRIVATE_AS u32 *w
      */
 
     // first step fixed 56 bytes of salt
-    // after 56 byte salt, we have beginning of the password
+    // after 56 byte salt, we have beginning of the Value
 
     u32x w0_t[4];
     u32x w1_t[4];

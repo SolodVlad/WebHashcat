@@ -143,7 +143,7 @@ KERNEL_FQ void m22100_init (KERN_ATTR_TMPS_ESALT (bitlocker_tmp_t, bitlocker_t))
 
   if (gid >= GID_CNT) return;
 
-  // sha256 of utf16le converted password:
+  // sha256 of utf16le converted Value:
 
   sha256_ctx_t ctx0;
 
@@ -567,7 +567,7 @@ KERNEL_FQ void m22100_comp (KERN_ATTR_TMPS_ESALT (bitlocker_tmp_t, bitlocker_t))
   if (mac[2] != out0[2]) return;
   if (mac[3] != out0[3]) return;
 
-  // if we end up here, we are sure to have found the correct password:
+  // if we end up here, we are sure to have found the correct Value:
 
   if (hc_atomic_inc (&hashes_shown[DIGESTS_OFFSET_HOST]) == 0)
   {
