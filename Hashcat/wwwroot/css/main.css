@@ -1,5 +1,94 @@
 /*Main page*/
-* {
+html {
+    font-size: 16px;
+}
+body {
+    height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    background-color: #FFF;
+    min-width: 320px;
+    background: linear-gradient(#000, #04143f);
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+section {
+    padding: 50px 0;
+}
+a {
+    color: #FFF !important;
+}
+a:hover {
+    color: #0b5a9d !important; 
+}
+/* Header */
+.navbar-dark .navbar-nav .nav-link {
+    font-weight: 500;
+}
+.navbar-brand {
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.navbar-nav .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+.top-menu li a::after {
+    content: '';
+    display: block;
+    width: 100%;
+    background-color: #0b5a9d;
+    height: 1px;
+    transition: all .3s;
+    transform: scale(0);
+}
+.top-menu li a:hover::after {
+    transform: scale(1);
+}
+.contant-site {
+    margin-top: 100px;
+}
+/*.top-menu-button::after {
+    content: '';
+    display: block;
+    width: 100%;
+    background-color: #0b5a9d;
+    height: 1px;
+    transition: all .3s;
+    transform: scale(0);
+}
+.top-menu-button:hover::after {
+    transform: scale(1);
+}*/
+/* Header */
+/* Footer */
+.footer {
+    background-color: #000;
+}
+.footer h4 {
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 16px;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 3px;
+}
+.footer a{
+    text-decoration: none;
+    transition: all .3s;
+}
+.footer a:hover {
+    color: #0b5a9d;
+    text-decoration: underline;
+}
+.footer a .footer li {
+    color: #FFF;
+}
+/* Footer */
+/** {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,8 +107,8 @@ body {
 }
 a {
     text-decoration: none;
-    color: #FFF !important;
-}
+    color: #FFF !important;*/
+/*}
 button {
     padding: 10px 20px;
     background-color: transparent;
@@ -86,9 +175,8 @@ header nav ul li a {
     display: block;
 }
 header nav ul li a:hover {
-    background: #0b5a9d;
-    /*color: #000 !important;*/ /*Не працює зміна кольору навіть з пріоритетом*/
-}
+    background: #0b5a9d;*/
+/*}
 header nav ul li ul {
     position: absolute;
     padding-left: 0 !important;
@@ -103,12 +191,12 @@ header nav ul li ul li {
     width: 100%;
     border: 1px solid #fff;
 }
-header nav ul li:hover > ul {
+header nav div div ul li:hover > ul {
     display: initial;
 }
 .pageContent {
     margin-top: 3%;
     margin-left: 10%;
     margin-right: 10%;
-}
+}*/
 /*Main page*/

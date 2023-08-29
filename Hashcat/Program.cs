@@ -51,7 +51,7 @@ builder.Services.ConfigureSwagger();
 //{
 //    options.Cookie.Name = "AuthCookie";
 //    options.Cookie.HttpOnly = true;
-//    options.Cookie.SecurePolicy = CookieSecurePolicy.None; //заменить на always
+//    options.Cookie.SecurePolicy = CookieSecurePolicy.None; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ always
 //    options.Cookie.SameSite = SameSiteMode.Strict;
 //    options.ExpireTimeSpan = TimeSpan.FromDays(1);
 //    options.SlidingExpiration = false;
@@ -144,7 +144,7 @@ app.MapRazorPages();
 //        .AllowCredentials();
 //});
 
-app.MapHub<HashcatHub>("/hubs/hashcat");
+app.MapHub<CabinetHub>("/Cabinet");
 
 app.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}");
 
