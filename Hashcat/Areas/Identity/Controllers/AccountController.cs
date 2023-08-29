@@ -50,8 +50,9 @@ namespace WebHashcat.Areas.Identity.Controllers
         [Route("ResetPassword")]
         public IActionResult ResetPassword(string userEmail, string token = null)
         {
-            if (token == null) return BadRequest("A code must be supplied for password reset");
-            return View(new ResetPassword { Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token)), Email = userEmail });
+            return View();
+            //if (token == null) return BadRequest("A code must be supplied for password reset");
+            //return View(new ResetPassword { Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token)), Email = userEmail });
         }
 
         [HttpPost]

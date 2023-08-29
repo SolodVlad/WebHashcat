@@ -106,7 +106,7 @@ app.MapRazorPages();
 //        .AllowCredentials();
 //});
 
-app.MapHub<CabinetHub>("/Cabinet");
+//app.MapHub<CabinetHub>("/Cabinet");
 
 app.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}");
 
