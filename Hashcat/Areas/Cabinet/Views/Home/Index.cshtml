@@ -18,7 +18,7 @@
                         <i class="bg-info bi-house-door text-center me-1"></i>
                         Взлом хешів
                     </a>
-                    <a class="nav-link active" id="replenishment-tab" data-bs-toggle="pill" data-bs-target="#replenishment-crack" role="tab" aria-controls="replenishment" aria-selected="true">
+                    <a class="nav-link" id="replenishment-tab" data-bs-toggle="pill" data-bs-target="#replenishment-crack" role="tab" aria-controls="replenishment" aria-selected="false">
                         <i class="bg-info bi-house-door text-center me-1"></i>
                         Поповнення балансу
                     </a>
@@ -49,11 +49,21 @@
                         </tr>
                     </table>
                 </div>
-                <div class="tab-pane fade show active" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
-                    <div class="profile_content" id="profile_2">
+                <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
+                    <h3 class="mb-4">Replenishment</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Напис</label>
+                                <input type="number" class="form-group">
+                                <button class="btn btn-primary">Поповнити</button>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="profile_content" id="profile_2">
                         <input type="number" id="sum"/>
                         <button type="submit" id="replenishmentBtn">Поповнити баланс</button>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                     <h3 class="mb-4">Password Settings</h3>
