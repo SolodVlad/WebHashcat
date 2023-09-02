@@ -32,7 +32,7 @@
                     <input type="button" id="forgotPasswordBtn" class="form_btn" value="Відправити"/>
                 </p>
                 <p>
-                    <a href="#" id="switchToLogin">Повернутися до авторизації</a>
+                    <a href="#" id="switchToLogin" style="text-decoration: none;">Повернутися до авторизації</a>
                 </p>
             </div>
 
@@ -48,14 +48,20 @@
                 </p>
                 <p>
                     <label>
-                        <input type="checkbox" id="isRememberMe"/> Запам'ятати мене
+                        <input type="checkbox" id="isRememberMe"/>
+                        <span class="text" style="color: #FFF;">Запам'ятати мене</span>
                     </label>
                 </p>
                 <p>
-                    <input type="button" id="loginBtn" class="form_btn" value="Увійти"/>
+                    <div class="col-md-1 mt-3 mt-md-0">
+                        <div class="d-grid">
+                            <input class="btn btn-primary btn-login" id="loginBtn" type="button" value="Увійти" />
+                        </div>
+                    </div>
+                    @*<input type="button" id="loginBtn" class="form_btn" value="Увійти"/>*@
                 </p>
                 <p>
-                    <a href="#" id="switchToRestore">Відновити пароль</a>
+                    <a href="#" id="switchToRestore" style="text-decoration: none;">Відновити пароль</a>
                 </p>
                 @*@Html.AntiForgeryToken()*@
             </div>

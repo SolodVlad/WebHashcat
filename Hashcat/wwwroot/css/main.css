@@ -12,6 +12,12 @@ body {
     min-width: 320px;
     background: linear-gradient(#000, #04143f);
 }
+.visual-style-black {
+    background-color: #000;
+}
+.empty-space {
+    height: 100px;
+}
 img {
     max-width: 100%;
     height: auto;
@@ -22,6 +28,7 @@ section {
 a {
     color: #FFF !important;
 }
+/* зробити 2 ховери */
 a:hover {
     color: #0b5a9d !important; 
 }
@@ -33,11 +40,7 @@ a:hover {
     font-weight: 600;
     text-transform: uppercase;
 }
-.navbar-nav .dropdown-menu {
-    right: 0;
-    left: auto;
-}
-.top-menu li a::after {
+.top-menu .visual-a-blue::after {
     content: '';
     display: block;
     width: 100%;
@@ -49,23 +52,68 @@ a:hover {
 .top-menu li a:hover::after {
     transform: scale(1);
 }
-.contant-site {
-    margin-top: 100px;
-}
-/*.top-menu-button::after {
+.top-menu .visual-a-black::after {
     content: '';
     display: block;
     width: 100%;
-    background-color: #0b5a9d;
+    color: #000 !important;
+    background-color: #000;
     height: 1px;
     transition: all .3s;
     transform: scale(0);
 }
-.top-menu-button:hover::after {
+.top-menu li a:hover::after {
     transform: scale(1);
-}*/
+}
+.dropdown-menu li a:hover {
+    color: #000;
+}
+.contant-site {
+    margin-top: 100px;
+}
+header {
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+header::before,
+header::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    background: linear-gradient(45deg, #0e4cf8, #0934a8, #062372, #030e2e,#01030a, #0e4cf8, #0934a8, #062372, #030e2e,#01030a );
+    background-size: 500%;
+    z-index: -1;
+    animation: animate 30s ease infinite;
+}
+header::after {
+    filter: blur(15px);
+}
+@keyframes animate {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 300% 0;
+    }
+
+    0% {
+        background-position: 0 0;
+    }
+}
+header .navbar-brand {
+    font-weight: 600;
+    transition: .5s;
+}
+header .navbar-brand:hover {
+    transform: scale(1.1);
+}
 /* Header */
-/* Footer */
+/* Footer  Закінчити пізнише*/
 .footer {
     background-color: #000;
 }
@@ -88,7 +136,8 @@ a:hover {
     color: #FFF;
 }
 /* Footer */
-/** {
+/* Старий код Фул сss
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;

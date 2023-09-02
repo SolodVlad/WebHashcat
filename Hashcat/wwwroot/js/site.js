@@ -69,6 +69,7 @@
 //    }
 //});
 
+
 function validateToken() {
     var token = Cookies.get('AuthCookie');
     if (token) {
