@@ -2,12 +2,82 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<section></section>
 <head>
     <link rel="stylesheet" href="~/css/searchByDatabase.css" asp-append-version="true" />
 </head>
-
-<div class="container_search_db">
+<section>
+    <div class="container">
+        <form>
+            <div class="row">
+                <div class="col-md-11">
+                    <textarea class="form-control search-db-style" id="hashes" placeholder="Додайте свій хеш..."></textarea>
+                </div>
+                <div class="col-md-1 mt-3 mt-md-0">
+                    <div class="d-grid">
+                        <input class="btn btn-primary btn-search-db" id="searchPass" type="button" value="Пошук" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <p class="text-db"><strong>Color Codes: </strong> <mark style="background-color: green"> Green: </mark> Exact match, <mark style="background-color: #95cc0a"> Yellow: </mark> Partial match, <mark style="background-color: red"> Red: </mark> Not found.</p>
+            </div>
+        </form>
+    </div>
+</section>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Хеш</th>
+            <th>Тип</th>
+            <th>Результат</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>a1d763f502ac82e15c36cdd9849eea897c6d2686275468e1cb54db724f5edd9d20097748e656a97ebce98d67c3a880b87a618b9d65b7d02314e094da036f5780</td>
+            <td>Так</td>
+            <td>adfsafasdfasf</td>
+        </tr>
+        <tr>
+            <td>a1d763f502ac82e15c36cdd9849eea897c6d2686275468e1cb54db724f5edd9d20097748e656a97ebce98d67c3a880b87a618b9d65b7d02314e094da036f5782</td>
+            <td>Так</td>
+            <td>Ні</td>
+        </tr>
+        <tr>
+           <td>a1d763f502ac82e15c36cdd9849eea897c6d2686275468e1cb54db724f5edd9d20097748e656a97ebce98d67c3a880b87a618b9d65b7d02314e094da036f5781</td>
+           <td>Ні</td>
+           <td>Ні</td>
+        </tr>
+    </tbody>
+</table>
+@*<table class="table">
+    <thead>
+        <tr>
+            <th class="col-md-7 th" scope="col">Хеш</th>
+            <th class="col-md-1 th" scope="col">Тип</th>
+            <th class="col-md-4 th" scope="col">Результат</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @*td as td ad td af col-md-7 col-md-1 col-md-4*@
+            @*<td>a1d763f502ac82e15c36cdd9849eea897c6d2686275468e1cb54db724f5edd9d20097748e656a97ebce98d67c3a880b87a618b9d65b7d02314e094da036f5780</td>
+            <td>Так</td>
+            <td>adfsafasdfasf</td>
+        </tr>
+        <tr>
+            <td>a1d763f502ac82e15c36cdd9849eea897c6d2686275468e1cb54db724f5edd9d20097748e656a97ebce98d67c3a880b87a618b9d65b7d02314e094da036f5782</td>
+            <td>Так</td>
+            <td>Ні</td>
+        </tr>
+        <tr>
+            <td>a1d763f502ac82e15c36cdd9849eea897c6d2686275468e1cb54db724f5edd9d20097748e656a97ebce98d67c3a880b87a618b9d65b7d02314e094da036f5781</td>
+            <td>Ні</td>
+            <td>Ні</td>
+        </tr>
+    </tbody>
+</table>*@
+@*<div class="container_search_db">
     <form class="form_search_db">
         <textarea class="textarea_search_db" id="hashes" placeholder="Додайте свій хеш..."></textarea>
         <input class="btn_search_db" id="searchPass" type="button" value="Пошук"/>
@@ -24,8 +94,8 @@
         <td class="td" id="hashType">Unknown</td>
         <td class="td" id="Value">Unrecognized hash format.</td>
         </tr>*@
-    </table>
-</div>
+    @*</table>
+</div>*@
 
 @*//////////////////////////////////////////////////Рекламні банери/////////////////////////////////////////////////////////*@
 @*<div class="body_card">

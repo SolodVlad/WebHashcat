@@ -8,36 +8,34 @@
     <link rel="stylesheet" href="~/css/cabinet.css" asp-append-version="true" />
 </head>
 
-<section></section>
-
-<div class="container">
-    <div>
-        <div class="profile_tab">
-            <div class="profile_menu">
-                <ul class="menu">
-                    <li class="active" href="#Menu_1"><a>Hash crack</a></li>
-                    <li href="#Payment"><a>Payment</a></li>
-                    <li href="#Value"><a>Value</a></li>
-                    <li><a>Log out</a></li>
-                </ul>
+<section class="py-5 my-5">
+    <div class="container">
+        <h1 class="mb-5">Profile</h1>
+        <div class="bg-dark shadow rounded d-flex d-sm-row static-content">
+            <div class="profile-tab-nav border-right p-4">
+                <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" data-bs-target="#hash-crack" role="tab" aria-controls="hash-crack" aria-selected="true">
+                        <i class="bg-info bi-house-door text-center me-1"></i>
+                        Взлом хешів
+                    </a>
+                    <a class="nav-link active" id="replenishment-tab" data-bs-toggle="pill" data-bs-target="#replenishment-crack" role="tab" aria-controls="replenishment" aria-selected="true">
+                        <i class="bg-info bi-house-door text-center me-1"></i>
+                        Поповнення балансу
+                    </a>
+                    <a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
+                        <i class="bi bi-key text-center me-1"></i>
+                        Зміна паролю
+                    </a>
+                </div>
             </div>
-            <div class="separator" />
-            <div class="profile_window">
-                <div class="profile_content active" id="profile_1">
-                    @* <select asp-for="HashType" asp-items="Html.GetEnumSelectList<Domain.Models.HashType>()" id="attackModeSelect">
-                        <option selected="selected">Select hash...</option>
-                    </select>
-                    <span asp-validation-for="HashType" class="text-danger">ATTACK</span>*@
-
+            <div class="tab-content p-4 p-md-5 flex-grow-1" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
                     <input asp-for="Hash" placeholder="Enter hash" id="hash" />
                     <span asp-validation-for="Hash" class="text-danger">HASH</span>
                     <button type="submit" id="startAutodetectModeBtn">NEXT</button>
 
                     <select id="hashTypesSelect" style="display: none"></select>
                     <button type="submit" id="startCrackBtn" style="display: none">START CRACK</button>
-
-                    @* <p id="hashcatResult"></p> *@
-
                     <table border="1" id="hashcatResultsTable">
                         <tr>
                             <th class="th">Значення (пароль)</th>
@@ -51,6 +49,207 @@
                         </tr>
                     </table>
                 </div>
+                <div class="tab-pane fade show active" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
+                    <div class="profile_content" id="profile_2">
+                        <input type="number" id="sum"/>
+                        <button type="submit" id="replenishmentBtn">Поповнити баланс</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                    <h3 class="mb-4">Password Settings</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Old password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>New password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Confirm new password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">Update</button>
+                        <button class="btn btn-light">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@*Чат джипиТи*@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // При кліку на вкладку
+        $(".nav-link").on("click", function () {
+            // Вимикаємо активну вкладку
+            $(".nav-link").removeClass("active");
+            // Вимикаємо відображення активного контенту
+            $(".tab-pane").removeClass("show active");
+            // Отримуємо ідентифікатор вкладки, на яку було натиснуто
+            var tabId = $(this).attr("aria-controls");
+            // Активуємо вибрану вкладку
+            $(this).addClass("active");
+            // Показуємо контент відповідної вкладки
+            $("#" + tabId).addClass("show active");
+        });
+    });
+</script>
+@*Старий код 3*@
+@*<section class="py-5 my-5">
+    <div class="container">
+        <h1 class="mb-5">Profile</h1>
+        <div class="bg-dark shadow rounded d-flex d-sm-row static-content">
+            <div class="profile-tab-nav border-right p-4">
+                <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" href="#hash-crack" role="tab" data-bs-target="#hash-crack" aria-controls="hash-crack" aria-selected="true">
+                        <i class="bg-info bi-house-door text-center me-1"></i>
+                        HashCrack
+                    </a>
+                    <a class="nav-link" id="password-tab" data-bs-toggle="pill" href="#password" role="tab" data-bs-target="#password" aria-controls="password" aria-selected="false">
+                        <i class="bi bi-key text-center me-1"></i>
+                        Password
+                    </a>
+                    <a class="nav-link" id="payment-tab" data-bs-toggle="pill" href="#payment" role="tab" aria-controls="payment" aria-selected="false">
+                        <i class="bi bi-key text-center me-1"></i>
+                        Payment
+                    </a>
+                    <a class="nav-link" id="value-tab" data-bs-toggle="pill" href="#value" role="tab" aria-controls="value" aria-selected="false">
+                        <i class="bi bi-key text-center me-1"></i>
+                        Value
+                    </a>
+                    <a class="nav-link" id="log-out-tab" data-bs-toggle="pill" href="#log-out" role="tab" aria-controls="log-out" aria-selected="false">
+                        <i class="text-center me-1"></i>
+                        Log out
+                    </a>
+                </div>
+            </div>
+            <div class="tab-content p-4 p-md-5 flex-grow-1" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
+                    <h3 class="mb-4">Заголовок</h3>
+                    <select asp-for="HashType" asp-items="Html.GetEnumSelectList<Domain.Models.HashType>()" id="attackModeSelect">
+                        <option selected="selected">Select hash...</option>
+                    </select>
+                    <span asp-validation-for="HashType" class="text-danger">ATTACK</span>
+                    <input asp-for="Hash" placeholder="Hash" id="hash" />
+                    <span asp-validation-for="Hash" class="text-danger">HASH</span>
+                    <button type="submit" id="startCrackBtn">START CRACK</button>
+                </div>
+                
+            </div>
+            <div class="tab-content p-4 p-md-5 flex-grow-1" id="v-pills-tabContent">
+                <div class="tab-pane fade show" id="password" role="tabpanel" aria-labelledby="password-tab">
+                    <h3 class="mb-4">Password Settings</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Old password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>New password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Confirm new password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">Update</button>
+                        <button class="btn btn-light">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>*@
+@*Старий код 2*@
+@*<section class="py-5 my-5">
+    <div class="container">
+        <h1 class="mb-5">Profile</h1>
+        <div class="bg-dark shadow rounded d-flex flex-column d-sm-row">
+            <div class="profile-tab-nav border-right d-flex p-4">
+                <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                    <a class="nav-link active" id="menu-1-tab" data-bs-toggle="pill" href="menu-1"*@ @*data-bs-target="#menu-1"*@ @*role="tab" aria-controls="menu-1" aria-selected="true">
+                        <i class="bg-info bi-house-door text-center me-1"></i>
+                        Menu-1
+                    </a>
+                    <a class="nav-link" id="password-tab" data-bs-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
+                        <i class="bi bi-key text-center me-1"></i>
+                        Password
+                    </a>
+                    <a class="nav-link" id="payment-tab" data-bs-toggle="pill" href="#payment" role="tab" aria-controls="payment" aria-selected="false">
+                        <i class="bi bi-key text-center me-1"></i>
+                        Payment
+                    </a>
+                    <a class="nav-link" id="value-tab" data-bs-toggle="pill" href="#value" role="tab" aria-controls="value" aria-selected="false">
+                        <i class="bi bi-key text-center me-1"></i>
+                        Value
+                    </a>
+                    <a class="nav-link" id="log-out-tab" data-bs-toggle="pill" href="#log-out" role="tab" aria-controls="log-out" aria-selected="false">
+                        <i class="text-center me-1"></i>
+                        Log out
+                    </a>
+                </div>
+            </div>
+            <div class="tab-content p-4 p-md-5 flex-grow-1" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="menu-1" role="tabpanel" aria-labelledby="menu-1-tab">
+                    <h3 class="mb-4">Заголовок</h3>
+                    <select asp-for="HashType" asp-items="Html.GetEnumSelectList<Domain.Models.HashType>()" id="attackModeSelect">
+                        <option selected="selected">Select hash...</option>
+                    </select>
+                    <span asp-validation-for="HashType" class="text-danger">ATTACK</span>
+                    <input asp-for="Hash" placeholder="Hash" id="hash" />
+                    <span asp-validation-for="Hash" class="text-danger">HASH</span>
+                    <button type="submit" id="startCrackBtn">START CRACK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>*@
+@*Старий код 1*@
+@*<div class="container">
+    <div>
+        <div class="profile_tab">
+            <div class="profile_menu">
+                <ul class="menu">
+                    <li class="active" href="#Menu_1"><a>Hash crack</a></li>
+                    <li href="#Payment"><a>Payment</a></li>
+                    <li href="#Value"><a>Value</a></li>
+                    <li><a>Log out</a></li>
+                </ul>
+            </div>
+            <div class="separator" />
+            <div class="profile_window">
+                <div class="profile_content active" id="profile_1">
+                    <select asp-for="HashType" asp-items="Html.GetEnumSelectList<Domain.Models.HashType>()" id="attackModeSelect">
+                        <option selected="selected">Select hash...</option>
+                    </select>
+                    <span asp-validation-for="HashType" class="text-danger">ATTACK</span>
+
+                    
+                </div>
                 <div class="profile_content" id="profile_2">
                     <input type="number" id="sum"/>
                     <button type="submit" id="replenishmentBtn">Поповнити баланс</button>
@@ -59,7 +258,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <script src="~/js/cabinet.js"></script>
 <script src="~/js/signalr.js"></script>

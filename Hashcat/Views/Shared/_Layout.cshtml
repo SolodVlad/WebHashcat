@@ -16,7 +16,7 @@
 </head>
 <body>
     <header id="header" class="fixed-top">
-        <nav class="navbar navbar-expand-lg navbar-dark"  style="background-color: #000">
+        <nav class="navbar navbar-expand-lg navbar-dark visual-style-black">
             <div class="container-fluid">
                 <a class="navbar-brand" href="@Url.Action("Index", "Home", new { Area = "" })">WebHashCat</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,24 +25,24 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 top-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("ResetPassword", "Account", new { Area = "Identity" })">Відновлення паролю</a>
+                            <a class="nav-link visual-a-blue" href="@Url.Action("ResetPassword", "Account", new { Area = "Identity" })">Відновлення паролю</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Home", new {Area = "Cabinet"})">Кабінет</a>
+                            <a class="nav-link visual-a-blue" href="@Url.Action("Index", "Home", new {Area = "Cabinet"})">Кабінет</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Послуги</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #000">
-                                <li><a class="dropdown-item" href="#">Brute</a></li>
-                                <li><a class="dropdown-item" href="#">Склеювання словників</a></li>
-                                <li><a class="dropdown-item" href="#">Telegram Bot</a></li>
+                            <a class="nav-link dropdown-toggle visual-a-blue" data-bs-toggle="dropdown" href="#">Послуги</a>
+                            <ul class="dropdown-menu visual-style-black" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item visual-a-black" href="#">Brute</a></li>
+                                <li><a class="dropdown-item visual-a-black" href="#">Склеювання словників</a></li>
+                                <li><a class="dropdown-item visual-a-black" href="#">Telegram Bot</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Скачування</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Мобільний додаток</a></li>
-                                <li><a class="dropdown-item" href="#">Додаток</a></li>
+                            <a class="nav-link dropdown-toggle visual-a-blue" data-bs-toggle="dropdown" href="#">Скачування</a>
+                            <ul class="dropdown-menu visual-style-black" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item visual-a-black" href="#">Мобільний додаток</a></li>
+                                <li><a class="dropdown-item visual-a-black" href="#">Додаток</a></li>
                             </ul>
                         </li>
                         <partial name="_LoginPartial" />
@@ -55,6 +55,7 @@
             </div>
         </nav>
     </header>
+    <div class="empty-space"></div>
     <div class="container">
         <asp:Content ID="ContentBody" ContentPlaceHolderID="MainContent" runat="server">
             <!-- Пример использования jQuery на этой странице -->
@@ -68,11 +69,13 @@
 
         @RenderBody()
     </div>
-    @*<footer class="footer fixed-bottom">
-        <div class="container">
-            <p>&copy; 2023 Ваша компанія. Усі права захищено.</p>
-        </div>
-    </footer>*@
+    @*<section>
+        <footer class="footer fixed-bottom">
+            <div class="container">
+                <p>&copy; 2023 Ваша компанія. Усі права захищено.</p>
+            </div>
+        </footer>
+    </section>*@
      @*Приклад футеру*@
     @* <footer id="footer" class="fixed-bottom">
         <section class="footer">

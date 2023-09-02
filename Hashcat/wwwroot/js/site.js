@@ -1,4 +1,4 @@
-﻿function validateToken() {
+function validateToken() {
     var token = Cookies.get('AuthCookie');
     if (token) {
         $.ajax({
@@ -110,80 +110,4 @@ $('#logoutBtn').click(function () {
             }
         }
     });
-})
-
-//$("#signup-btn").on("click", function (x) {
-//    console.log('A')
-//    formBox.classList.add('active');
-//});
-//$(".signin-btn").on("click", function (x) {
-//    formBox.classList.remove('active');
-//});
-
-//const signInBtn = document.querySelector('.signin-btn')
-//const signUpBtn = document.querySelector('.signup-btn');
-
-//signUpBtn.addEventListener('click', function() {
-//    formBox.classList.add('active');
-//});
-//signInBtn.addEventListener('click', function() {
-//    formBox.classList.remove('active');
-//});
-
-$(function () {
-    
-
-    //$('#registerEmail, #registerPasssword, #confirmValue').on('input', function () {
-    //    var validationResult = ValidateField($('#registerEmail'));
-    //    if (typeof validationResult === 'string') $('#registerEmailValidationError').text(validationResult);
-    //    else $('#registerEmailValidationError').text(validationResult);
-
-
-    //    var registerBtn = $('#registerBtn');
-    //    if (typeof validationResult === 'boolean') registerBtn.prop('disabled', true);
-    //    else registerBtn.prop('disabled', false);
-    //});
-
-    //function ValidateField(element) {
-    //    var isValid = element[0].checkValidity();
-    //    if (isValid) return isValid;
-    //    return element[0].validationMessage;
-    //}
-
-    //$("#attackModeSelect, #hash").on("input", function () {
-    //    var isValid = $('#hashcatForm').checkValidity();
-
-    //    var attackModeSelect = $("#attackModeSelect");
-    //    var hash = $("#hash");
-    //    var startCrackBtn = $("#startCrackBtn");
-
-    //    if (isValid) startCrackBtn.prop("disabled", true);
-    //    else startCrackBtn.prop("disabled", false);
-    //});
-
-    //// Обработчик события клика по ссылке с классом "Payment"
-    //$('a[href="#Payment"]').click(function () {
-    //    // Удаление класса "active" у всех элементов с классом "profile_content"
-    //    $('.profile_content').removeClass('active');
-    //    // Добавление класса "active" к элементам с id "profile_2" и ссылке с href "#Payment"
-    //    $('#profile_2, a[href="#Payment"]').addClass('active');
-    //});
-
-    //// Обработчик события клика по ссылке с классом "Menu_1"
-    //$('a[href="#Menu_1"]').click(function () {
-    //    // Удаление класса "active" у всех элементов с классом "profile_content"
-    //    $('.profile_content').removeClass('active');
-    //    // Добавление класса "active" к элементам с id "profile_1" и ссылке с href "#Menu_1"
-    //    $('#profile_1, a[href="#Menu_1"]').addClass('active');
-    //});
-
-    //// Обработчик события клика по ссылке с классом "Value"
-    //$('a[href="#Value"]').click(function () {
-    //    // Удаление класса "active" у всех элементов с классом "profile_content"
-    //    $('.profile_content').removeClass('active');
-    //    // Добавление класса "active" к элементам с id "profile_3" и ссылке с href "#Value"
-    //    $('#profile_3, a[href="#Value"]').addClass('active');
-    //});
-    // Обработчик события клика по ссылке с классом "Payment"
-    
 })

@@ -31,6 +31,11 @@
     border-radius: 20px 20px;
     /*outline: solid;*/
 }
+@media (min-width: 768px) {
+    .static-content {
+        height: 600px
+    }
+}
 /*.menu li.active:before {
     content: "";
     position: absolute;
