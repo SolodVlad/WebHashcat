@@ -48,12 +48,18 @@
     }
 }*@
 
-<li class="nav-item" id="authenticatedNav" style="display: none;">
-    <a id="showEmail" class="nav-link text-dark" href="@Url.Action("Index", "Home", new {Area = "Cabinet"})" title="Manage"></a>
+<li class="nav-item" id="balanceLi" style="display: none;">
+    <p id="showBalance" class="nav-link"></p>
 </li>
-<li class="nav-item" id="logoutNav" style="display: none;">
-    <input type="button" id="logoutBtn" class="nav-link btn btn-link text-dark" value="Вихід" />
+
+<li class="nav-item" id="emailLi" style="display: none;">
+    <a id="showEmail" class="nav-link" href="@Url.Action("Index", "Home", new {Area = "Cabinet"})" title="Кабінет"></a>
 </li>
-<li class="nav-item" id="loginNav">
+
+<li class="nav-item" id="logoutLi" style="display: none;">
+    <input type="button" id="logoutBtn" class="nav-link btn btn-link" value="Вихід" />
+</li>
+
+<li class="nav-item" id="loginLi">
     <a href="@Url.Action("Login", "Account", new {Area = "Identity"})">Авторизація</a>
 </li>

@@ -1,5 +1,4 @@
-﻿using Domain.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace WebHashcat.ViewModels
 {
@@ -8,7 +7,7 @@ namespace WebHashcat.ViewModels
         public string Hash { get; set; }
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Enums.HashType HashType { get; set; }
-        public string? Password { get; set; }
+        public string? Value { get; set; }
         public bool IsSuccess { get; set; }
     }
 }

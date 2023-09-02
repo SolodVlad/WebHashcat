@@ -153,16 +153,9 @@ namespace WebHashcat.Areas.Identity.Controllers
 
                     AppendCookie("AuthCookie", jwtAccessToken, login.IsRememberMe);
 
-                    return Ok();
+                    var userBalance = user.Balance;
 
-
-                    //return Ok(new
-                    //{
-                    //    Token = new JwtSecurityTokenHandler().WriteToken(jwtAccessToken),
-                    //    //RefreshToken = refreshToken,
-                    //    //Expiration = token.ValidTo,
-                    //    //Response = new Response() { Status = "Success", Message = "Authenticated" }
-                    //});
+                    return Ok(userBalance);
                 }
             }
             return Unauthorized();
@@ -235,7 +228,11 @@ namespace WebHashcat.Areas.Identity.Controllers
                     var newJwtAccessSecurityToken = _tokenService.GenerateNewAccessToken(principal.Claims.ToList());
                     AppendCookie("AuthCookie", new JwtSecurityTokenHandler().WriteToken(newJwtAccessSecurityToken), isRememberMe);
 
-                    return Ok(userName);
+                    var currentUser = await _userManager.FindByNameAsync(userName);
+
+                    var balance = currentUser.Balance;
+
+                    return Ok(new { userName, balance });
                 }
 
                 Response.Cookies.Delete("AuthCookie");

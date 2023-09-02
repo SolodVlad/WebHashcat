@@ -9,6 +9,28 @@
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "dist/jquery.min.js"
+      ]
+    },
+    {
+      "library": "bootstrap@5.3.1",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "dist/css/bootstrap.min.css",
+        "dist/js/bootstrap.min.js"
+      ]
+    },
+    {
+      "library": "js-cookie@3.0.5",
+      "destination": "wwwroot/lib/js-cookie/",
+      "files": [
+        "dist/js.cookie.min.js"
+      ]
     }
   ]
 }

@@ -1,5 +1,4 @@
-﻿using BLL.Services;
-using Domain.Models;
+﻿using Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -7,35 +6,109 @@ using System.Diagnostics;
 using System.Globalization;
 using WebHashcat.Models;
 
-namespace WebHashcat.SignalR
+namespace WebHashcat.Hubs
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class HashcatHub : Hub
     {
-        public void StartHashcat(HashcatArguments hashcatArguments)
+        private readonly string _scriptPath;
+        private readonly string _workingDirectory;
+
+        private bool isMultipleHashTypes;
+        private bool isOneHashType;
+        private bool isNotHash;
+
+        private readonly Dictionary<string, Process> _processes;
+
+        public HashcatHub()
         {
-            //string scriptPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hashcat-6.2.6", "hashcat.exe");
-            //string workingDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hashcat-6.2.6");
+            _scriptPath = "hashcat-6.2.6\\hashcat.exe";
+            _workingDirectory = "hashcat-6.2.6";
+            _processes = new Dictionary<string, Process>();
+        }
 
-            string scriptPath = "hashcat-6.2.6\\hashcat.exe";
-            string workingDirectory = "hashcat-6.2.6";
+        public void StartAutodetectModeHashcat(string hash)
+        {
+            //string scriptPath = "hashcat-6.2.6\\hashcat.exe";
+            //string workingDirectory = "hashcat-6.2.6";
 
-            string arguments = @$"-m {(int)hashcatArguments.HashType} -a 0 {hashcatArguments.Hash} BasicPasswords_+_10-million-password-list-top-1000000_+_piotrcki-wordlist-top10m_+_rockyou_+_PasswordsPro_full.txt --status --potfile-disable";
+            string arguments = @$"-a 0 {hash} hashkiller-dict.txt --status --potfile-disable";
 
             ProcessStartInfo startInfo = new()
             {
-                FileName = scriptPath,
+                FileName = _scriptPath,
                 Arguments = arguments,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                WorkingDirectory = workingDirectory
+                WorkingDirectory = _workingDirectory
             };
 
             using Process process = new();
             process.StartInfo = startInfo;
 
-            var result = new HashcatResult();
-            result.Hash = hashcatArguments.Hash;
+            process.OutputDataReceived += (sender, e) =>
+            {
+                var data = e.Data;
+                if (!string.IsNullOrEmpty(data))
+                {
+                    if (data.Contains("Autodetecting hash-modes. Please be patient...Autodetected hash-modesThe following")) isMultipleHashTypes = true;
+                    else if (data.Contains("The following mode was auto-detected as the only one matching your input hash:")) isOneHashType = true;
+                    else if (data.Contains("Autodetecting hash-modes. Please be patient...Autodetected hash-modesStarted")) isNotHash = true;
+
+                    if (isMultipleHashTypes)
+                    {
+                        if (data.Contains('|') && !data.Contains("Name"))
+                        {
+                            var numberHashType = data.Split('|')[0].Trim();
+                            var hashType = data.Split('|')[1].Trim();
+                            Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", numberHashType, hashType);
+                        }
+                    }
+                    else if (isOneHashType)
+                    {
+                        if (data.Contains('|'))
+                        {
+                            var numberHashType = data.Split('|')[0].Trim();
+                            var hashType = data.Split('|')[1].Trim();
+                            Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", numberHashType, hashType);
+                            process.Kill();
+                        }
+                    }
+                    else if (isNotHash) Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", null, null);
+                }
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+
+            process.WaitForExit();
+        }
+
+        public void StartCrackHashcat(HashcatArguments hashcatArguments)
+        {
+            //string scriptPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hashcat-6.2.6", "hashcat.exe");
+            //string workingDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hashcat-6.2.6");
+
+            //string scriptPath = "hashcat-6.2.6\\hashcat.exe";
+            //string workingDirectory = "hashcat-6.2.6";
+
+            string arguments = @$"-m {hashcatArguments.HashType} -a 0 {hashcatArguments.Hash} hashkiller-dict.txt --status --potfile-disable";
+
+            ProcessStartInfo startInfo = new()
+            {
+                FileName = _scriptPath,
+                Arguments = arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                WorkingDirectory = _workingDirectory
+            };
+
+            using Process process = new();
+            process.StartInfo = startInfo;
+
+            _processes.Add(hashcatArguments.Hash, process);
+
+            var result = new HashcatResult { Hash = hashcatArguments.Hash };
 
             process.OutputDataReceived += (sender, e) =>
             {
@@ -44,9 +117,9 @@ namespace WebHashcat.SignalR
                 {
                     if (data.Contains(hashcatArguments.Hash))
                     {
-                        var value = data.Split(':')[1];
+                        var value = data.Split(':')[1].TrimStart();
 
-                        if (result.Value != null) result.Value = value;
+                        if (value != hashcatArguments.Hash) result.Value = value;
                     }
                     else if (data.Contains("Status"))
                     {
@@ -96,7 +169,7 @@ namespace WebHashcat.SignalR
 
                         result.Progress = double.Parse(progressPercentage, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
 
-                        Clients.Client(Context.ConnectionId).SendAsync("hashcatResult", result);
+                        Clients.User(Context.UserIdentifier).SendAsync("hashcatResult", result);
                     }
                 }
             };
@@ -107,15 +180,11 @@ namespace WebHashcat.SignalR
             process.WaitForExit();
         }
 
-        //Clients.Client(Context.ConnectionId).SendAsync("hashcatResult", e.Data);
-        //public void BroadcastMessage(string name, string message)
-        //{
-        //    Clients.All.SendAsync("broadcastMessage", name, message);
-        //}
-
-        //public void Echo(string name, string message)
-        //{
-        //    Clients.Client(Context.ConnectionId).SendAsync("echo", name, message + " (echo from server)");
-        //}
+        public void StopCrack(string hash)
+        {
+            _processes[hash].Kill();
+            _processes.Remove(hash);
+            Clients.User(Context.UserIdentifier).SendAsync("stopCrack", hash);
+        }
     }
 }

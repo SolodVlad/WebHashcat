@@ -1,46 +1,107 @@
 ﻿var connectionHashcat = new signalR.HubConnectionBuilder().withUrl('/hubs/hashcat').build();
 
-var row = '';
+connectionHashcat.on('hashTypeResult', (numberHashType, hashType) => {
+    if (numberHashType != null && hashType != null) {
+        var hashTypesSelect = $('#hashTypesSelect');
+        hashTypesSelect.append($('<option>', {
+            value: numberHashType,
+            text: hashType
+        }));
+
+        hashTypesSelect.css('display', 'block');
+        $('#startCrackBtn').css('display', 'block');
+        $('#startAutodetectModeBtn').css('display', 'none');
+    }
+})
 
 connectionHashcat.on('hashcatResult', (result) => {
-    if (result.status == "Running")
-        row = '<tr>' +
-                '<td class="td" style="background-color: yellow">' + result.hash + '</td>' +
-                '<td class="td" style="background-color: yellow">' + result.hashType + '</td>' +
-                '<td class="td" style="background-color: yellow">' + result.timeStarted + '</td>' +
-                '<td class="td" style="background-color: yellow">' + result.timePassed + '</td>' +
-                '<td class="td" style="background-color: yellow">' + result.timeEstimated + '</td>' +
-                '<td class="td" style="background-color: yellow">' + result.timeLeft + '</td>' +
-                '<td class="td" style="background-color: yellow">' + result.progress + '</td>' +
-              '</tr>';
+    var row = $('#' + $.escapeSelector(result.hash));
 
-    else if (result.status == "Exhausted")
-        row = '<tr>' +
-                '<td class="td" style="background-color: red">' + result.hash + '</td>' +
-                '<td class="td" style="background-color: red">' + result.hashType + '</td>' +
-                '<td class="td" style="background-color: red">' + result.timeStarted + '</td>' +
-                '<td class="td" style="background-color: red">' + result.timePassed + '</td>' +
-                '<td class="td" style="background-color: red">' + result.timeEstimated + '</td>' +
-                '<td class="td" style="background-color: red">' + result.timeLeft + '</td>' +
-                '<td class="td" style="background-color: red">' + result.progress + '</td>' +
-              '</tr>';
+    if (row.length !== 0) {
+        row.find('.td').eq(0).text(result.value);
+        row.find('.td').eq(1).text(result.hash);
+        row.find('.td').eq(2).text(result.hashType);
+        row.find('.td').eq(3).text(result.timeStarted);
+        row.find('.td').eq(4).text(result.timePassed);
+        row.find('.td').eq(5).text(result.timeEstimated);
+        row.find('.td').eq(6).text(result.timeLeft);
+        row.find('.td').eq(7).text(result.progress + '%');
 
-    else if (result.status == "Cracked")
-        row = '<tr>' +
-                '<td class="td" style="background-color: blue">' + result.hash + '</td>' +
-                '<td class="td" style="background-color: blue">' + result.hashType + '</td>' +
-                '<td class="td" style="background-color: blue">' + result.timeStarted + '</td>' +
-                '<td class="td" style="background-color: blue">' + result.timePassed + '</td>' +
-                '<td class="td" style="background-color: blue">' + result.timeEstimated + '</td>' +
-                '<td class="td" style="background-color: blue">' + result.timeLeft + '</td>' +
-                '<td class="td" style="background-color: blue">' + result.progress + '</td>' +
-              '</tr>';
+        if (result.status == 'Running') {
+            row.css('background-color', 'yellow');
+            row.find('.td').eq(0).text('У процесі');
+        }
+        else if (result.status == 'Exhausted') {
+            row.css('background-color', 'red');
+            row.find('.td').eq(0).text('Не знайдено');
+        }
+        else if (result.status == 'Cracked') {
+            row.css('background-color', 'blue');
+            row.find('.td').eq(0).text(result.value);
+            row.find('.td').eq(5).text('0');
+            row.find('.td').eq(6).text('0');
+            row.find('.td').eq(7).text('100%');
+        }
+    }
+    else {
+        if (result.status == "Running")
+            row = '<tr id="' + result.hash + '" style="background-color: yellow">' +
+                    '<td class="td">У процесі</td>' +
+                    '<td class="td">' + result.hash + '</td>' +
+                    '<td class="td">' + result.hashType + '</td>' +
+                    '<td class="td">' + result.timeStarted + '</td>' +
+                    '<td class="td">' + result.timePassed + '</td>' +
+                    '<td class="td">' + result.timeEstimated + '</td>' +
+                    '<td class="td">' + result.timeLeft + '</td>' +
+                    '<td class="td">' + result.progress + '%</td>' +
+                    '<td class="td">' +
+                        '<input type="button" class="stopCrackBtn form_btn" value="СТОП"/>' +
+                    '</td>' + 
+                  '</tr > ';
+
+        else if (result.status == "Exhausted")
+            row = '<tr id="' + result.hash + '" style="background-color: red">' +
+                    '<td class="td">Не знайдено</td>' +
+                    '<td class="td">' + result.hash + '</td>' +
+                    '<td class="td">' + result.hashType + '</td>' +
+                    '<td class="td">' + result.timeStarted + '</td>' +
+                    '<td class="td">' + result.timePassed + '</td>' +
+                    '<td class="td">' + result.timeEstimated + '</td>' +
+                    '<td class="td">' + result.timeLeft + '</td>' +
+                    '<td class="td">' + result.progress + '%</td>' +
+                  '</tr>';
+
+        else
+            row = '<tr id="' + result.hash + '" style="background-color: blue">' +
+                    '<td class="td">' + result.value + '</td>' +
+                    '<td class="td">' + result.hash + '</td>' +
+                    '<td class="td">' + result.hashType + '</td>' +
+                    '<td class="td">' + result.timeStarted + '</td>' +
+                    '<td class="td">' + result.timePassed + '</td>' +
+                    '<td class="td">0</td>' +
+                    '<td class="td">0</td>' +
+                    '<td class="td">100%</td>' +
+                  '</tr>';
+    }
 
     $('#hashcatResultsTable').append(row);
 });
 
-function hashcatOnClient(hashcatArguments) {
-    connectionHashcat.invoke('StartHashcat', hashcatArguments).catch(function (err) { console.error(err); });
+connectionHashcat.on('stopCrack', (hash) => {
+    var row = $('#' + $.escapeSelector(hash));
+    row.css('background-color', 'red');
+});
+
+function startCrackHashcatOnClient(hashcatArguments) {
+    connectionHashcat.invoke('StartCrackHashcat', hashcatArguments).catch(function (err) { console.error(err); });
+};
+
+function startAutodetectModeHashcatOnClient(hash) {
+    connectionHashcat.invoke('StartAutodetectModeHashcat', hash).catch(function (err) { console.error(err); });
+};
+
+function stopCrackHashcatOnClient(hash) {
+    connectionHashcat.invoke('StopCrack', hash).catch(function (err) { console.error(err); });
 };
 
 function fulfilled() {

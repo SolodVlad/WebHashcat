@@ -1,21 +1,11 @@
 using BLL.Infrastructure;
 using BLL.Services;
 using Domain.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using WebHashcat.Configurations;
-using WebHashcat.SignalR;
-using System.Security.Claims;
 using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-//using SignalRAuthenticationSample.Data;
-//using SignalRAuthenticationSample.Hubs;
-//using SignalRAuthenticationSample;
+using WebHashcat.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,9 +49,14 @@ builder.Services.ConfigureSwagger();
 //});
 
 builder.Services.AddSignalR().AddAzureSignalR();
+builder.Services.Configure<HubOptions>(options =>
+{
+    options.ClientTimeoutInterval = TimeSpan.FromDays(1);
+});
+
 //builder.Services.AddAuthentication().AddIdentityServerJwt();
 //builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>());
-//builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 builder.Services.Configure<SendGridEmailSenderOptions>(option =>
 {
@@ -86,14 +81,12 @@ builder.Services.AddHsts(options =>
 
 builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
-//builder.Services.AddDistributedRedisCache(option =>
-//{
-//    option.Configuration = builder.Configuration["LocalRedisConnectionString"];
-//});
 builder.Services.AddDistributedRedisCache(option =>
 {
     option.Configuration = builder.Configuration["CacheConnection"];
 });
+
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
 var app = builder.Build();
 

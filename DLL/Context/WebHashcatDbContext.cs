@@ -19,13 +19,15 @@ namespace DLL.Context
             base.OnModelCreating(builder);
 
             //Currency
-            builder.Entity<Currency>().ToTable(nameof(Currency));
-            builder.Entity<Currency>().HasKey(currency => currency.Code);
-            builder.Entity<Currency>().Property(currency => currency.Code).HasColumnType("char").HasMaxLength(3).IsFixedLength();
-            builder.Entity<Currency>().Property(currency => currency.Name).HasColumnType("varchar").HasMaxLength(100);
+            //builder.Entity<Currency>().ToTable("Currencies");
+            //builder.Entity<Currency>().HasKey(currency => currency.Code);
+            //builder.Entity<Currency>().Property(currency => currency.Code).HasColumnType("char").HasMaxLength(3).IsFixedLength();
+            //builder.Entity<Currency>().Property(currency => currency.Name).HasColumnType("varchar").HasMaxLength(100);
 
             //HashcatResult
+            builder.Entity<HashcatResult>().ToTable("SuccessfulAttackResults");
             builder.Entity<HashcatResult>().HasKey(hashcatResult => new { hashcatResult.Hash, hashcatResult.UserId });
+            builder.Entity<HashcatResult>().Ignore(hashcatResult => hashcatResult.Status);
             builder.Entity<HashcatResult>().Property(hashcatResult => hashcatResult.Hash).HasColumnType("varchar").HasMaxLength(8000);
             builder.Entity<HashcatResult>().Property(hashcatResult => hashcatResult.HashType).HasColumnType("varchar").HasMaxLength(100);
             builder.Entity<HashcatResult>().Property(hashcatResult => hashcatResult.TimePassed).HasColumnType("varchar").HasMaxLength(50);
@@ -62,7 +64,7 @@ namespace DLL.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<DataLookupTable> LookupTable { get; set; }
-        public DbSet<Currency> Currencies { get; set; }
+        //public DbSet<Currency> Currencies { get; set; }
 
         private async Task<string> ComputeHashAsync(byte[] data, HashAlgorithm algorithm)
         {

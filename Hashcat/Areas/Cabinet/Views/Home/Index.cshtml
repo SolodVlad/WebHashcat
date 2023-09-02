@@ -24,26 +24,43 @@
             <div class="separator" />
             <div class="profile_window">
                 <div class="profile_content active" id="profile_1">
-                    <select asp-for="HashType" asp-items="Html.GetEnumSelectList<Domain.Models.HashType>()" id="attackModeSelect">
+                    @* <select asp-for="HashType" asp-items="Html.GetEnumSelectList<Domain.Models.HashType>()" id="attackModeSelect">
                         <option selected="selected">Select hash...</option>
                     </select>
-                    <span asp-validation-for="HashType" class="text-danger">ATTACK</span>
-                    <input asp-for="Hash" placeholder="Hash" id="hash" />
+                    <span asp-validation-for="HashType" class="text-danger">ATTACK</span>*@
+
+                    <input asp-for="Hash" placeholder="Enter hash" id="hash" />
                     <span asp-validation-for="Hash" class="text-danger">HASH</span>
-                    <button type="submit" id="startCrackBtn">START CRACK</button>
+                    <button type="submit" id="startAutodetectModeBtn">NEXT</button>
+
+                    <select id="hashTypesSelect" style="display: none"></select>
+                    <button type="submit" id="startCrackBtn" style="display: none">START CRACK</button>
 
                     @* <p id="hashcatResult"></p> *@
 
-                    <table id="hashcatResultsTable">
-
+                    <table border="1" id="hashcatResultsTable">
+                        <tr>
+                            <th class="th">Значення (пароль)</th>
+                            <th class="th">Хеш</th>
+                            <th class="th">Тип</th>
+                            <th class="th">Час початку</th>
+                            <th class="th">Пройшло часу</th>
+                            <th class="th">Орієнтовний час завершення</th>
+                            <th class="th">Залишилось часу</th>
+                            <th class="th">Прогрес</th>
+                        </tr>
                     </table>
                 </div>
-                <div class="profile_content" id="profile_2">Надпись 2</div>
+                <div class="profile_content" id="profile_2">
+                    <input type="number" id="sum"/>
+                    <button type="submit" id="replenishmentBtn">Поповнити баланс</button>
+                </div>
                 <div class="profile_content" id="profile_3">Надпись 3</div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="~/js/cabinet.js"></script>
 <script src="~/js/signalr.js"></script>
 <script src="~/js/hashcat.js"></script>
