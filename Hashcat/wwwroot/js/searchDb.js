@@ -19,26 +19,25 @@ $(function () {
 
                 $.each(data, function (i, dataLookupTable) {
                     var row = ''
-                    //Можливо це оптимізувати?
                     if (dataLookupTable.isSuccess)
                         row = '<tr>' +
-                            '<td class="td width_hash" style="background-color: green">' + dataLookupTable.hash + '</td>' +
-                            '<td class="td width_type" style="background-color: green">' + dataLookupTable.hashType + '</td>' +
-                            '<td class="td width_password" style="background-color: green">' + dataLookupTable.password + '</td>' +
-                            '</tr>'
+                                '<td style="background-color: green">' + dataLookupTable.hash + '</td>' +
+                                '<td style="background-color: green">' + dataLookupTable.hashType + '</td>' +
+                                '<td style="background-color: green">' + dataLookupTable.value + '</td>' +
+                              '</tr>'
                     else {
                         if (dataLookupTable.hashType != "None")
                             row = '<tr>' +
-                                '<td class="td width_hash" style="background-color: yellow">' + dataLookupTable.hash + '</td>' +
-                                '<td class="td width_type" style="background-color: yellow">' + dataLookupTable.hashType + '</td>' +
-                                '<td class="td width_password" style="background-color: yellow">' + "NOT FOUND" + '</td>' +
-                                '</tr>'
+                                    '<td style="background-color: yellow">' + dataLookupTable.hash + '</td>' +
+                                    '<td style="background-color: yellow">' + dataLookupTable.hashType + '</td>' +
+                                    '<td style="background-color: yellow">Значення хешу не було знайдено</td>' +
+                                  '</tr>'
                         else
                             row = '<tr>' +
-                                '<td class="td width_hash" style="background-color: red">' + dataLookupTable.hash + '</td>' +
-                                '<td class="td width_type" style="background-color: red">' + dataLookupTable.hashType + '</td>' +
-                                '<td class="td width_password" style="background-color: red">' + "NOT FOUND" + '</td>' +
-                                '</tr>'
+                                    '<td style="background-color: red">' + dataLookupTable.hash + '</td>' +
+                                    '<td style="background-color: red">Це не хеш або такий тип хешу не підтримується</td>' +
+                                    '<td style="background-color: red">Це не хеш або такий тип хешу не підтримується</td>' +
+                                  '</tr>'
                     }
 
                     $("#table_search_db").append(row)

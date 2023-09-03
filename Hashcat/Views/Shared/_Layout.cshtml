@@ -8,7 +8,7 @@
     
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebHashcat.styles.css" asp-append-version="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
     <header id="header" class="fixed-top">
         <nav class="navbar navbar-expand-lg navbar-dark visual-style-black">
             <div class="container-fluid">
-                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { Area = "" })">WebHashCat</a>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { Area = "" })">WebHashсat</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -27,9 +27,6 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 top-menu">
                         <li class="nav-item">
                             <a class="nav-link visual-a-blue" href="@Url.Action("ResetPassword", "Account", new { Area = "Identity" })">Відновлення паролю</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link visual-a-blue" href="@Url.Action("Index", "Home", new {Area = "Cabinet"})">Кабінет</a>
                         </li>
                         @*<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle visual-a-blue" data-bs-toggle="dropdown" href="#">Послуги</a>
@@ -60,13 +57,13 @@
     <div class="container">
         @RenderBody()
     </div>
-    <section>
+    @* <section>
         <footer class="footer fixed-bottom">
             <div class="container">
                 <p>&copy; 2023 Ваша компанія. Усі права захищено.</p>
             </div>
         </footer>
-    </section>
+    </section> *@
      @*Приклад футеру*@
     @* <footer id="footer" class="fixed-bottom">
         <section class="footer">
