@@ -11,6 +11,8 @@ body {
     background-color: #FFF;
     min-width: 320px;
     background: linear-gradient(#000, #04143f);
+    background-attachment: fixed;
+    background-size: cover;
 }
 .visual-style-black {
     background-color: #000;
