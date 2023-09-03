@@ -1,5 +1,15 @@
 ﻿var connectionHashcat = new signalR.HubConnectionBuilder().withUrl('/hubs/hashcat').build();
 
+function fulfilled() {
+    console.log('Connection to hashcat hub successful');
+};
+
+function rejected() {
+    console.error('Error connection to hashcat hub');
+};
+
+connectionHashcat.start().then(fulfilled, rejected);
+
 connectionHashcat.on('hashTypeResult', (numberHashType, hashType) => {
     if (numberHashType != null && hashType != null) {
         var hashTypesSelect = $('#hashTypesSelect');
@@ -56,7 +66,7 @@ connectionHashcat.on('hashcatResult', (result) => {
                     '<td class="td">' + result.progress + '%</td>' +
                     '<td class="td">' +
                         '<input type="button" class="stopCrackBtn form_btn" value="СТОП"/>' +
-                    '</td>' + 
+                    '</td>' +
                   '</tr > ';
 
         else if (result.status == "Exhausted")
@@ -71,7 +81,8 @@ connectionHashcat.on('hashcatResult', (result) => {
                     '<td class="td">' + result.progress + '%</td>' +
                   '</tr>';
 
-        else
+        else {
+            connectionBalance.send('StopPaymentWithdrawal').catch(function (err) { console.error(err); });
             row = '<tr id="' + result.hash + '" style="background-color: blue">' +
                     '<td class="td">' + result.value + '</td>' +
                     '<td class="td">' + result.hash + '</td>' +
@@ -82,6 +93,7 @@ connectionHashcat.on('hashcatResult', (result) => {
                     '<td class="td">0</td>' +
                     '<td class="td">100%</td>' +
                   '</tr>';
+        }
     }
 
     $('#hashcatResultsTable').append(row);
@@ -92,8 +104,9 @@ connectionHashcat.on('stopCrack', (hash) => {
     row.css('background-color', 'red');
 });
 
-function startCrackHashcatOnClient(hashcatArguments) {
+function startCrackHashcatOnClient(hashcatArguments, token) {
     connectionHashcat.invoke('StartCrackHashcat', hashcatArguments).catch(function (err) { console.error(err); });
+    connectionBalance.send('StartPaymentWithdrawal', token).catch(function (err) { console.error(err); });
 };
 
 function startAutodetectModeHashcatOnClient(hash) {
@@ -102,14 +115,5 @@ function startAutodetectModeHashcatOnClient(hash) {
 
 function stopCrackHashcatOnClient(hash) {
     connectionHashcat.invoke('StopCrack', hash).catch(function (err) { console.error(err); });
+    connectionBalance.send('StopPaymentWithdrawal').catch(function (err) { console.error(err); });
 };
-
-function fulfilled() {
-    console.log('Connection to hashcat hub successful');
-};
-
-function rejected() {
-    console.error('Error connection to hashcat hub');
-};
-
-connectionHashcat.start().then(fulfilled, rejected);

@@ -207,7 +207,9 @@ namespace WebHashcat.Areas.Identity.Controllers
                 var jwtSecurityToken = (JwtSecurityToken)validatedToken;
                 var userName = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
 
-                return Ok(userName);
+                var currentUser = await _userManager.FindByNameAsync(userName);
+
+                return Ok(new { userName, currentUser.Balance });
             }
             catch (SecurityTokenExpiredException ex)
             {
@@ -230,9 +232,7 @@ namespace WebHashcat.Areas.Identity.Controllers
 
                     var currentUser = await _userManager.FindByNameAsync(userName);
 
-                    var balance = currentUser.Balance;
-
-                    return Ok(new { userName, balance });
+                    return Ok(new { userName, currentUser.Balance });
                 }
 
                 Response.Cookies.Delete("AuthCookie");

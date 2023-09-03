@@ -17,8 +17,6 @@ namespace BLL.Infrastructure
             serviceCollection.AddDbContext<WebHashcatDbContext>(opt => opt.UseSqlServer(configuration.GetValue<string>("DbConnection")));
 
             serviceCollection.AddTransient<LookupTableRepository>();
-            serviceCollection.AddTransient<CurrencyRepository>();
-            serviceCollection.AddTransient<UserRepository>();
             serviceCollection.AddTransient<IEmailSender, SendGridEmailService>();
 
             serviceCollection.AddIdentity<User, IdentityRole>(opt =>

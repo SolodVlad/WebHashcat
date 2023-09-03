@@ -3,9 +3,12 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebHashcat.Configurations
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CustomUserIdProvider : IUserIdProvider
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -25,7 +28,7 @@ namespace WebHashcat.Configurations
             return null;
         }
 
-        private string ComputeSha512(byte[] data)
+        private static string ComputeSha512(byte[] data)
         {
             using var stream = new MemoryStream(data);
             var hashBytes = SHA512.Create().ComputeHash(stream);

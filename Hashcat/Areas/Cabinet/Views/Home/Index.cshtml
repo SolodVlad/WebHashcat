@@ -32,10 +32,10 @@
                 <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
                     <input asp-for="Hash" placeholder="Enter hash" id="hash" />
                     <span asp-validation-for="Hash" class="text-danger">HASH</span>
-                    <button type="submit" id="startAutodetectModeBtn">NEXT</button>
+                    <input type="button" id="startAutodetectModeBtn" value="NEXT"/>
 
                     <select id="hashTypesSelect" style="display: none"></select>
-                    <button type="submit" id="startCrackBtn" style="display: none">START CRACK</button>
+                    <input type="button" id="startCrackBtn" style="display: none" value="START CRACK" />
                     <table border="1" id="hashcatResultsTable">
                         <tr>
                             <th class="th">Значення (пароль)</th>
@@ -55,8 +55,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Напис</label>
-                                <input type="number" class="form-group">
-                                <button class="btn btn-primary">Поповнити</button>
+                                <input type="number" class="form-group" id="sum">
+                                <input type="button" class="btn btn-primary" id="replenishmentBtn" value="Поповнити" />
                             </div>
                         </div>
                     </div>
@@ -273,3 +273,4 @@
 <script src="~/js/cabinet.js"></script>
 <script src="~/js/signalr.js"></script>
 <script src="~/js/hashcat.js"></script>
+<script src="~/js/balance.js"></script>

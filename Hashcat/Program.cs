@@ -13,8 +13,6 @@ var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
 builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 // Add services to the container.
-builder.Services.AddTransient<CurrencyService>();
-builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<LookupTableService>();
 
 builder.Services.AddControllersWithViews();
@@ -88,6 +86,8 @@ builder.Services.AddDistributedRedisCache(option =>
 
 builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -115,6 +115,7 @@ app.UseFileServer();
 app.UseAzureSignalR(routes =>
 {
     routes.MapHub<HashcatHub>("/hubs/hashcat");
+    routes.MapHub<BalanceHub>("/hubs/balance");
 });
 
 app.UseHttpsRedirection();

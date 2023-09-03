@@ -13,7 +13,7 @@ function validateToken() {
                     $('#loginLi').css('display', 'none');
 
                     $('#showEmail').text(response.userName);
-                    $('#showBalance').text(response.balance);
+                    $('#showBalance').text(response.balance + '$');
                 } else {
                     document.cookie = 'AuthCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 

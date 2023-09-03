@@ -26,7 +26,7 @@ $('#startCrackBtn').click(function () {
         Hash: $('#hash').val()
     };
 
-    startCrackHashcatOnClient(hashcatArguments);
+    startCrackHashcatOnClient(hashcatArguments, Cookies.get('AuthCookie'));
 });
 
 $(function () {
@@ -49,7 +49,7 @@ $('#replenishmentBtn').click(function () {
         contentType: 'application/json',
 
         success: function (currentBalance) {
-            $('#showBalance').text(currentBalance);
+            $('#showBalance').text(currentBalance + '$');
         },
 
         error: function (jqXHR, exception) {

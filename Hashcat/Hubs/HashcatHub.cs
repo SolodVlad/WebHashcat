@@ -27,7 +27,7 @@ namespace WebHashcat.Hubs
             _processes = new Dictionary<string, Process>();
         }
 
-        public void StartAutodetectModeHashcat(string hash)
+        public async Task StartAutodetectModeHashcat(string hash)
         {
             //string scriptPath = "hashcat-6.2.6\\hashcat.exe";
             //string workingDirectory = "hashcat-6.2.6";
@@ -46,7 +46,7 @@ namespace WebHashcat.Hubs
             using Process process = new();
             process.StartInfo = startInfo;
 
-            process.OutputDataReceived += (sender, e) =>
+            process.OutputDataReceived += async (sender, e) =>
             {
                 var data = e.Data;
                 if (!string.IsNullOrEmpty(data))
@@ -61,7 +61,7 @@ namespace WebHashcat.Hubs
                         {
                             var numberHashType = data.Split('|')[0].Trim();
                             var hashType = data.Split('|')[1].Trim();
-                            Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", numberHashType, hashType);
+                            await Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", numberHashType, hashType);
                         }
                     }
                     else if (isOneHashType)
@@ -70,11 +70,11 @@ namespace WebHashcat.Hubs
                         {
                             var numberHashType = data.Split('|')[0].Trim();
                             var hashType = data.Split('|')[1].Trim();
-                            Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", numberHashType, hashType);
+                            await Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", numberHashType, hashType);
                             process.Kill();
                         }
                     }
-                    else if (isNotHash) Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", null, null);
+                    else if (isNotHash) await Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", null, null);
                 }
             };
 
@@ -84,7 +84,7 @@ namespace WebHashcat.Hubs
             process.WaitForExit();
         }
 
-        public void StartCrackHashcat(HashcatArguments hashcatArguments)
+        public async Task StartCrackHashcat(HashcatArguments hashcatArguments)
         {
             //string scriptPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hashcat-6.2.6", "hashcat.exe");
             //string workingDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hashcat-6.2.6");
@@ -110,7 +110,7 @@ namespace WebHashcat.Hubs
 
             var result = new HashcatResult { Hash = hashcatArguments.Hash };
 
-            process.OutputDataReceived += (sender, e) =>
+            process.OutputDataReceived += async (sender, e) =>
             {
                 var data = e.Data;
                 if (!string.IsNullOrEmpty(data))
@@ -169,7 +169,7 @@ namespace WebHashcat.Hubs
 
                         result.Progress = double.Parse(progressPercentage, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
 
-                        Clients.User(Context.UserIdentifier).SendAsync("hashcatResult", result);
+                        await Clients.User(Context.UserIdentifier).SendAsync("hashcatResult", result);
                     }
                 }
             };
@@ -180,11 +180,11 @@ namespace WebHashcat.Hubs
             process.WaitForExit();
         }
 
-        public void StopCrack(string hash)
+        public async Task StopCrack(string hash)
         {
             _processes[hash].Kill();
             _processes.Remove(hash);
-            Clients.User(Context.UserIdentifier).SendAsync("stopCrack", hash);
+            await Clients.User(Context.UserIdentifier).SendAsync("stopCrack", hash);
         }
     }
 }
