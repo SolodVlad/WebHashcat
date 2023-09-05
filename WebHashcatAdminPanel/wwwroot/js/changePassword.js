@@ -1,3 +1,0 @@
-﻿$('#changeDefPassBtn').click(function () {
-    $
-})

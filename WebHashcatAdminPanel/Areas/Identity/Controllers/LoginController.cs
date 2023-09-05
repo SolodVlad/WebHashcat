@@ -5,9 +5,8 @@ namespace WebHashcatAdminPanel.Areas.Identity.Controllers
     [Area("Identity")]
     public class LoginController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        [HttpGet]
+        [Route("Login")]
+        public IActionResult Index() => View();
     }
 }

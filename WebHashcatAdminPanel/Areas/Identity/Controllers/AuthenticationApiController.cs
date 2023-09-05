@@ -14,7 +14,7 @@ using System.Security.Cryptography;
 using System.Text;
 using WebHashcatAdminPanel.Areas.Identity.Services;
 
-namespace WebHashcatAdminPanel.Controllers
+namespace WebHashcatAdminPanel.Areas.Identity.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
