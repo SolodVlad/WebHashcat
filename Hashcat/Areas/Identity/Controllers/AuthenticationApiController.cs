@@ -131,7 +131,7 @@ namespace WebHashcat.Areas.Identity.Controllers
         {
             if (login != null)
             {
-                var user = await _userManager.FindByEmailAsync(login.Login_);
+                var user = await _userManager.FindByNameAsync(login.Login_);
                 if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
                 {
                     var roles = await _userManager.GetRolesAsync(user);
@@ -252,26 +252,6 @@ namespace WebHashcat.Areas.Identity.Controllers
         {
             var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(userName));
             if (!await _tokenService.IsRevokeRefreshTokenAsync(userNameHash)) return BadRequest("Invalid user name");
-
-            return NoContent();
-        }
-
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost]
-        [Route("RevokeAllRefreshTokens")]
-        public async Task<IActionResult> RevokeAllRefreshTokens()
-        {
-            var users = _userManager.Users.ToList();
-
-            var userNames = new List<string>();
-            var userNameHash = "";
-            foreach (var user in users)
-            {
-                userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(user.UserName));
-                userNames.Add(userNameHash);
-            }
-
-            await _tokenService.RevokeAllRefreshTokensAsync(userNames);
 
             return NoContent();
         }

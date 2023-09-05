@@ -71,3 +71,11 @@ $('#replenishmentBtn').click(function () {
         }
     });
 })
+
+$('.nav-link').on('click', function () {
+    $('.nav-link').removeClass('active');
+    $('.tab-pane').removeClass('show active');
+    var tabId = $(this).attr('aria-controls');
+    $(this).addClass('active');
+    $('#' + tabId).addClass('show active');
+});

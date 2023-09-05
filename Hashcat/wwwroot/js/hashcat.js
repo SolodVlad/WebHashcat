@@ -106,7 +106,7 @@ connectionHashcat.on('stopCrack', (hash) => {
 
 function startCrackHashcatOnClient(hashcatArguments, token) {
     connectionHashcat.invoke('StartCrackHashcat', hashcatArguments).catch(function (err) { console.error(err); });
-    connectionBalance.send('StartPaymentWithdrawal', token).catch(function (err) { console.error(err); });
+    //connectionBalance.send('StartPaymentWithdrawal', token).catch(function (err) { console.error(err); });
 };
 
 function startAutodetectModeHashcatOnClient(hash) {

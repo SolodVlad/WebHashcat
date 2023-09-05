@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLLTest", "DLLTest\DLLTest.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHashcat", "Hashcat\WebHashcat.csproj", "{AB9811F2-9BF6-4973-BFCE-F4AA1217B8AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHashcatAdminPanel", "WebHashcatAdminPanel\WebHashcatAdminPanel.csproj", "{37E2B200-6179-4EFF-8CC8-942D7F8ECF97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{AB9811F2-9BF6-4973-BFCE-F4AA1217B8AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB9811F2-9BF6-4973-BFCE-F4AA1217B8AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB9811F2-9BF6-4973-BFCE-F4AA1217B8AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37E2B200-6179-4EFF-8CC8-942D7F8ECF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37E2B200-6179-4EFF-8CC8-942D7F8ECF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37E2B200-6179-4EFF-8CC8-942D7F8ECF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37E2B200-6179-4EFF-8CC8-942D7F8ECF97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{8742CC18-247C-4227-B6A6-D4AAFADB4B1A} = {AA5C0B03-F848-4095-A17B-4A658BA4C496}
 		{5CF7EA15-71D6-41C5-8132-E7633F357065} = {22EA3BFC-E316-4AA0-B991-59B7BFBEF0F0}
 		{AB9811F2-9BF6-4973-BFCE-F4AA1217B8AB} = {AA5C0B03-F848-4095-A17B-4A658BA4C496}
+		{37E2B200-6179-4EFF-8CC8-942D7F8ECF97} = {AA5C0B03-F848-4095-A17B-4A658BA4C496}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC7F4321-4F92-470E-AE4D-D5F3E46BE93B}

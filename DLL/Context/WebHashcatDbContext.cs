@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace DLL.Context
 {
@@ -14,15 +13,9 @@ namespace DLL.Context
             Database.EnsureCreated();
         }
 
-        protected override async void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            //Currency
-            //builder.Entity<Currency>().ToTable("Currencies");
-            //builder.Entity<Currency>().HasKey(currency => currency.Code);
-            //builder.Entity<Currency>().Property(currency => currency.Code).HasColumnType("char").HasMaxLength(3).IsFixedLength();
-            //builder.Entity<Currency>().Property(currency => currency.Name).HasColumnType("varchar").HasMaxLength(100);
 
             //HashcatResult
             builder.Entity<HashcatResult>().ToTable("SuccessfulAttackResults");
@@ -62,9 +55,8 @@ namespace DLL.Context
             //    });
         }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<DataLookupTable> LookupTable { get; set; }
-        //public DbSet<Currency> Currencies { get; set; }
 
         private async Task<string> ComputeHashAsync(byte[] data, HashAlgorithm algorithm)
         {
