@@ -10,7 +10,7 @@
 
 <section class="py-5 my-5">
     <div class="container">
-        <h1 class="mb-5">Profile</h1>
+        <h1 class="mb-5" style="color: #FFF; padding-left: 2%">Профіль</h1>
         <div class="bg-dark box-shadow-custom rounded d-flex d-sm-row static-content">
             <div class="profile-tab-nav border-right menu-container col-2.5">
                 <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -28,16 +28,18 @@
                     </a>
                 </div>
             </div>
-            <div class="tab-content p-4 p-md-5 flex-grow-1 col-9.5" id="v-pills-tabContent">
+            <div class="tab-content content-container p-4 flex-grow-1 col-9.5" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
-                    <input asp-for="Hash" placeholder="Enter hash" id="hash" />
-                    <span asp-validation-for="Hash" class="text-danger">HASH</span>
-                    <input type="button" id="startAutodetectModeBtn" value="NEXT"/>
+                    <h3 class="mb-4">Взлом хешів</h3>
+                    <label>Введіть хеш:</label>
+                    <input asp-for="Hash" class="form-control mt-1" placeholder="Enter hash" id="hash" />
+                    @*<span asp-validation-for="Hash" class="text-danger">HASH</span>*@
+                    <input type="button" class="btn btn-primary def-btn mt-2" id="startAutodetectModeBtn" value="Далі" />
 
                     <select id="hashTypesSelect" style="display: none"></select>
                     <input type="button" id="startCrackBtn" style="display: none" value="START CRACK" />
                     <table border="1" id="hashcatResultsTable">
-                        <tr>
+                        @*<tr>
                             <th class="th">Значення (пароль)</th>
                             <th class="th">Хеш</th>
                             <th class="th">Тип</th>
@@ -46,17 +48,17 @@
                             <th class="th">Орієнтовний час завершення</th>
                             <th class="th">Залишилось часу</th>
                             <th class="th">Прогрес</th>
-                        </tr>
+                        </tr>*@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
-                    <h3 class="mb-4">Replenishment</h3>
+                    <h3 class="mb-4">Поповнення балансу</h3>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Напис</label>
-                                <input type="number" class="form-group" id="sum">
-                                <input type="button" class="btn btn-primary" id="replenishmentBtn" value="Поповнити" />
+                                <label>Введіть сумму поповнення:</label>
+                                <input type="number" class="form-control mt-1" id="sum"> @*form-group*@
+                                <input type="button" class="btn btn-primary def-btn mt-2" id="replenishmentBtn" value="Поповнити" />
                             </div>
                         </div>
                     </div>
@@ -66,32 +68,32 @@
                     </div>*@
                 </div>
                 <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                    <h3 class="mb-4">Password Settings</h3>
+                    <h3 class="mb-4">Зміна паролю</h3>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Old password</label>
-                                <input type="password" class="form-control">
+                                <label>Старий пароль:</label>
+                                <input type="password" class="form-control mt-1">
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>New password</label>
-                                <input type="password" class="form-control">
+                                <label>Новий пароль:</label>
+                                <input type="password" class="form-control mt-1">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Confirm new password</label>
-                                <input type="password" class="form-control">
+                                <label>Повторіть новий пароль:</label>
+                                <input type="password" class="form-control mt-1">
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-light">Cancel</button>
+                    <div class="mt-2">
+                        <button class="btn btn-primary def-btn">Оновити</button>
+                        @*<button class="btn btn-primary def-btn">Cancel</button>*@
                     </div>
                 </div>
             </div>
