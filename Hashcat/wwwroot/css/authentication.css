@@ -54,9 +54,9 @@
     overflow: hidden;
 }
 
-    #form-box.active {
-        left: 50%;
-    }
+#form-box.active {
+    left: 50%;
+}
 
 .form {
     width: 100%;
@@ -95,15 +95,15 @@
     font-weight: 500;
     color: #FFF;
 }
-
 .form_input {
+    border-radius: 5px;
     width: 100%;
     padding: 10px;
     border: solid 2px #018ed5;
     font-size: inherit;
 }
 /*Button*/
-.btn-login {
+/*.btn-login {
     background-color: transparent;
     border: 1px solid #FFF;
     color: #FFF;
@@ -112,7 +112,7 @@
     background-color: #0b5a9d;
     border: 1px solid #FFF;
     color: #FFF;
-}
+}*/
 /*Button*/
 /*checkbox закончить визуал!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 /*.text {

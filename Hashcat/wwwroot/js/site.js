@@ -111,3 +111,26 @@ $('#logoutBtn').click(function () {
         }
     });
 })
+var button = $('.def-btn');
+button.on('click', function () {
+    setTimeout(function () {
+        button.blur();
+    }, 300);
+});
+//$(window).scroll(function () {
+//    var scrollHeight = $(document).height();
+//    var scrollPosition = $(window).height() + $(window).scrollTop();
+//    var footerHeight = $('#footer').height();
+
+//    if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+//        $('#footer').css({
+//            'position': 'relative',
+//            'bottom': 'auto'
+//        });
+//    } else {
+//        $('#footer').css({
+//            'position': 'fixed',
+//            'bottom': '0'
+//        });
+//    }
+//});
