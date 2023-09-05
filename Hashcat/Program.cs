@@ -114,11 +114,11 @@ app.Use(async (context, next) =>
 });
 
 app.UseFileServer();
-app.UseAzureSignalR(routes =>
-{
-    routes.MapHub<HashcatHub>("/hubs/hashcat");
-    routes.MapHub<BalanceHub>("/hubs/balance");
-});
+//app.UseAzureSignalR(routes =>
+//{
+//    routes.MapHub<HashcatHub>("/hubs/hashcat");
+//    routes.MapHub<BalanceHub>("/hubs/balance");
+//});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
