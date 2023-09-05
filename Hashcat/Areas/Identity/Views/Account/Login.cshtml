@@ -14,11 +14,11 @@
         <div class="block">
             <selection class="block_item block-item">
                 <h2 class="block-item_title">У вас є аккаунт?</h2>
-                <button class="block-item_btn" id="signin-btn">Авторизація</button>
+                <button class="btn btn-primary def-btn" id="signin-btn">Авторизація</button>
             </selection>
             <selection class="block_item block-item">
                 <h2 class="block-item_title">У вас немає аккаунту?</h2>
-                <button class="block-item_btn" id="signup-btn">Реєстрація</button>
+                <button class="btn btn-primary def-btn" id="signup-btn">Реєстрація</button>
             </selection>
         </div>
         <div id="form-box">
@@ -29,7 +29,7 @@
                     <span asp-validation-for="Email" class="text-danger" id="message"></span>
                 </p>
                 <p>
-                    <input type="button" id="forgotPasswordBtn" class="form_btn" value="Відправити"/>
+                    <input type="button" id="forgotPasswordBtn" class="btn btn-primary def-btn" value="Відправити" />
                 </p>
                 <p>
                     <a id="switchToLogin" style="text-decoration: none;">Повернутися до авторизації</a>
@@ -55,7 +55,7 @@
                 <p>
                     <div class="col-md-1 mt-3 mt-md-0">
                         <div class="d-grid">
-                            <input class="btn btn-primary btn-login" id="loginBtn" type="button" value="Увійти" />
+                            <input class="btn btn-primary def-btn" id="loginBtn" type="button" value="Увійти" />
                         </div>
                     </div>
                     @*<input type="button" id="loginBtn" class="form_btn" value="Увійти"/>*@
@@ -81,7 +81,7 @@
                     <span asp-validation-for="ConfirmPassword" id="confirmPasswordErrorMessage" class="text-danger"></span>
                 </p>
                 <p>
-                    <input type="button" id="registerBtn" class="form_btn" value="Зареєструватись"/>
+                    <input type="button" id="registerBtn" class="btn btn-primary def-btn" value="Зареєструватись" />
                 </p>
             </div>
         </div>

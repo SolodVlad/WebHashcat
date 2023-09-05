@@ -21,22 +21,22 @@ $(function () {
                     var row = ''
                     if (dataLookupTable.isSuccess)
                         row = '<tr>' +
-                                '<td style="background-color: green">' + dataLookupTable.hash + '</td>' +
-                                '<td style="background-color: green">' + dataLookupTable.hashType + '</td>' +
-                                '<td style="background-color: green">' + dataLookupTable.value + '</td>' +
+                                /*'<td style="background-color: green">'*/'<td>' + dataLookupTable.hash + '</td>' +
+                                /*'<td style="background-color: green">'*/'<td>' + dataLookupTable.hashType + '</td>' +
+                                /*'<td style="background-color: green">'*/'<td>' + dataLookupTable.value + '</td>' +
                               '</tr>'
                     else {
                         if (dataLookupTable.hashType != "None")
                             row = '<tr>' +
-                                    '<td style="background-color: yellow">' + dataLookupTable.hash + '</td>' +
-                                    '<td style="background-color: yellow">' + dataLookupTable.hashType + '</td>' +
-                                    '<td style="background-color: yellow">Значення хешу не було знайдено</td>' +
+                                    '<td>'  + dataLookupTable.hash + '</td>' +
+                                    '<td>'  + dataLookupTable.hashType + '</td>' +
+                                    '<td> Значення хешу не було знайдено</td>' +
                                   '</tr>'
                         else
                             row = '<tr>' +
-                                    '<td style="background-color: red">' + dataLookupTable.hash + '</td>' +
-                                    '<td style="background-color: red">Це не хеш або такий тип хешу не підтримується</td>' +
-                                    '<td style="background-color: red">Це не хеш або такий тип хешу не підтримується</td>' +
+                                    '<td>'  + dataLookupTable.hash + '</td>' +
+                                    '<td> Це не хеш або такий тип хешу не підтримується</td>' +
+                                    '<td> Це не хеш або такий тип хешу не підтримується</td>' +
                                   '</tr>'
                     }
 

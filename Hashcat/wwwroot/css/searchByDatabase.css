@@ -19,18 +19,6 @@
     box-shadow: 0 5px 45px rgba(12, 88, 252, 0.23);
 }
 /*Textarea*/
-/*Button*/
-.btn-search-db {
-    background-color: transparent;
-    border: 1px solid #FFF;
-    color: #FFF;
-}
-.btn-search-db:hover {
-    background-color: #0b5a9d;
-    border: 1px solid #FFF;
-    color: #FFF;
-}
-/*Button*/
 /*SearchDB*/
 /*InfoDB*/
 .text-db {
@@ -42,21 +30,70 @@
 }
 /*InfoDB*/
 /*Table*/
-.th {
-    /*color: #FFF;
+.table-db {
+    width: 100%;
+    border: none;
+    margin-bottom: 20px;
+    border-collapse: separate;
+    color: #FFF;
+}
+.table-db thead th {
+    font-weight: bold;
+    text-align: left;
+    border: none;
+    padding: 10px 15px;
+    background: #18337d;
+    font-size: 14px;
+    border-top: 2px solid rgba(6, 29, 80, 0.6);
+    text-align: center;
+}
+.table-db thead tr th:first-child {
+    border-radius: 20px 0 0 0;
+}
+.table-db thead tr th:last-child {
+    border-radius: 0 20px 0 0;
+}
+.table-db tbody td {
+    text-align: left;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    vertical-align: top;
+}
+.table-db tbody tr:nth-child(odd) {
+    background: #05103b;
+}
+.table-db tbody tr:nth-child(even) {
+    background: #030641;
+}
+.table-db tbody tr:last-child td {
+    border-bottom: 2px solid rgba(6, 29, 80, 0.6);
+}
+.table-db tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 20px;
+}
+.table-db tbody tr:last-child td:last-child {
+    border-radius: 0 0 20px 0;
+}
+.color-detector {
+    width: 3px;
+    padding: 0 !important;
+}
+/*.th {
+    color: #FFF;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     color: #FFF;
     font-size: 14px;
-    font-weight: 500;*/
+    font-weight: 500;
 }
 .td {    
-    /*color: #FFF;
+    color: #FFF;
     font-family: 'Montserrat', sans-serif;
     color: #000;
     font-size: 14px;
-    font-weight: 500;*/
-}
+    font-weight: 500;
+}*/
 /*.as {
     background-color: #95cc0a;
 }

@@ -115,8 +115,33 @@ header .navbar-brand:hover {
     transform: scale(1.1);
 }
 /* Header */
+/* Button */
+.def-btn {
+    background-color: transparent;
+    border: 1px solid #FFF;
+    color: #FFF;
+}
+.def-btn:hover {
+    background-color: #0b5a9d;
+    border: 1px solid #FFF;
+    color: #FFF;
+}
+.def-btn:focus {
+    background-color: #0b5a9d;
+    border: 1px solid #FFF;
+}
+/* Button */
+/* Header */
 /* Footer  Закінчити пізнише*/
-.footer {
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #000;
+    color: #FFF;
+    padding: 10px;
+}
+/*.footer {
     background-color: #000;
 }
 .footer h4 {
@@ -136,7 +161,7 @@ header .navbar-brand:hover {
 }
 .footer a .footer li {
     color: #FFF;
-}
+}*/
 /* Footer */
 /* Старий код Фул сss
 * {
