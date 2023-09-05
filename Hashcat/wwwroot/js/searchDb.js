@@ -1,8 +1,11 @@
-﻿var headlines = '<tr>' +
-    '<th class="th width_hash">Хеш</th>' +
-    '<th class="th width_type">Тип</th>' +
-    '<th class="th width_password">Пароль</th>' +
-    '</tr>'
+﻿var headlines = '<thead>' +
+                    '<tr>' +
+                        '<th colspan="2">Хеш</th>' +
+                        '<th colspan="3">Тип</th>' +
+                        '<th colspan="2">Результат</th>' +
+                    '</tr>' +
+                '</thead>' + 
+                '<tbody id="table_search_db_tbody"></tbody>';
 
 $(function () {
     $("#searchPass").click(function () {
@@ -20,27 +23,39 @@ $(function () {
                 $.each(data, function (i, dataLookupTable) {
                     var row = ''
                     if (dataLookupTable.isSuccess)
-                        row = '<tr>' +
-                                /*'<td style="background-color: green">'*/'<td>' + dataLookupTable.hash + '</td>' +
-                                /*'<td style="background-color: green">'*/'<td>' + dataLookupTable.hashType + '</td>' +
-                                /*'<td style="background-color: green">'*/'<td>' + dataLookupTable.value + '</td>' +
-                              '</tr>'
+                    row = '<tr>' + 
+                            '<td style="background: green;" class="color-detector"></td>' +
+                            '<td>' + dataLookupTable.hash + '</td>' +
+                            '<td style="background: green;" class="color-detector"></td>' +
+                            '<td>' + dataLookupTable.hashType + '</td>' +
+                            '<td style="background: green;" class="color-detector"></td>' +
+                            '<td>' + dataLookupTable.value + '</td>' +
+                            '<td style="background: green;" class="color-detector"></td>' +
+                          '</tr>'
                     else {
                         if (dataLookupTable.hashType != "None")
                             row = '<tr>' +
-                                    '<td>'  + dataLookupTable.hash + '</td>' +
-                                    '<td>'  + dataLookupTable.hashType + '</td>' +
+                                    '<td style="background: yellow;" class="color-detector"></td>' +
+                                    '<td>' + dataLookupTable.hash + '</td>' +
+                                    '<td style="background: yellow;" class="color-detector"></td>' +
+                                    '<td>' + dataLookupTable.hashType + '</td>' +
+                                    '<td style="background: yellow;" class="color-detector"></td>' +
                                     '<td> Значення хешу не було знайдено</td>' +
+                                    '<td style="background: yellow;" class="color-detector"></td>' +
                                   '</tr>'
                         else
                             row = '<tr>' +
+                                    '<td style="background: red;" class="color-detector"></td>' +
                                     '<td>'  + dataLookupTable.hash + '</td>' +
+                                    '<td style="background: red;" class="color-detector"></td>' +
                                     '<td> Це не хеш або такий тип хешу не підтримується</td>' +
+                                    '<td style="background: red;" class="color-detector"></td>' +
                                     '<td> Це не хеш або такий тип хешу не підтримується</td>' +
+                                    '<td style="background: red;" class="color-detector"></td>' +
                                   '</tr>'
                     }
 
-                    $("#table_search_db").append(row)
+                    $("#table_search_db_tbody").append(row)
                 })
             },
 

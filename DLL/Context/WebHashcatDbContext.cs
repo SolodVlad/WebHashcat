@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace DLL.Context
 {
@@ -13,7 +14,7 @@ namespace DLL.Context
             Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override async void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
@@ -35,24 +36,24 @@ namespace DLL.Context
             builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA384).HasColumnType("varchar").HasMaxLength(96).IsFixedLength();
             builder.Entity<DataLookupTable>().Property(lookupTable => lookupTable.SHA512).HasColumnType("varchar").HasMaxLength(128).IsFixedLength();
 
-            //var md5 = MD5.Create();
-            //var sha1 = SHA1.Create();
-            //var sha256 = SHA256.Create();
-            //var sha384 = SHA384.Create();
-            //var sha512 = SHA512.Create();
+            var md5 = MD5.Create();
+            var sha1 = SHA1.Create();
+            var sha256 = SHA256.Create();
+            var sha384 = SHA384.Create();
+            var sha512 = SHA512.Create();
 
-            //string? value;
-            //using var streamReader = new StreamReader("hashcat-6.2.6\\test.txt");
-            //while ((value = streamReader.ReadLine()) != null)
-            //    builder.Entity<DataLookupTable>().HasData(new DataLookupTable()
-            //    {
-            //        Value = value,
-            //        MD5 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), md5),
-            //        SHA1 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha1),
-            //        SHA256 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha256),
-            //        SHA384 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha384),
-            //        SHA512 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha512),
-            //    });
+            string? value;
+            using var streamReader = new StreamReader("hashcat-6.2.6\\test.txt");
+            while ((value = streamReader.ReadLine()) != null)
+                builder.Entity<DataLookupTable>().HasData(new DataLookupTable()
+                {
+                    Value = value,
+                    MD5 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), md5),
+                    SHA1 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha1),
+                    SHA256 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha256),
+                    SHA384 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha384),
+                    SHA512 = await ComputeHashAsync(Encoding.UTF8.GetBytes(value), sha512),
+                });
         }
 
         //public DbSet<User> Users { get; set; }

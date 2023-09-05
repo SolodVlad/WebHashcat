@@ -54,6 +54,7 @@
     border-radius: 0 20px 0 0;
 }
 .table-db tbody td {
+    word-wrap: anywhere;
     text-align: left;
     border: none;
     padding: 10px 15px;
