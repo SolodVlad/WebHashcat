@@ -32,12 +32,12 @@
                 <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
                     <h3 class="mb-4">Взлом хешів</h3>
                     <label>Введіть хеш:</label>
-                    <input asp-for="Hash" class="form-control mt-1" placeholder="Enter hash" id="hash" />
+                    <input class="form-control mt-1" placeholder="Enter hash" id="hash" />
                     @*<span asp-validation-for="Hash" class="text-danger">HASH</span>*@
                     <input type="button" class="btn btn-primary def-btn mt-2" id="startAutodetectModeBtn" value="Далі" />
 
-                    <select id="hashTypesSelect" style="display: none"></select>
-                    <input type="button" id="startCrackBtn" style="display: none" value="START CRACK" />
+                    <select id="hashTypesSelect" class="form-control mt-2" style="display: none"></select>
+                    <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" style="display: none" value="Старт кряк" />
                     <table border="1" id="hashcatResultsTable">
                         @*<tr>
                             <th class="th">Значення (пароль)</th>
