@@ -1,6 +1,9 @@
 /*Main page*/
-html {
+html, body {
     font-size: 16px;
+}
+.header-container {
+    padding: 50px 0px;
 }
 #content-container {
     min-height: 100%;
@@ -19,7 +22,6 @@ body, html {
     padding: 0;
 }
 body {
-    /*height: 100vh;*/
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -148,35 +150,21 @@ header .navbar-brand:hover {
 }
 /* Button */
 /* Header */
+/* Content */
+.content-section {
+    min-height: 100vh;
+}
+/* Content */
 /* Footer  Закінчити пізнише*/
-.fixed-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #000;
-    color: #FFF;
-    padding: 10px;
-}
 /*.footer {
-    background-color: #000;
-}
-.footer h4 {
-    color: #FFF;
-    text-transform: uppercase;
-    font-size: 16px;
-    border-bottom: 1px solid #fff;
-    padding-bottom: 3px;
-}
-.footer a{
-    text-decoration: none;
-    transition: all .3s;
-}
-.footer a:hover {
-    color: #0b5a9d;
-    text-decoration: underline;
-}
-.footer a .footer li {
-    color: #FFF;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    position: fixed;
+    /*bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
 }*/
 /* Footer */
 /* Старий код Фул сss

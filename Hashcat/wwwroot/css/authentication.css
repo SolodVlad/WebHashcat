@@ -1,13 +1,14 @@
 ﻿/*Авторизация - Регистрация*/
-.autorith {
-    margin-top: 17%;
+/*.autorith {
+    margin-top: 0%;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-content: center;
-}
+}*/
 
 .container_authorization {
+    
     width: 800px;
     height: 500px;
     padding: 40px 0;
@@ -103,7 +104,7 @@
     font-size: inherit;
 }
 /*Button*/
-/*.btn-login {
+.btn-login {
     background-color: transparent;
     border: 1px solid #FFF;
     color: #FFF;
@@ -112,7 +113,7 @@
     background-color: #0b5a9d;
     border: 1px solid #FFF;
     color: #FFF;
-}*/
+}
 /*Button*/
 /*checkbox закончить визуал!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 /*.text {
@@ -147,15 +148,15 @@
         left: 0px;
     }
 }
-@media screen and (zoom: 125%) {
+/*@media screen and (zoom: 125%) {
     .autorith {
         margin-top: 0;
     }
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-height: 1200px) {
     .autorith {
-        margin-top: 0;
+        margin-top: 0%;
     }
-}
+}*/
 /*Адаптивність*/
 /*Авторизация - Регистрация*/

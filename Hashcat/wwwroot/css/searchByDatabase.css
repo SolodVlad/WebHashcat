@@ -1,4 +1,16 @@
 ﻿/*Home_content*/
+/*Banner*/
+.banner-icon {
+    color: #FFF;
+    margin-right: 15px;
+}
+.banner-text {
+    color: #FFF;
+}
+.banner-text p{
+    font-size: 14px;
+}
+/*Banner*/
 /*SearchDB*/
 /*Textarea*/
 .form-control {
@@ -80,30 +92,6 @@
     width: 3px;
     padding: 0 !important;
 }
-/*.th {
-    color: #FFF;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    color: #FFF;
-    font-size: 14px;
-    font-weight: 500;
-}
-.td {    
-    color: #FFF;
-    font-family: 'Montserrat', sans-serif;
-    color: #000;
-    font-size: 14px;
-    font-weight: 500;
-}*/
-/*.as {
-    background-color: #95cc0a;
-}
-.ad {
-    background-color: #d7bc3e;
-}
-.af {
-    background-color: #d7bc3e;
-}*/
 /*Table*/
 /*Home_content*/
 
