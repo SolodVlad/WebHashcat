@@ -32,5 +32,20 @@ namespace WebHashcat.Areas.Cabinet.Controllers
 
             return Ok(currentUser.Balance);
         }
+
+        //[Route("Test")]
+        //public IActionResult Test()
+        //{
+        //    string filePath = "hashcat-6.2.6\\hashcat.exe";
+
+        //    if (System.IO.File.Exists(filePath))
+        //    {
+        //        return Ok("Файл існує.");
+        //    }
+        //    else
+        //    {
+        //        return Ok("Файл не існує.");
+        //    }
+        //}
     }
 }

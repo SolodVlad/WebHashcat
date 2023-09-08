@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
 using System.Globalization;
@@ -14,17 +15,20 @@ namespace WebHashcat.Hubs
         private readonly string _scriptPath;
         private readonly string _workingDirectory;
 
+        private readonly IEmailSender _emailSender;
+
         private bool isMultipleHashTypes;
         private bool isOneHashType;
         private bool isNotHash;
 
         private readonly Dictionary<string, Process> _processes;
 
-        public HashcatHub()
+        public HashcatHub(IEmailSender emailSender)
         {
             _scriptPath = "hashcat-6.2.6\\hashcat.exe";
             _workingDirectory = "hashcat-6.2.6";
             _processes = new Dictionary<string, Process>();
+            _emailSender = emailSender;
         }
 
         public async Task StartAutodetectModeHashcat(string hash)
@@ -170,6 +174,9 @@ namespace WebHashcat.Hubs
                         result.Progress = double.Parse(progressPercentage, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
 
                         await Clients.User(Context.UserIdentifier).SendAsync("hashcatResult", result);
+
+                        if (result.Value != null)
+                            _emailSender.SendEmailAsync(Context.UserIdentifier, "ВАШ ХЕШ БУВ УСПІШНО ЗЛАМАНИЙ", $"Значення хешу {hashcatArguments.Hash}: {result.Value}");
                     }
                 }
             };

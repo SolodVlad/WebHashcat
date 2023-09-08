@@ -74,7 +74,7 @@ namespace WebHashcat.Areas.Identity.Controllers
             if (result.Succeeded)
             {
                 var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(user.UserName));
-                await _tokenService.IsRevokeRefreshTokenAsync(userNameHash);
+                await _tokenService.IsRevokeRefreshTokenSuccessAsync(userNameHash);
                 return Ok();
             }
             return BadRequest(result.Errors);

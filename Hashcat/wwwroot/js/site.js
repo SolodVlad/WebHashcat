@@ -1,53 +1,66 @@
 function validateToken() {
-    var token = Cookies.get('AuthCookie');
-    if (token) {
-        $.ajax({
-            url: 'api/AuthenticationApi/ValidateJWTToken',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(token),
+    $.ajax({
+        url: 'api/AuthenticationApi/ValidateJWTToken',
+        type: 'GET',
+        //contentType: 'application/json',
 
-            success: function (response) {
-                if (response) {
-                    $('#balanceLi, #emailLi, #logoutLi').css('display', 'block');
-                    $('#loginLi').css('display', 'none');
+        success: function (response) {
+            if (response.userName) {
+                $('#balanceLi, #emailLi, #logoutLi').css('display', 'block');
+                $('#loginLi').css('display', 'none');
 
-                    $('#showEmail').text(response.userName);
-                    $('#showBalance').text(response.balance + '$');
-                } else {
-                    document.cookie = 'AuthCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-                    $('#balanceLi, #emailLi, #logoutLi').css('display', 'none');
-                    $('#loginLi').css('display', 'block');
-
-                    alert('Сесія авторизації минула');
-                    window.location.replace('/');
-                }
-            },
-
-            error: function (jqXHR, exception) {
-                if (jqXHR.status === 0) {
-                    console.error('Not connect. Verify Network.');
-                } else if (jqXHR.status == 404) {
-                    console.error('Requested page not found (404).');
-                } else if (jqXHR.status == 500) {
-                    console.error('Internal Server Error (500).');
-                } else if (exception === 'parsererror') {
-                    console.error('Requested JSON parse failed.');
-                } else if (exception === 'timeout') {
-                    console.error('Time out error.');
-                } else if (exception === 'abort') {
-                    console.error('Ajax request aborted.');
-                } else {
-                    console.error('Uncaught Error. ' + jqXHR.responseText);
-                }
+                $('#showEmail').text(response.userName);
+                $('#showBalance').text(response.balance + '$');
             }
-        })
-    }
+            else if (response === "Cookie deleted") {
+                $('#balanceLi, #emailLi, #logoutLi').css('display', 'none');
+                $('#loginLi').css('display', 'block');
+
+                alert('Сесія авторизації минула');
+                window.location.replace('/');
+            }
+        },
+
+        error: function (jqXHR, exception) {
+            if (jqXHR.status === 0) {
+                console.error('Not connect. Verify Network.');
+            } else if (jqXHR.status == 404) {
+                console.error('Requested page not found (404).');
+            } else if (jqXHR.status == 500) {
+                console.error('Internal Server Error (500).');
+            } else if (exception === 'parsererror') {
+                console.error('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                console.error('Time out error.');
+            } else if (exception === 'abort') {
+                console.error('Ajax request aborted.');
+            } else {
+                console.error('Uncaught Error. ' + jqXHR.responseText);
+            }
+        }
+    })
 };
 
 document.addEventListener('DOMContentLoaded', function () {
     validateToken();
+
+//    var apiUrl = "/api/SystemInfo/GetSystemInfo";
+
+//    // Виконуємо AJAX-запит за допомогою Fetch API
+//    fetch(apiUrl)
+//        .then(response => {
+//            if (!response.ok) {
+//                throw new Error(`HTTP error! Status: ${response.status}`);
+//            }
+//            return response.json();
+//        })
+//        .then(data => {
+//            // Виводимо отримані дані через alert
+//            alert(JSON.stringify(data));
+//        })
+//        .catch(error => {
+//            console.error("Fetch error:", error);
+//        });
 });
 
 document.addEventListener('click', function () {
@@ -56,21 +69,21 @@ document.addEventListener('click', function () {
 
 $('#logoutBtn').click(function () {
     $.ajax({
-        url: 'api/AuthenticationApi/GetUserNameByAccessToken',
-        type: 'POST',
-        data: JSON.stringify(Cookies.get('AuthCookie')),
-        contentType: 'application/json',
+        url: 'api/AuthenticationApi/Logout',
+        type: 'GET',
 
         success: function (userName) {
             $.ajax({
-                url: "api/AuthenticationApi/RevokeRefreshToken",
+                url: "api/AuthenticationApi/RevokeTokens",
                 type: "POST",
                 data: JSON.stringify(userName),
                 contentType: "application/json",
 
                 success: function () {
-                    document.cookie = 'AuthCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
                     window.location.replace('/');
+
+                    $('#balanceLi, #emailLi, #logoutLi').css('display', 'none');
+                    $('#loginLi').css('display', 'block');
                 },
 
                 error: function (jqXHR, exception) {
@@ -111,26 +124,3 @@ $('#logoutBtn').click(function () {
         }
     });
 })
-var button = $('.def-btn');
-button.on('click', function () {
-    setTimeout(function () {
-        button.blur();
-    }, 300);
-});
-//$(window).scroll(function () {
-//    var scrollHeight = $(document).height();
-//    var scrollPosition = $(window).height() + $(window).scrollTop();
-//    var footerHeight = $('#footer').height();
-
-//    if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
-//        $('#footer').css({
-//            'position': 'relative',
-//            'bottom': 'auto'
-//        });
-//    } else {
-//        $('#footer').css({
-//            'position': 'fixed',
-//            'bottom': '0'
-//        });
-//    }
-//});

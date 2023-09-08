@@ -23,16 +23,9 @@ namespace WebHashcat.Configurations
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
                 var userName = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
-                return ComputeSha512(Encoding.UTF8.GetBytes(userName));
+                return userName;
             }
             return null;
-        }
-
-        private static string ComputeSha512(byte[] data)
-        {
-            using var stream = new MemoryStream(data);
-            var hashBytes = SHA512.Create().ComputeHash(stream);
-            return BitConverter.ToString(hashBytes).Replace("-", "");
         }
     }
 }

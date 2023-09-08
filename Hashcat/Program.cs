@@ -60,7 +60,7 @@ builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 builder.Services.Configure<SendGridEmailSenderOptions>(option =>
 {
-    option.ApiKey = builder.Configuration["ExternalProviders:SendGrid:SENDGRID_API_KEY"];
+    option.ApiKey = builder.Configuration.GetValue<string>("SENDGRID-API-KEY");
     option.SenderName = builder.Configuration["ExternalProviders:SendGrid:SenderName"];
     option.SenderEmail = builder.Configuration["ExternalProviders:SendGrid:SenderEmail"];
 });

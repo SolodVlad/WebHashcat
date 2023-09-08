@@ -104,7 +104,7 @@ connectionHashcat.on('stopCrack', (hash) => {
     row.css('background-color', 'red');
 });
 
-function startCrackHashcatOnClient(hashcatArguments, token) {
+function startCrackHashcatOnClient(hashcatArguments) {
     connectionHashcat.invoke('StartCrackHashcat', hashcatArguments).catch(function (err) { console.error(err); });
     //connectionBalance.send('StartPaymentWithdrawal', token).catch(function (err) { console.error(err); });
 };

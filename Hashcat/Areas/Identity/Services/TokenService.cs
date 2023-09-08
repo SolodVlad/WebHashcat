@@ -79,7 +79,7 @@ namespace WebHashcat.Areas.Identity.Services
             return principal;
         }
 
-        public async Task<bool> IsRevokeRefreshTokenAsync(string key)
+        public async Task<bool> IsRevokeRefreshTokenSuccessAsync(string key)
         {
             if (string.IsNullOrEmpty(await _cache.GetStringAsync(key))) return false;
 

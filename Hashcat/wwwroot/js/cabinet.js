@@ -18,6 +18,15 @@ $('li[href="#Value"]').click(function () {
 
 $('#startAutodetectModeBtn').click(function () {
     startAutodetectModeHashcatOnClient($('#hash').val());
+
+    //$.ajax({
+    //    url: 'api/BalanceApi/Test',
+    //    type: 'GET',
+
+    //    success: function (res) {
+    //        alert(res);
+    //    }
+    //})
 });
 
 $('#startCrackBtn').click(function () {
@@ -26,7 +35,7 @@ $('#startCrackBtn').click(function () {
         Hash: $('#hash').val()
     };
 
-    startCrackHashcatOnClient(hashcatArguments, Cookies.get('AuthCookie'));
+    startCrackHashcatOnClient(hashcatArguments);
 });
 
 $(function () {

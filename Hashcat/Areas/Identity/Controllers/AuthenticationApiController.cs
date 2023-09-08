@@ -32,6 +32,8 @@ namespace WebHashcat.Areas.Identity.Controllers
         private readonly IWebHostEnvironment _environment;
         private readonly TokenService _tokenService;
 
+        private readonly string _cookieName = "AuthCookie";
+
         public AuthenticationApiController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, IConfiguration config, IEmailSender emailSender, IWebHostEnvironment environment, IDistributedCache cache)
         {
             _userManager = userManager;
@@ -149,13 +151,12 @@ namespace WebHashcat.Areas.Identity.Controllers
 
                     var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(user.UserName));
 
-                    await _tokenService.SaveRefreshTokenToCacheAsync(userNameHash, refreshToken);
+                    if (!await _tokenService.IsRefreshTokenExistsAsync(userNameHash))
+                        await _tokenService.SaveRefreshTokenToCacheAsync(userNameHash, refreshToken);
 
-                    AppendCookie("AuthCookie", jwtAccessToken, login.IsRememberMe);
+                    AppendCookie(_cookieName, jwtAccessToken, login.IsRememberMe);
 
-                    var userBalance = user.Balance;
-
-                    return Ok(userBalance);
+                    return NoContent();
                 }
             }
             return Unauthorized();
@@ -187,10 +188,13 @@ namespace WebHashcat.Areas.Identity.Controllers
         //    return Ok();
         //}
 
-        [HttpPost]
         [Route("ValidateJWTToken")]
-        public async Task<IActionResult> ValidateJwtToken([FromBody] string accessToken)
+        public async Task<IActionResult> ValidateJwtTokenAsync(/*[FromBody] string accessToken*/)
         {
+            var accessToken = Request.Cookies[_cookieName];
+
+            if (string.IsNullOrEmpty(accessToken)) return Ok();
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config.GetValue<string>("JWTSecret"));
             try
@@ -228,41 +232,44 @@ namespace WebHashcat.Areas.Identity.Controllers
                 if (await _tokenService.IsRefreshTokenExistsAsync(userNameHash)) 
                 {
                     var newJwtAccessSecurityToken = _tokenService.GenerateNewAccessToken(principal.Claims.ToList());
-                    AppendCookie("AuthCookie", new JwtSecurityTokenHandler().WriteToken(newJwtAccessSecurityToken), isRememberMe);
+                    AppendCookie(_cookieName, new JwtSecurityTokenHandler().WriteToken(newJwtAccessSecurityToken), isRememberMe);
 
                     var currentUser = await _userManager.FindByNameAsync(userName);
 
                     return Ok(new { userName, currentUser.Balance });
                 }
 
-                Response.Cookies.Delete("AuthCookie");
-                return NoContent();
+                Response.Cookies.Delete(_cookieName);
+                return Ok("Cookie deleted");
             }
             catch (Exception ex) 
             {
+                Response.Cookies.Delete(_cookieName);
                 Debug.WriteLine(ex.Message);
-                throw new Exception(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        [Route("RevokeRefreshToken")]
-        public async Task<IActionResult> RevokeRefreshToken([FromBody] string userName)
+        [Route("RevokeTokens")]
+        public async Task<IActionResult> RevokeTokens([FromBody] string userName)
         {
             var userNameHash = await ComputeSha512Async(Encoding.UTF8.GetBytes(userName));
-            if (!await _tokenService.IsRevokeRefreshTokenAsync(userNameHash)) return BadRequest("Invalid user name");
-
+            if (!await _tokenService.IsRevokeRefreshTokenSuccessAsync(userNameHash)) return BadRequest("Invalid user name");
+            
+            Response.Cookies.Delete(_cookieName);
             return NoContent();
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost]
-        [Route("GetUserNameByAccessToken")]
-        public string GetUserNameByAccessToken([FromBody] string accessToken)
+        [Route("Logout")]
+        public string GetUserNameByAccessToken(/*[FromBody] string accessToken*/)
         {
+            var accessToken = Request.Cookies[_cookieName];
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = tokenHandler.ReadJwtToken(accessToken);
+            
             return jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
         }
 
@@ -270,7 +277,7 @@ namespace WebHashcat.Areas.Identity.Controllers
         {
             var cookieOptions = new CookieOptions
             {
-                HttpOnly = !_environment.IsDevelopment(),
+                HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
                 Path = "/",

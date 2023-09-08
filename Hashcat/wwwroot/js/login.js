@@ -75,9 +75,8 @@ $("#loginBtn").click(function () {
         type: "POST",
         data: JSON.stringify(login),
         contentType: "application/json",
-        success: function (balance) {
+        success: function () {
             window.location.replace("Cabinet");
-            $('#showBalance').text(balance + '$');
         },
         error: function (jqXHR, exception) {
             if (jqXHR.status === 0) {

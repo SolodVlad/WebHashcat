@@ -29,12 +29,9 @@ namespace WebHashcat.Hubs
             _serviceProvider = serviceProvider;
         }
 
-        public async Task StartPaymentWithdrawal(string token)
+        public async Task StartPaymentWithdrawal()
         {
-            var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            var userName = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
-
-            user = await _userManager.FindByNameAsync(userName);
+            user = await _userManager.FindByNameAsync(Context.UserIdentifier);
 
             _timer.Start();
         }
