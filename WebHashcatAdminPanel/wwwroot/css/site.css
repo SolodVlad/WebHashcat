@@ -1,22 +1,128 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
+/*Admin_mane_page*/
+html, body {
     font-size: 16px;
-  }
 }
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.header-container {
+    padding: 50px 0px;
 }
-
-html {
-  position: relative;
-  min-height: 100%;
+#content-container {
+    min-height: 100%;
+    position: relative;
 }
-
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 body {
-  margin-bottom: 60px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    background-color: #FFF;
+    min-width: 320px;
+    background: linear-gradient(#000, #04143f);
+    background-attachment: fixed;
+    background-size: cover;
 }
+.visual-style-black {
+    background-color: #000;
+}
+.empty-space {
+    height: 100px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+section {
+    padding: 50px 0;
+}
+a {
+    color: #FFF !important;
+}
+a:hover {
+    color: #0b5a9d !important;
+}
+/*Header*/
+.navbar-dark .navbar-nav .nav-link {
+    font-weight: 500;
+}
+.navbar-brand {
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.top-menu .visual-a-blue::after {
+    content: '';
+    display: block;
+    width: 100%;
+    background-color: #0b5a9d;
+    height: 1px;
+    transition: all .3s;
+    transform: scale(0);
+}
+.top-menu li a:hover::after {
+    transform: scale(1);
+}
+.top-menu .visual-a-black::after {
+    content: '';
+    display: block;
+    width: 100%;
+    color: #000 !important;
+    background-color: #000;
+    height: 1px;
+    transition: all .3s;
+    transform: scale(0);
+}
+.top-menu li a:hover::after {
+    transform: scale(1);
+}
+.dropdown-menu li a:hover {
+    color: #000;
+}
+.contant-site {
+    margin-top: 100px;
+}
+header {
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+header::before,
+header::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    background: linear-gradient(45deg, #0e4cf8, #0934a8, #062372, #030e2e,#01030a, #0e4cf8, #0934a8, #062372,#030e2e,#01030a );
+    background-size: 500%;
+    z-index: -1;
+    animation: animate 30s ease infinite;
+}
+header::after {
+    filter: blur(15px);
+}
+@keyframes animate {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 300% 0;
+    }
+
+    0% {
+        background-position: 0 0;
+    }
+}
+header .navbar-brand {
+    font-weight: 600;
+    transition: .5s;
+}
+header .navbar-brand:hover {
+    transform: scale(1.1);
+}
+/*Header*/
+/*Admin_mane_page*/

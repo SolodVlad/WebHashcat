@@ -7,14 +7,7 @@ html, body {
 }
 #content-container {
     min-height: 100%;
-    position: relative; /* Важно: устанавливаем относительное позиционирование */
-}
-footer {
-    position: absolute;
-    bottom: 0; /* Располагаем футер внизу контейнера */
-    width: 100%;
-    background-color: #f5f5f5; /* Цвет футера */
-    padding: 10px;
+    position: relative;
 }
 body, html {
     height: 100%;
@@ -27,7 +20,7 @@ body {
     font-weight: 400;
     color: #000;
     background-color: #FFF;
-    min-width: 320px;
+    min-width: 480px;
     background: linear-gradient(#000, #04143f);
     background-attachment: fixed;
     background-size: cover;
@@ -48,7 +41,7 @@ section {
 a {
     color: #FFF !important;
 }
-/* зробити 2 ховери */
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! зробити 2 ховери!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 a:hover {
     color: #0b5a9d !important; 
 }
@@ -151,21 +144,23 @@ header .navbar-brand:hover {
 /* Button */
 /* Header */
 /* Content */
-.content-section {
+/*.content-section {
     min-height: 100vh;
-}
+}*/
 /* Content */
 /* Footer  Закінчити пізнише*/
-/*.footer {
-    background-color: #333;
-    color: white;
+footer {
+    background-color: #000;
+    color: #FFF;
     text-align: center;
-    position: fixed;
-    /*bottom: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
-}*/
+    height: 100px;
+}
+.footer-absolute {
+    position: fixed;
+}
 /* Footer */
 /* Старий код Фул сss
 * {

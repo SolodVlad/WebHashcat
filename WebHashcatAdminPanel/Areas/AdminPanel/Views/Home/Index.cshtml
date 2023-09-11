@@ -1,1 +1,143 @@
-﻿<p>Cabinet</p>
+﻿@{
+    ViewData["Title"] = "Cabinet";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@*<div class="container">*@
+    @*<h1 class="mb-5" style="color: #FFF; padding-left: 2%">Профіль</h1>*@
+    <div class="bg-dark box-shadow-custom rounded d-flex d-sm-row static-content">
+        <div class="profile-tab-nav border-right menu-container col-2.5">
+            <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" data-bs-target="#hash-crack" role="tab" aria-controls="hash-crack" aria-selected="true">
+                    <i class="bg-info bi-house-door text-center me-1"></i>
+                    Взлом хешів
+                </a>
+                <a class="nav-link" id="replenishment-tab" data-bs-toggle="pill" data-bs-target="#replenishment-crack" role="tab" aria-controls="replenishment" aria-selected="false">
+                    <i class="bg-info bi-house-door text-center me-1"></i>
+                    Поповнення балансу
+                </a>
+                <a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
+                    <i class="bi bi-key text-center me-1"></i>
+                    Зміна паролю
+                </a>
+            </div>
+        </div>
+        <div class="tab-content content-container p-4 flex-grow-1 col-9.5" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
+                <h3 class="mb-4">Взлом хешів</h3>
+                <label>Введіть хеш:</label>
+                <input class="form-control mt-1" placeholder="Enter hash" id="hash" />
+                @*<span asp-validation-for="Hash" class="text-danger">HASH</span>*@
+                <input type="button" class="btn btn-primary def-btn mt-2" id="startAutodetectModeBtn" value="Далі" />
+
+                <select id="hashTypesSelect" class="form-control mt-2" style="display: none"></select>
+                <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" style="display: none" value="Старт кряк" />
+
+                @*<table border="1" id="hashcatResultsTable">
+                <tr>
+                <th class="th">Значення (пароль)</th>
+                <th class="th">Хеш</th>
+                <th class="th">Тип</th>
+                <th class="th">Час початку</th>
+                <th class="th">Пройшло часу</th>
+                <th class="th">Орієнтовний час завершення</th>
+                <th class="th">Залишилось часу</th>
+                <th class="th">Прогрес</th>
+                </tr>
+                </table>*@
+                <table id="table_search_db" class="table-db mt-1">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Хеш</th>
+                            <th colspan="3">Тип</th>
+                            <th colspan="2">Результат</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="background: green" class="color-detector"></td>
+                            <td>Довгий текст, який може бути обрізаний для адаптивності</td>
+                            <td style="background: green" class="color-detector"></td>
+                            <td>Короткий текст</td>
+                            <td style="background: green" class="color-detector"></td>
+                            <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
+                            <td style="background: green" class="color-detector"></td>
+                        </tr>
+                        <tr>
+                            <td style="background: yellow" class="color-detector"></td>
+                            <td>Довгий текст, який може бути обрізаний для адаптивності</td>
+                            <td style="background: yellow" class="color-detector"></td>
+                            <td>Короткий текст</td>
+                            <td style="background: yellow" class="color-detector"></td>
+                            <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
+                            <td style="background: yellow" class="color-detector"></td>
+                        </tr>
+                        <tr>
+                            <td style="background: red" class="color-detector"></td>
+                            <td>Довгий текст, який може бути обрізаний для адаптивності</td>
+                            <td style="background: red" class="color-detector"></td>
+                            <td>Короткий текст</td>
+                            <td style="background: red" class="color-detector"></td>
+                            <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
+                            <td style="background: red" class="color-detector"></td>
+                        </tr>
+                        <tr>
+                            <td style="background: red" class="color-detector"></td>
+                            <td>Довгий текст, який може бути обрізаний для адаптивності</td>
+                            <td style="background: red" class="color-detector"></td>
+                            <td>Короткий текст</td>
+                            <td style="background: red" class="color-detector"></td>
+                            <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
+                            <td style="background: red" class="color-detector"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
+                <h3 class="mb-4">Поповнення балансу</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Введіть сумму поповнення:</label>
+                            <input type="number" class="form-control mt-1" id="sum"> @*form-group*@
+                            <input type="button" class="btn btn-primary def-btn mt-2" id="replenishmentBtn" value="Поповнити" />
+                        </div>
+                    </div>
+                </div>
+                @*<div class="profile_content" id="profile_2">
+                <input type="number" id="sum"/>
+                <button type="submit" id="replenishmentBtn">Поповнити баланс</button>
+                </div>*@
+            </div>
+            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                <h3 class="mb-4">Зміна паролю</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Старий пароль:</label>
+                            <input type="password" class="form-control mt-1">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Новий пароль:</label>
+                            <input type="password" class="form-control mt-1">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Повторіть новий пароль:</label>
+                            <input type="password" class="form-control mt-1">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <button class="btn btn-primary def-btn">Оновити</button>
+                    @*<button class="btn btn-primary def-btn">Cancel</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+@*</div>*@

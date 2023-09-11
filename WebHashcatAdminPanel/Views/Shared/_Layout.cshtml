@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/WebHashcatAdminPanel.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
+    @*<header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebHashcatAdminPanel</a>
@@ -25,23 +25,54 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Login", new { Area = "Identity" })" class="nav-link text-dark">Вхід</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Home", new { Area = "AdminPanel" })" class="nav-link text-dark">AdminPanel</a>
+                        </li>
                     </ul>
                     @* <partial name="_LoginPartial" /> *@
-                </div>
+                @*</div>
             </div>
         </nav>
-    </header>
+    </header>*@
+    <section class="header-container">
+        <header id="header" class="fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-dark visual-style-black">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home", new { Area = "" })">WebHashсat</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 top-menu">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Login", new { Area = "Identity" })" class="nav-link visual-a-blue">Вхід</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Home", new { Area = "AdminPanel" })" class="nav-link visual-a-blue">AdminPanel</a>
+                            </li>
+                        </ul>
+                        @*<ul class="navbar-nav ms-auto mb-2 mb-lg-0 top-menu">
+                            <partial name="_LoginPartial" />
+                        </ul>*@
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </section>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @*<footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - WebHashcatAdminPanel - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>*@
 
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/js-cookie/js.cookie.min.js"></script>

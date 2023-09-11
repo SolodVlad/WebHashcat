@@ -55,7 +55,9 @@ connectionHashcat.on('hashcatResult', (result) => {
     }
     else {
         if (result.status == "Running")
-            row = '<tr id="' + result.hash + '" style="background-color: yellow">' +
+            row =   
+                '<tr id="' + result.hash + '">' + /*style="background-color: yellow"*/
+                    '<td style="background: yellow;" class="color-detector"></td>' +
                     '<td class="td">У процесі</td>' +
                     '<td class="td">' + result.hash + '</td>' +
                     '<td class="td">' + result.hashType + '</td>' +
@@ -64,13 +66,15 @@ connectionHashcat.on('hashcatResult', (result) => {
                     '<td class="td">' + result.timeEstimated + '</td>' +
                     '<td class="td">' + result.timeLeft + '</td>' +
                     '<td class="td">' + result.progress + '%</td>' +
+                    '<td style="background: yellow;" class="color-detector"></td>' +
                     '<td class="td">' +
-                        '<input type="button" class="stopCrackBtn form_btn" value="СТОП"/>' +
+                    '<input type="button" class="stopCrackBtn form_btn" value="СТОП"/>' +
                     '</td>' +
-                  '</tr > ';
+                '</tr > ';
 
         else if (result.status == "Exhausted")
-            row = '<tr id="' + result.hash + '" style="background-color: red">' +
+            row =   '<td style="background: yellow;" class="color-detector"></td>' +
+                    '<tr id="' + result.hash + '" style="background-color: red">' +
                     '<td class="td">Не знайдено</td>' +
                     '<td class="td">' + result.hash + '</td>' +
                     '<td class="td">' + result.hashType + '</td>' +
@@ -96,7 +100,7 @@ connectionHashcat.on('hashcatResult', (result) => {
         }
     }
 
-    $('#hashcatResultsTable').append(row);
+    $('#tbody-content').append(row);
 });
 
 connectionHashcat.on('stopCrack', (hash) => {

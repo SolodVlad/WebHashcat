@@ -33,6 +33,7 @@ $("#registerBtn").click(function () {
         contentType: "application/json",
         data: JSON.stringify(register),
         success: function () {
+            /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Підтвердіть емеіл!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
             $("#confirmPasswordErrorMessage").text("Підтвердіть реєстрацію за допомогою пошти")
         },
         error: function (jqXHR, exception) {

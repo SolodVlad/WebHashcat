@@ -32,7 +32,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 top-menu">
                             <li class="nav-item">
-                                <a class="nav-link visual-a-blue" href="@Url.Action("ResetPassword", "Account", new { Area = "Identity" })">Відновлення паролю</a>
+                                <a class="nav-link visual-a-blue" href="@Url.Action("EmailConfirm", "EmailConfirm", new { Area = "Identity" })">Email</a>
                             </li>
                             @*<li class="nav-item">
                                 <a class="nav-link visual-a-blue" href="@Url.Action("Index", "Home", new {Area = "Cabinet"})">Кабінет</a>
@@ -68,59 +68,15 @@
             </nav>
         </header>
     </section>
-    @*<div class="empty-space"></div>*@
-    <section class="content-section">
+    <section id="content">
         <div class="container" id="content-container">
             @RenderBody()
         </div>
-        @*<footer id="footer" class="">
-            <p>&copy; 2023 Ваша компанія. Усі права захищено.</p>
-        </footer>*@
     </section>
-    @*<script>
-        // Функція, яка перевіряє наявність прокрутки
-        function checkScroll() {
-            const contentHeight = document.querySelector('.content').offsetHeight;
-            const windowHeight = window.innerHeight;
-
-            if (contentHeight > windowHeight) {
-                document.getElementById('footer').classList.remove('footer-absolute');
-            } else {
-                document.getElementById('footer').classList.add('footer-absolute');
-            }
-        }
-
-        // Перевіряємо стан прокрутки при завантаженні сторінки і при зміні розміру вікна
-        window.addEventListener('load', checkScroll);
-        window.addEventListener('resize', checkScroll);
-    </script>*@
-     @*Приклад футеру*@
-    @* <footer id="footer" class="fixed-bottom">
-        <section class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-6">
-                        <h4>Інформація</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Головна</a></li>
-                            <li><a href="#">Про сайт</a></li>
-                            <li><a href="#">Сплата послуг</a></li>
-                            <li><a href="#">Контакти</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <h4>Інформація 2</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Напис 1</a></li>
-                            <li><a href="#">Напис 2</a></li>
-                            <li><a href="#">Напис 3</a></li>
-                            <li><a href="#">Напис 4</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </footer> *@
+    <footer>
+        <p>&copy; 2023 Ваша компанія. Усі права захищено.</p>
+    </footer>
+    
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="~/js/site.js" defer asp-append-version="true"></script>

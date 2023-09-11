@@ -9,6 +9,52 @@
     <link rel="stylesheet" href="~/css/authentication.css" asp-append-version="true" />
 </head>
 
+
+
+@*<!-- Кнопки -->
+    <div class="container mt-5">
+        <button class="btn btn-success" id="successButton">Показати успішне вікно</button>
+        <button class="btn btn-danger" id="errorButton">Показати вікно з помилкою</button>
+    </div>*@
+@*Модальні вікна*@
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-success text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Успіх</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Ваш запит був успішно виконаний.
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Помилка</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Ми намагаємося відновити кожне завдання, яке ви нам надсилаєте, безкоштовно.Якщо пароль успішно відновлений і слабкий, ми віддаємо його вам безкоштовно, без реєстрації, без обмежень. Більше інформації про наші ціни тут.
+            </div>
+        </div>
+    </div>
+</div>
+@*<script>
+    // Обробники для кнопок
+    $(document).ready(function () {
+        $("#successButton").click(function () {
+            $("#successModal").modal("show");
+        });
+
+        $("#errorButton").click(function () {
+            $("#errorModal").modal("show");
+        });
+    });
+</script>*@
 <div class="d-flex justify-content-center align-items-center">
     <article class="container_authorization">
         <div class="block mx-auto">
@@ -87,7 +133,6 @@
         </div>
     </article>
 </div>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

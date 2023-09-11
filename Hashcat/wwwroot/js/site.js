@@ -1,3 +1,19 @@
+function checkScroll() {
+    var contentHeight = $('#content').outerHeight();
+    var windowHeight = $(window).height();
+    if (contentHeight > windowHeight) {
+        $('footer').removeClass('footer-absolute');
+    } else {
+        $('footer').addClass('footer-absolute');
+    }
+}
+$(document).ready(function () {
+    checkScroll();
+});
+$(window).resize(function () {
+    checkScroll();
+});
+
 function validateToken() {
     $.ajax({
         url: 'api/AuthenticationApi/ValidateJWTToken',
@@ -124,3 +140,13 @@ $('#logoutBtn').click(function () {
         }
     });
 })
+/*Втрата фокусу*/
+$(document).ready(function () {
+    var buttons = $("button, input[type='button'], input[type='submit']");
+    buttons.click(function () {
+        var self = $(this);
+        setTimeout(function () {
+            self.blur();
+        }, 300);
+    });
+});

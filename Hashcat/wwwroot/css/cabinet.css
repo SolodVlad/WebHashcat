@@ -59,11 +59,25 @@
 .content-container {
     color: #FFF;
 }
-@media (min-width: 768px) {
+.tab-pane {
+    min-height: 600px;
+}
+/*.tab-content {
+    height: 600px;
+    overflow: auto;
+}*/
+/*.tab-content::-webkit-scrollbar{
+    padding-top: 10px; 
+}
+.tab-content::-webkit-scrollbar-thumb {
+    background-color: #FFF;
+    border-radius: 5px;
+}*/
+/*@media (min-width: 768px) {
     .static-content {
         height: 600px
     }
-}
+}*/
 /*.menu li.active:before {
     content: "";
     position: absolute;
@@ -110,6 +124,8 @@
 }
 /*Таблиця*/
 .table-db {
+    width: 100%;
+    overflow: auto;
     border: none;
     margin-bottom: 20px;
     border-collapse: separate;
