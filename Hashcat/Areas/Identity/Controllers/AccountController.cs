@@ -62,6 +62,17 @@ namespace WebHashcat.Areas.Identity.Controllers
             return View(new ResetPassword { Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token)), Email = userEmail });
         }
 
+        [Route("EmailConfirm")]
+        public async Task<IActionResult> EmailConfirmAsync(string guid, string userEmail)
+        {
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            if (user == null) return BadRequest("USER NOT FOUND");
+            var res = await _userManager.ConfirmEmailAsync(user, guid);
+            if (res.Succeeded) return View();
+
+            return BadRequest("INVALID TOKEN");
+        }
+
         [HttpPost]
         [Route("ResetPassword")]
         public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPassword resetPassword)

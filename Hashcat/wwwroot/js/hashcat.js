@@ -25,82 +25,95 @@ connectionHashcat.on('hashTypeResult', (numberHashType, hashType) => {
 })
 
 connectionHashcat.on('hashcatResult', (result) => {
+    var tbodyBrutResult = $('#tbodyBrutResult');
+
+    if (tbodyBrutResult.contents().length === 0) $('#tableBrutResult').css('display', 'block');
+
     var row = $('#' + $.escapeSelector(result.hash));
 
     if (row.length !== 0) {
-        row.find('.td').eq(0).text(result.value);
-        row.find('.td').eq(1).text(result.hash);
-        row.find('.td').eq(2).text(result.hashType);
-        row.find('.td').eq(3).text(result.timeStarted);
-        row.find('.td').eq(4).text(result.timePassed);
-        row.find('.td').eq(5).text(result.timeEstimated);
-        row.find('.td').eq(6).text(result.timeLeft);
-        row.find('.td').eq(7).text(result.progress + '%');
+        var tdElements = row.find('td');
+
+        tdElements.eq(1).text(result.value);
+        tdElements.eq(2).text(result.hash);
+        tdElements.eq(3).text(result.hashType);
+        tdElements.eq(4).text(result.timeStarted);
+        tdElements.eq(5).text(result.timePassed);
+        tdElements.eq(6).text(result.timeEstimated);
+        tdElements.eq(7).text(result.timeLeft);
+        tdElements.eq(8).text(result.progress + '%');
 
         if (result.status == 'Running') {
-            row.css('background-color', 'yellow');
-            row.find('.td').eq(0).text('У процесі');
+            tdElements.eq(0).css('background-color', 'yellow');
+            tdElements.eq(1).text('У процесі');
+            tdElements.eq(9).css('background-color', 'yellow');
         }
         else if (result.status == 'Exhausted') {
-            row.css('background-color', 'red');
-            row.find('.td').eq(0).text('Не знайдено');
+            tdElements.eq(0).css('background-color', 'red');
+            tdElements.eq(1).text('Не знайдено');
+            tdElements.eq(9).css('background-color', 'red');
+            tdElements.eq(10).remove();
         }
         else if (result.status == 'Cracked') {
-            row.css('background-color', 'blue');
-            row.find('.td').eq(0).text(result.value);
-            row.find('.td').eq(5).text('0');
-            row.find('.td').eq(6).text('0');
-            row.find('.td').eq(7).text('100%');
+            tdElements.eq(0).css('background-color', 'blue');
+            tdElements.eq(1).text(result.value);
+            tdElements.eq(6).text('0');
+            tdElements.eq(7).text('0');
+            tdElements.eq(8).text('100%');
+            tdElements.eq(9).css('background-color', 'blue');
+            tdElements.eq(10).remove();
         }
     }
     else {
         if (result.status == "Running")
-            row =   
-                '<tr id="' + result.hash + '">' + /*style="background-color: yellow"*/
-                    '<td style="background: yellow;" class="color-detector"></td>' +
-                    '<td class="td">У процесі</td>' +
-                    '<td class="td">' + result.hash + '</td>' +
-                    '<td class="td">' + result.hashType + '</td>' +
-                    '<td class="td">' + result.timeStarted + '</td>' +
-                    '<td class="td">' + result.timePassed + '</td>' +
-                    '<td class="td">' + result.timeEstimated + '</td>' +
-                    '<td class="td">' + result.timeLeft + '</td>' +
-                    '<td class="td">' + result.progress + '%</td>' +
-                    '<td style="background: yellow;" class="color-detector"></td>' +
-                    '<td class="td">' +
-                    '<input type="button" class="stopCrackBtn form_btn" value="СТОП"/>' +
-                    '</td>' +
+            row = '<tr id="' + result.hash + '">' +
+                '<td style="background: yellow;" class="color-detector"></td>' +
+                '<td>У процесі</td>' +
+                '<td>' + result.hash + '</td>' +
+                '<td>' + result.hashType + '</td>' +
+                '<td>' + result.timeStarted + '</td>' +
+                '<td>' + result.timePassed + '</td>' +
+                '<td>' + result.timeEstimated + '</td>' +
+                '<td>' + result.timeLeft + '</td>' +
+                '<td>' + result.progress + '%</td>' +
+                '<td style="background: yellow;" class="color-detector"></td>' +
+                '<td>' +
+                '<input type="button" class="stopCrackBtn form_btn" value="СТОП"/>' +
+                '</td>' +
                 '</tr > ';
 
         else if (result.status == "Exhausted")
-            row =   '<td style="background: yellow;" class="color-detector"></td>' +
-                    '<tr id="' + result.hash + '" style="background-color: red">' +
-                    '<td class="td">Не знайдено</td>' +
-                    '<td class="td">' + result.hash + '</td>' +
-                    '<td class="td">' + result.hashType + '</td>' +
-                    '<td class="td">' + result.timeStarted + '</td>' +
-                    '<td class="td">' + result.timePassed + '</td>' +
-                    '<td class="td">' + result.timeEstimated + '</td>' +
-                    '<td class="td">' + result.timeLeft + '</td>' +
-                    '<td class="td">' + result.progress + '%</td>' +
-                  '</tr>';
+            row = '<tr id="' + result.hash + '">' +
+                '<td style="background: red;" class="color-detector"></td>' +
+                '<td>Не знайдено</td>' +
+                '<td>' + result.hash + '</td>' +
+                '<td>' + result.hashType + '</td>' +
+                '<td>' + result.timeStarted + '</td>' +
+                '<td>' + result.timePassed + '</td>' +
+                '<td>' + result.timeEstimated + '</td>' +
+                '<td>' + result.timeLeft + '</td>' +
+                '<td>' + result.progress + '%</td>' +
+                '<td style="background: red;" class="color-detector"></td>' +
+                '</tr>';
 
         else {
             connectionBalance.send('StopPaymentWithdrawal').catch(function (err) { console.error(err); });
-            row = '<tr id="' + result.hash + '" style="background-color: blue">' +
-                    '<td class="td">' + result.value + '</td>' +
-                    '<td class="td">' + result.hash + '</td>' +
-                    '<td class="td">' + result.hashType + '</td>' +
-                    '<td class="td">' + result.timeStarted + '</td>' +
-                    '<td class="td">' + result.timePassed + '</td>' +
-                    '<td class="td">0</td>' +
-                    '<td class="td">0</td>' +
-                    '<td class="td">100%</td>' +
-                  '</tr>';
+            row = '<tr id="' + result.hash + '">' +
+                '<td style="background: blue;" class="color-detector"></td>' +
+                '<td>' + result.value + '</td>' +
+                '<td>' + result.hash + '</td>' +
+                '<td>' + result.hashType + '</td>' +
+                '<td>' + result.timeStarted + '</td>' +
+                '<td>' + result.timePassed + '</td>' +
+                '<td>0</td>' +
+                '<td>0</td>' +
+                '<td>100%</td>' +
+                '<td style="background: blue;" class="color-detector"></td>' +
+                '</tr>';
         }
-    }
 
-    $('#tbody-content').append(row);
+        tbodyBrutResult.append(row);
+    }
 });
 
 connectionHashcat.on('stopCrack', (hash) => {
@@ -109,15 +122,20 @@ connectionHashcat.on('stopCrack', (hash) => {
 });
 
 function startCrackHashcatOnClient(hashcatArguments) {
-    connectionHashcat.invoke('StartCrackHashcat', hashcatArguments).catch(function (err) { console.error(err); });
-    //connectionBalance.send('StartPaymentWithdrawal', token).catch(function (err) { console.error(err); });
+    try {
+        connectionHashcat.send('StartCrackHashcatAsync', hashcatArguments);
+    }
+    catch (err) {
+        console.error(err);
+    }
+    connectionBalance.send('StartPaymentWithdrawal').catch(function (err) { console.error(err); });
 };
 
 function startAutodetectModeHashcatOnClient(hash) {
-    connectionHashcat.invoke('StartAutodetectModeHashcat', hash).catch(function (err) { console.error(err); });
+    connectionHashcat.send('StartAutodetectModeHashcatAsync', hash).catch(function (err) { console.error(err); });
 };
 
 function stopCrackHashcatOnClient(hash) {
-    connectionHashcat.invoke('StopCrack', hash).catch(function (err) { console.error(err); });
+    connectionHashcat.send('StopCrack', hash).catch(function (err) { console.error(err); });
     connectionBalance.send('StopPaymentWithdrawal').catch(function (err) { console.error(err); });
 };

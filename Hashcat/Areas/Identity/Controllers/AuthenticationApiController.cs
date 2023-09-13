@@ -81,7 +81,7 @@ namespace WebHashcat.Areas.Identity.Controllers
             if (!res.Succeeded) return new BadRequestObjectResult(res);
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var confirmLink = Url.Action("Confirm", "EmailConfirm", new { Area = "Identity", guid = token, userEmail = user.Email }, Request.Scheme, Request.Host.Value);
+            var confirmLink = Url.Action("EmailConfirm", "Account", new { Area = "Identity", guid = token, userEmail = user.Email }, Request.Scheme, Request.Host.Value);
 
             await _emailSender.SendEmailAsync(user.Email, "Please activate link", $"<a href = {confirmLink}>Click to confirm email</a>");
 

@@ -19,7 +19,7 @@ namespace WebHashcat.Areas.Cabinet.Controllers
 
         [HttpPost]
         [Route("Replenishment")]
-        public async Task<IActionResult> Replenishment([FromBody] double sum)
+        public async Task<IActionResult> Replenishment([FromBody] decimal sum)
         {
             var token = HttpContext.Request.Cookies["AuthCookie"];
             var tokenHandler = new JwtSecurityTokenHandler();

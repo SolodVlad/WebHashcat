@@ -6,6 +6,7 @@ using WebHashcat.Configurations;
 using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebHashcat.Hubs;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,11 @@ builder.Services.Configure<HubOptions>(options =>
 {
     options.ClientTimeoutInterval = TimeSpan.FromDays(1);
 });
+
+//builder.Services.AddSingleton<UserManager<User>>();
+//builder.Services.AddScoped<BalanceHub>();
+
+builder.Services.AddSingleton<HubContextAccessor>();
 
 //builder.Services.AddAuthentication().AddIdentityServerJwt();
 //builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>());

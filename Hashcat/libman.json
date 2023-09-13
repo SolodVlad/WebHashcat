@@ -19,13 +19,6 @@
       ]
     },
     {
-      "library": "js-cookie@3.0.5",
-      "destination": "wwwroot/lib/js-cookie/",
-      "files": [
-        "dist/js.cookie.min.js"
-      ]
-    },
-    {
       "library": "jquery@3.7.1",
       "destination": "wwwroot/lib/jquery/",
       "files": [

@@ -49,8 +49,6 @@ $(function () {
 });
 
 $('#replenishmentBtn').click(function () {
-    var test = $('#sum').val();
-
     $.ajax({
         url: 'api/BalanceApi/Replenishment',
         type: 'POST',

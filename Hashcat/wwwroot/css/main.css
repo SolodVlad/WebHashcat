@@ -157,10 +157,19 @@ footer {
     left: 0;
     right: 0;
     height: 100px;
+    z-index: 2000;
 }
 .footer-absolute {
     position: fixed;
 }
+
+@media (zoom: 125%) {
+    .footer-absolute {
+        position: static;
+        margin-top: 100px;
+    }
+}
+
 /* Footer */
 /* Старий код Фул сss
 * {

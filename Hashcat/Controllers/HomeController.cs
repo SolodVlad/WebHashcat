@@ -62,6 +62,7 @@ namespace WebHashcat.Controllers
             return View();
         }
         
+        [Route("FAQ")]        
         public IActionResult FAQ () 
         {
             return View();

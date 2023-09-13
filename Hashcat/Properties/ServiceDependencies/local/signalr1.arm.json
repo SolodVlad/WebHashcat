@@ -36,7 +36,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('WebHashcat', subscription().subscriptionId)))]",
+      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('SignalRForWebHashcat', subscription().subscriptionId)))]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -50,13 +50,13 @@
           "resources": [
             {
               "sku": {
-                "name": "Free_F1",
-                "tier": "Free",
-                "size": "F1",
+                "name": "Standard_S1",
+                "tier": "Standard",
+                "size": "S1",
                 "capacity": 1
               },
               "location": "[parameters('resourceLocation')]",
-              "name": "WebHashcat",
+              "name": "SignalRForWebHashcat",
               "type": "Microsoft.SignalRService/SignalR",
               "apiVersion": "2018-10-01"
             }

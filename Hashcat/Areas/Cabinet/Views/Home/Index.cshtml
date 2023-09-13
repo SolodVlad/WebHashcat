@@ -1,6 +1,4 @@
-﻿@model WebHashcat.Models.HashcatArguments
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@{
+﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
@@ -38,8 +36,8 @@
                     <select id="hashTypesSelect" class="form-control mt-2" style="display: none"></select>
                     <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" style="display: none" value="Старт кряк" />
 
-                    <table border="1" class="table-db mt-1">
-                        <thead style="display: none;">
+                    <table id="tableBrutResult" border="1" class="table-db mt-1" style="display: none;">
+                        <thead>
                             <tr>
                                 <th colspan="2">Значення (пароль)</th>
                                 <th>Хеш</th>
@@ -51,9 +49,7 @@
                                 <th colspan="2">Прогрес</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody-content" style="display: none;">
-
-                        </tbody>
+                        <tbody id="tbodyBrutResult"></tbody>
                     </table>
                     @*<table id="table_search_db" class="table-db mt-1">
                         <thead>
@@ -450,7 +446,6 @@
     </div>
 </div>*@
 
-<script src="~/js/cabinet.js"></script>
 <script src="~/js/signalr.js"></script>
+<script src="~/js/cabinet.js"></script>
 <script src="~/js/hashcat.js"></script>
-<script src="~/js/balance.js"></script>
