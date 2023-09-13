@@ -7,7 +7,7 @@
       "defaultValue": "WebHashcat",
       "metadata": {
         "_parameterType": "resourceGroup",
-        "description": "Name of the resource group for the resource. It is recommended to put resources under same resource group for better tracking."
+        "description": "Имя группы ресурсов для ресурса. Рекомендуется поместить ресурсы в одну группу ресурсов для более удобного отслеживания."
       }
     },
     "resourceGroupLocation": {
@@ -15,7 +15,7 @@
       "defaultValue": "polandcentral",
       "metadata": {
         "_parameterType": "location",
-        "description": "Location of the resource group. Resource groups could have different location than resources."
+        "description": "Расположение группы ресурсов. Группы ресурсов и ресурсы могут находиться в различных расположениях."
       }
     },
     "resourceLocation": {
@@ -23,7 +23,7 @@
       "defaultValue": "[parameters('resourceGroupLocation')]",
       "metadata": {
         "_parameterType": "location",
-        "description": "Location of the resource. By default use resource group's location, unless the resource provider is not supported there."
+        "description": "Расположение ресурса. По умолчанию используется расположение группы ресурсов, если это не поддерживается поставщиком ресурсов."
       }
     }
   },
@@ -36,7 +36,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('WebHashcat', subscription().subscriptionId)))]",
+      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('SignalRForWebHashcat', subscription().subscriptionId)))]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -50,13 +50,13 @@
           "resources": [
             {
               "sku": {
-                "name": "Free_F1",
-                "tier": "Free",
-                "size": "F1",
+                "name": "Standard_S1",
+                "tier": "Standard",
+                "size": "S1",
                 "capacity": 1
               },
               "location": "[parameters('resourceLocation')]",
-              "name": "WebHashcat",
+              "name": "SignalRForWebHashcat",
               "type": "Microsoft.SignalRService/SignalR",
               "apiVersion": "2018-10-01"
             }
