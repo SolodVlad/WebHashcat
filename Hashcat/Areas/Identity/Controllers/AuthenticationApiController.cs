@@ -25,23 +25,17 @@ namespace WebHashcat.Areas.Identity.Controllers
     public class AuthenticationApiController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _config;
         private readonly IEmailSender _emailSender;
-        private readonly IWebHostEnvironment _environment;
         private readonly TokenService _tokenService;
 
         private readonly string _cookieName = "AuthCookie";
 
-        public AuthenticationApiController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, IConfiguration config, IEmailSender emailSender, IWebHostEnvironment environment, IDistributedCache cache)
+        public AuthenticationApiController(UserManager<User> userManager, IConfiguration config, IEmailSender emailSender, IDistributedCache cache)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
-            _signInManager = signInManager;
             _config = config;
             _emailSender = emailSender;
-            _environment = environment;
             _tokenService = new TokenService(config, cache);
         }
 
@@ -59,24 +53,6 @@ namespace WebHashcat.Areas.Identity.Controllers
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            //if (await _roleManager.FindByNameAsync("user") == null)
-            //{
-            //    var role = await _roleManager.CreateAsync(new IdentityRole("user"));
-            //    if (role.Succeeded) await _userManager.AddToRoleAsync(user, "user");
-            //}
-
-            //if (await _roleManager.FindByNameAsync("admin") == null)
-            //{
-            //    var role = await _roleManager.CreateAsync(new IdentityRole("admin"));
-            //    if (role.Succeeded) await _userManager.AddToRoleAsync(user, "admin");
-            //}
-
-            //if (await _roleManager.FindByNameAsync("manager") == null)
-            //{
-            //    var role = await _roleManager.CreateAsync(new IdentityRole("manager"));
-            //    if (role.Succeeded) await _userManager.AddToRoleAsync(user, "manager");
-            //}
-
             var res = await _userManager.CreateAsync(user, register.Password);
             if (!res.Succeeded) return new BadRequestObjectResult(res);
 
@@ -86,49 +62,10 @@ namespace WebHashcat.Areas.Identity.Controllers
             await _emailSender.SendEmailAsync(user.Email, "Please activate link", $"<a href = {confirmLink}>Click to confirm email</a>");
 
             return StatusCode(201);
-
-            //if (!res.Succeeded) return StatusCode(500, new Response() { Status = "Error", Message = "User create failed" });
-
-            //return Ok(new Response() { Status = "Success", Message = "User created" });
         }
-
-        //[HttpPost]
-        //[Route("register-admin")]
-        //public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
-        //{
-        //    var userExists = await _userManager.FindByNameAsync(model.Username);
-        //    if (userExists != null)
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
-
-        //    User user = new()
-        //    {
-        //        Email = model.Email,
-        //        SecurityStamp = Guid.NewGuid().ToString(),
-        //        UserName = model.Username
-        //    };
-        //    var result = await _userManager.CreateAsync(user, model.Value);
-        //    if (!result.Succeeded)
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-        //    if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-        //        await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-        //    if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-        //        await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-        //    if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-        //    {
-        //        await _userManager.AddToRoleAsync(user, UserRoles.Admin);
-        //    }
-        //    if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-        //    {
-        //        await _userManager.AddToRoleAsync(user, UserRoles.User);
-        //    }
-        //    return Ok(new Response { Status = "Success", Message = "User created successfully!" });
-        //}
 
         [HttpPost]
         [Route("Login")]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginAsync(Login login)
         {
             if (login != null)
@@ -178,18 +115,8 @@ namespace WebHashcat.Areas.Identity.Controllers
             return Ok();
         }
 
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //[HttpGet]
-        //[Route("Logout")]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    Response.Cookies.Delete("AuthCookie");
-
-        //    return Ok();
-        //}
-
         [Route("ValidateJWTToken")]
-        public async Task<IActionResult> ValidateJwtTokenAsync(/*[FromBody] string accessToken*/)
+        public async Task<IActionResult> ValidateJwtTokenAsync()
         {
             var accessToken = Request.Cookies[_cookieName];
 
@@ -218,9 +145,6 @@ namespace WebHashcat.Areas.Identity.Controllers
             catch (SecurityTokenExpiredException ex)
             {
                 Debug.WriteLine(ex.Message);
-
-                //var jwtSecurityToken = tokenHandler.ReadJwtToken(token.AccessToken);
-                //var userName = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
 
                 var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
 
@@ -264,7 +188,7 @@ namespace WebHashcat.Areas.Identity.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("Logout")]
-        public string GetUserNameByAccessToken(/*[FromBody] string accessToken*/)
+        public string GetUserNameByAccessToken()
         {
             var accessToken = Request.Cookies[_cookieName];
             var tokenHandler = new JwtSecurityTokenHandler();

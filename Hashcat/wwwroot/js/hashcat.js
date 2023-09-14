@@ -1,4 +1,4 @@
-﻿var connectionHashcat = new signalR.HubConnectionBuilder().withUrl('/hubs/hashcat').build();
+﻿var connectionHashcat = new signalR.HubConnectionBuilder().withUrl('/hubs/hashcat').configureLogging(signalR.LogLevel.Debug).build();
 
 function fulfilled() {
     console.log('Connection to hashcat hub successful');
@@ -122,12 +122,7 @@ connectionHashcat.on('stopCrack', (hash) => {
 });
 
 function startCrackHashcatOnClient(hashcatArguments) {
-    try {
-        connectionHashcat.send('StartCrackHashcatAsync', hashcatArguments);
-    }
-    catch (err) {
-        console.error(err);
-    }
+    connectionHashcat.send('StartCrackHashcatAsync', hashcatArguments).catch(function (err) { console.error(err); });
     connectionBalance.send('StartPaymentWithdrawal').catch(function (err) { console.error(err); });
 };
 

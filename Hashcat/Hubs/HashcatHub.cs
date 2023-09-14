@@ -39,13 +39,7 @@ namespace WebHashcat.Hubs
 
         public async Task StartAutodetectModeHashcatAsync(string hash)
         {
-            //string scriptPath = "hashcat-6.2.6\\hashcat.exe";
-            //string workingDirectory = "hashcat-6.2.6";
-
-            //////string host = "20.215.192.48";
-            //////string username = "KaliVMForWebhashcat";
-            //////string password = "VM0mrj-fy8p-kpmz";
-            string command = $"hashcat -a 0 {hash} ~/wordlists/hashkiller-dict.txt --status --potfile-disable"; // Замените на фактическую команду hashcat и ее аргументы
+            string command = $"hashcat -a 0 {hash} ~/wordlists/hashkiller-dict.txt --status --potfile-disable";
 
             using var client = new SshClient(_host, _username, _password);
             try
@@ -54,10 +48,9 @@ namespace WebHashcat.Hubs
                 if (client.IsConnected)
                 {
                     using var shellStream = client.CreateShellStream("", 0, 0, 0, 0, 1024);
-                    // Отправляем команду на SSH-сервер
+                    
                     shellStream.WriteLine(command);
 
-                    // Читаем и выводим результат построчно
                     string line;
                     while ((line = shellStream.ReadLine()) != null)
                     {
@@ -84,7 +77,6 @@ namespace WebHashcat.Hubs
                                 var numberHashType = line.Split('|')[0].Trim();
                                 var hashType = line.Split('|')[1].Trim();
                                 await Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", numberHashType, hashType);
-                                //process.Kill();
                             }
                         }
                         else if (isNotHash) await Clients.User(Context.UserIdentifier).SendAsync("hashTypeResult", null, null);
@@ -103,39 +95,11 @@ namespace WebHashcat.Hubs
             {
                 client.Disconnect();
             }
-
-            //ProcessStartInfo startInfo = new()
-            //{
-            //    FileName = _scriptPath,
-            //    Arguments = arguments,
-            //    RedirectStandardOutput = true,
-            //    RedirectStandardError = true,
-            //    WorkingDirectory = _workingDirectory
-            //};
-
-            //using Process process = new();
-            //process.StartInfo = startInfo;
-
-            //process.OutputDataReceived += async (sender, e) =>
-            //{
-            //    var data = e.Data;
-            //    if (!string.IsNullOrEmpty(data))
-            //    {
-            //                        }
-            //};
-
-            //process.Start();
-            //process.BeginOutputReadLine();
-
-            //process.WaitForExit();
         }
 
         public async Task StartCrackHashcatAsync(HashcatArguments hashcatArguments)
         {
-            //string host = "20.215.192.48";
-            //string username = "KaliVMForWebhashcat";
-            //string password = "VM0mrj-fy8p-kpmz";
-            string command = $"hashcat -m {hashcatArguments.HashType} -a 0 {hashcatArguments.Hash} ~/wordlists/hashkiller-dict.txt  --status --potfile-disable"; // Замените на фактическую команду hashcat и ее аргументы
+            string command = $"hashcat -m {hashcatArguments.HashType} -a 0 {hashcatArguments.Hash} ~/wordlists/hashkiller-dict.txt  --status --potfile-disable";
 
             using var client = new SshClient(_host, _username, _password);
             try
@@ -144,12 +108,10 @@ namespace WebHashcat.Hubs
                 if (client.IsConnected)
                 {
                     using var shellStream = client.CreateShellStream(Guid.NewGuid().ToString(), 0, 0, 0, 0, 1024);
-                    // Отправляем команду на SSH-сервер
                     shellStream.WriteLine(command);
 
                     var result = new HashcatResult { Hash = hashcatArguments.Hash };
 
-                    // Читаем и выводим результат построчно
                     string line;
                     while ((line = shellStream.ReadLine()) != null)
                     {
