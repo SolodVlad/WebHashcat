@@ -83,6 +83,26 @@
             <label>© 2023 WebHashcat - сайт для відновлення паролю. Усі права захищено</label>
         </div>
     </footer>
+    <script>
+        $(document).ready(function () {
+            $(".triangle-text").click(function (e) {
+                e.preventDefault();
+                var targetId = $(this).attr("href");
+                var offset = 80;
+                $("html, body").animate({
+                    scrollTop: $(targetId).offset().top - offset
+                }, 500);
+            });
+            $(".up").click(function (e) {
+                e.preventDefault();
+                var targetId = "#faq-up";
+                var offset = 80;
+                $("html, body").animate({
+                    scrollTop: $(targetId).offset().top - offset
+                }, 500);
+            });
+        });
+    </script>
     
     <script src="~/js/site.js" defer asp-append-version="true"></script>
     <script src="~/js/signalr.js"></script>
