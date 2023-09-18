@@ -2,10 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <p>Придумайте пароль адміністратора</p>
-    <input type="password" id="newPassword"/>
-    <input type="submit" value="Зберегти пароль" id="changeDefPassBtn"/>
+<div class="container">
+    <div class="row container">
+        <div class="col-4"></div>
+        <div class="form-group mt-3 col-4">
+            <label style="color:#FFF;">Придумайте пароль адміністратора</label>
+            <input type="password" id="newPassword" class="form-control" />
+            <input type="button" value="Зберегти пароль" id="changeDefPassBtn" class="btn btn-primary def-btn mt-2" />
+        </div>
+        <div class="col-4"></div>
+    </div>
 </div>
 
 <script src="~/js/changePassword.js"></script>
