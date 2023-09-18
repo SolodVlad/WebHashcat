@@ -37,11 +37,11 @@
                             @*<i class="fas fa-spinner load"></i>*@
                         </div>
                     </div>
-                <select id="hashTypesSelect" class="form-control mt-2"></select>@*style="display: none"*@
-                <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" value="Старт кряк" />@*style="display: none"*@
 
-                <table id="tableBrutResult" border="1" class="table-db mt-1">
-                    @*style="display: none;"*@
+                    <select id="hashTypesSelect" class="form-control mt-2" style="display: none"></select>
+                    <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" style="display: none" value="Старт кряк" />
+
+                    <table id="tableBrutResult" border="1" class="table-db mt-1" style="display: none;">
                         <thead>
                             <tr>
                                 <th colspan="2">Значення (пароль)</th>
@@ -55,10 +55,9 @@
                             </tr>
                         </thead>
                         <tbody id="tbodyBrutResult">
-                            <tr>
+                            @* <tr>
                                 <td style="background: yellow;" class="color-detector"></td>
                                 <td>У процесі</td>
-                                <td>
                                             05ABF64A68C4731699C23B4FC6894A36646FCE525F3C96F9CF743B5D0C3BFD933DAD0E95E449E3AFE1F74D534D69A53B8F46CF835763DD42915813C897B02B87
                                 </td>
                                 <td>SHA512</td>
@@ -71,55 +70,55 @@
                             <td class="icon-table">
                                     <i type="button" class="far fa-circle-xmark stopCrackBtn form_btn"/>
                                 </td>
-                            </tr>
+                            </tr> *@
                         </tbody>
                     </table>
                     @*<table id="table_search_db" class="table-db mt-1">
-                    <thead>
-                    <tr>
-                    <th colspan="2">Хеш</th>
-                    <th colspan="3">Тип</th>
-                    <th colspan="2">Результат</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                    <td style="background: green" class="color-detector"></td>
-                    <td>Довгий текст, який може бути обрізаний для адаптивності</td>
-                    <td style="background: green" class="color-detector"></td>
-                    <td>Короткий текст</td>
-                    <td style="background: green" class="color-detector"></td>
-                    <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
-                    <td style="background: green" class="color-detector"></td>
-                    </tr>
-                    <tr>
-                    <td style="background: yellow" class="color-detector"></td>
-                    <td>Довгий текст, який може бути обрізаний для адаптивності</td>
-                    <td style="background: yellow" class="color-detector"></td>
-                    <td>Короткий текст</td>
-                    <td style="background: yellow" class="color-detector"></td>
-                    <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
-                    <td style="background: yellow" class="color-detector"></td>
-                    </tr>
-                    <tr>
-                    <td style="background: red" class="color-detector"></td>
-                    <td>Довгий текст, який може бути обрізаний для адаптивності</td>
-                    <td style="background: red" class="color-detector"></td>
-                    <td>Короткий текст</td>
-                    <td style="background: red" class="color-detector"></td>
-                    <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
-                    <td style="background: red" class="color-detector"></td>
-                    </tr>
-                    <tr>
-                    <td style="background: red" class="color-detector"></td>
-                    <td>Довгий текст, який може бути обрізаний для адаптивності</td>
-                    <td style="background: red" class="color-detector"></td>
-                    <td>Короткий текст</td>
-                    <td style="background: red" class="color-detector"></td>
-                    <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
-                    <td style="background: red" class="color-detector"></td>
-                    </tr>
-                    </tbody>
+                        <thead>
+                            <tr>
+                                <th colspan="2">Хеш</th>
+                                <th colspan="3">Тип</th>
+                                <th colspan="2">Результат</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="background: green" class="color-detector"></td>
+                                <td>Довгий текст, який може бути обрізаний для адаптивності</td>
+                                <td style="background: green" class="color-detector"></td>
+                                <td>Короткий текст</td>
+                                <td style="background: green" class="color-detector"></td>
+                                <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
+                                <td style="background: green" class="color-detector"></td>
+                            </tr>
+                            <tr>
+                                <td style="background: yellow" class="color-detector"></td>
+                                <td>Довгий текст, який може бути обрізаний для адаптивності</td>
+                                <td style="background: yellow" class="color-detector"></td>
+                                <td>Короткий текст</td>
+                                <td style="background: yellow" class="color-detector"></td>
+                                <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
+                                <td style="background: yellow" class="color-detector"></td>
+                            </tr>
+                            <tr>
+                                <td style="background: red" class="color-detector"></td>
+                                <td>Довгий текст, який може бути обрізаний для адаптивності</td>
+                                <td style="background: red" class="color-detector"></td>
+                                <td>Короткий текст</td>
+                                <td style="background: red" class="color-detector"></td>
+                                <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
+                                <td style="background: red" class="color-detector"></td>
+                            </tr>
+                            <tr>
+                                <td style="background: red" class="color-detector"></td>
+                                <td>Довгий текст, який може бути обрізаний для адаптивності</td>
+                                <td style="background: red" class="color-detector"></td>
+                                <td>Короткий текст</td>
+                                <td style="background: red" class="color-detector"></td>
+                                <td>Ще один текст, який може бути досить довгим, щоб виправдати адаптивність</td>
+                                <td style="background: red" class="color-detector"></td>
+                            </tr>
+                        </tbody>
                     </table>*@
                 </div>
                 <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
@@ -170,7 +169,7 @@
             </div>
         </div>
     </div>
-@*</section*@>
+@*</section>*@
 @*<div class="container">
     <div class="bg-dark box-shadow-custom rounded d-flex d-sm-row static-content">
         <div class="profile-tab-nav border-right menu-container col-2.5">
@@ -469,6 +468,5 @@
     </div>
 </div>*@
 
-<script src="~/js/signalr.js"></script>
 <script src="~/js/cabinet.js"></script>
 <script src="~/js/hashcat.js"></script>

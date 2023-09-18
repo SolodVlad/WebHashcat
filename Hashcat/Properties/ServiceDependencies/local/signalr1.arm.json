@@ -7,7 +7,7 @@
       "defaultValue": "WebHashcat",
       "metadata": {
         "_parameterType": "resourceGroup",
-        "description": "Имя группы ресурсов для ресурса. Рекомендуется поместить ресурсы в одну группу ресурсов для более удобного отслеживания."
+        "description": "Name of the resource group for the resource. It is recommended to put resources under same resource group for better tracking."
       }
     },
     "resourceGroupLocation": {
@@ -15,7 +15,7 @@
       "defaultValue": "polandcentral",
       "metadata": {
         "_parameterType": "location",
-        "description": "Расположение группы ресурсов. Группы ресурсов и ресурсы могут находиться в различных расположениях."
+        "description": "Location of the resource group. Resource groups could have different location than resources."
       }
     },
     "resourceLocation": {
@@ -23,7 +23,7 @@
       "defaultValue": "[parameters('resourceGroupLocation')]",
       "metadata": {
         "_parameterType": "location",
-        "description": "Расположение ресурса. По умолчанию используется расположение группы ресурсов, если это не поддерживается поставщиком ресурсов."
+        "description": "Location of the resource. By default use resource group's location, unless the resource provider is not supported there."
       }
     }
   },
@@ -36,7 +36,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('SignalRForWebHashcat', subscription().subscriptionId)))]",
+      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('SignalRWebHashcat', subscription().subscriptionId)))]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -56,7 +56,7 @@
                 "capacity": 1
               },
               "location": "[parameters('resourceLocation')]",
-              "name": "SignalRForWebHashcat",
+              "name": "SignalRWebHashcat",
               "type": "Microsoft.SignalRService/SignalR",
               "apiVersion": "2018-10-01"
             }

@@ -4,6 +4,8 @@
     {
         Running,
         Exhausted,
-        Cracked
+        Cracked,
+        Quit,
+        Paused
     }
 }

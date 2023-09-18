@@ -1,16 +1,33 @@
-﻿var connectionHashcat = new signalR.HubConnectionBuilder().withUrl('/hubs/hashcat').configureLogging(signalR.LogLevel.Debug).build();
+﻿function getRandomDelay() {
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    return getRandom(1000, 2000);
+}
 
-function fulfilled() {
-    console.log('Connection to hashcat hub successful');
-};
+var hashcatConnection = new signalR.HubConnectionBuilder().withUrl("/hubs/hashcat").withAutomaticReconnect({
+        nextRetryDelayInMilliseconds: function () {
+            return getRandomDelay();
+        }
+    }).build();
+    //.withHubProtocol(new signalR.protocols.msgpack.MessagePackHubProtocol())
 
-function rejected() {
-    console.error('Error connection to hashcat hub');
-};
+hashcatConnection.onclose(() => {
+    console.log('Соединение с хабом закрыто.');
+    // В этом месте можно выполнить дополнительные действия при обрыве соединения.
+});
 
-connectionHashcat.start().then(fulfilled, rejected);
+hashcatConnection.onreconnecting(() => {
+    console.log('Идет переподключение к хабу...');
+    // Вы можете выполнить дополнительные действия здесь.
+});
 
-connectionHashcat.on('hashTypeResult', (numberHashType, hashType) => {
+hashcatConnection.onreconnected(() => {
+    console.log('Переподключение к хабу завершено.');
+    // Вы можете выполнить дополнительные действия после успешного переподключения.
+});
+
+hashcatConnection.on('hashTypeResult', (numberHashType, hashType) => {
     if (numberHashType != null && hashType != null) {
         var hashTypesSelect = $('#hashTypesSelect');
         hashTypesSelect.append($('<option>', {
@@ -24,10 +41,9 @@ connectionHashcat.on('hashTypeResult', (numberHashType, hashType) => {
     }
 })
 
-connectionHashcat.on('hashcatResult', (result) => {
+hashcatConnection.on('hashcatResult', (result) => {
     var tbodyBrutResult = $('#tbodyBrutResult');
-
-    if (tbodyBrutResult.contents().length === 0) $('#tableBrutResult').css('display', 'block');
+    if (tbodyBrutResult.children().length === 0) $('#tableBrutResult').css('display', 'block');
 
     var row = $('#' + $.escapeSelector(result.hash));
 
@@ -47,6 +63,9 @@ connectionHashcat.on('hashcatResult', (result) => {
             tdElements.eq(0).css('background-color', 'yellow');
             tdElements.eq(1).text('У процесі');
             tdElements.eq(9).css('background-color', 'yellow');
+            tdElements.eq(10).html('<input type="button" class="stopBtn form_btn" value="СТОП"/> ' +
+                '<input type="button" class="pauseBtn form_btn" value="ПАУЗА"/>' +
+                '<input type="button" class="resumeBtn form_btn" value="ВІДНОВИТИ"/>');
         }
         else if (result.status == 'Exhausted') {
             tdElements.eq(0).css('background-color', 'red');
@@ -63,6 +82,17 @@ connectionHashcat.on('hashcatResult', (result) => {
             tdElements.eq(9).css('background-color', 'blue');
             tdElements.eq(10).remove();
         }
+        else if (result.status == "Quit") {
+            tdElements.eq(0).css('background-color', 'red');
+            tdElements.eq(1).text('Зупиннено користувачем');
+            tdElements.eq(9).css('background-color', 'red');
+        }
+
+        else if (result.status == "Paused") {
+            tdElements.eq(0).css('background-color', 'pink');
+            tdElements.eq(1).text('Поставлено на паузу');
+            tdElements.eq(9).css('background-color', 'pink');
+        }
     }
     else {
         if (result.status == "Running")
@@ -78,7 +108,9 @@ connectionHashcat.on('hashcatResult', (result) => {
                 '<td>' + result.progress + '%</td>' +
                 '<td style="background: yellow;" class="color-detector"></td>' +
                 '<td>' +
-                '<input type="button" class="stopCrackBtn form_btn" value="СТОП"/>' +
+                '<input type="button" class="stopBtn form_btn" value="СТОП"/>' +
+                '<input type="button" class="pauseBtn form_btn" value="ПАУЗА"/>' +
+                '<input type="button" class="resumeBtn form_btn" value="ВІДНОВИТИ"/>' +
                 '</td>' +
                 '</tr > ';
 
@@ -91,13 +123,30 @@ connectionHashcat.on('hashcatResult', (result) => {
                 '<td>' + result.timeStarted + '</td>' +
                 '<td>' + result.timePassed + '</td>' +
                 '<td>' + result.timeEstimated + '</td>' +
-                '<td>' + result.timeLeft + '</td>' +
-                '<td>' + result.progress + '%</td>' +
+                '<td>0</td>' +
+                '<td>100%</td>' +
                 '<td style="background: red;" class="color-detector"></td>' +
                 '</tr>';
 
-        else {
-            connectionBalance.send('StopPaymentWithdrawal').catch(function (err) { console.error(err); });
+        else if (result.status == "Paused")
+            row = '<tr id="' + result.hash + '">' +
+                '<td style="background: pink;" class="color-detector"></td>' +
+                '<td>Поставлено на паузу</td>' +
+                '<td>' + result.hash + '</td>' +
+                '<td>' + result.hashType + '</td>' +
+                '<td>' + result.timeStarted + '</td>' +
+                '<td>' + result.timePassed + '</td>' +
+                '<td>' + result.timeEstimated + '</td>' +
+                '<td>' + result.timeLeft + '</td>' +
+                '<td>' + result.progress + '%</td>' +
+                '<td style="background: pink;" class="color-detector"></td>' +
+                '<td>' +
+                '<input type="button" class="stopBtn form_btn" value="СТОП"/>' +
+                '<input type="button" class="resumeBtn form_btn" value="ВІДНОВИТИ"/>' +
+                '</td>' +
+                '</tr > ';
+
+        else
             row = '<tr id="' + result.hash + '">' +
                 '<td style="background: blue;" class="color-detector"></td>' +
                 '<td>' + result.value + '</td>' +
@@ -110,27 +159,51 @@ connectionHashcat.on('hashcatResult', (result) => {
                 '<td>100%</td>' +
                 '<td style="background: blue;" class="color-detector"></td>' +
                 '</tr>';
-        }
 
         tbodyBrutResult.append(row);
     }
 });
 
-connectionHashcat.on('stopCrack', (hash) => {
-    var row = $('#' + $.escapeSelector(hash));
-    row.css('background-color', 'red');
+hashcatConnection.start().then(function () {
+    return console.log("Successfull connect to hashcat hub")
+}).catch(function (err) {
+    return console.error(err.toString());
 });
 
-function startCrackHashcatOnClient(hashcatArguments) {
-    connectionHashcat.send('StartCrackHashcatAsync', hashcatArguments).catch(function (err) { console.error(err); });
-    connectionBalance.send('StartPaymentWithdrawal').catch(function (err) { console.error(err); });
-};
-
 function startAutodetectModeHashcatOnClient(hash) {
-    connectionHashcat.send('StartAutodetectModeHashcatAsync', hash).catch(function (err) { console.error(err); });
-};
+    try { 
+        hashcatConnection.invoke("StartAutodetectModeHashcatAsync", hash)
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
 
-function stopCrackHashcatOnClient(hash) {
-    connectionHashcat.send('StopCrack', hash).catch(function (err) { console.error(err); });
-    connectionBalance.send('StopPaymentWithdrawal').catch(function (err) { console.error(err); });
-};
+function startCrackHashcatOnClient(hashcatArguments) {
+    var newConnection = new signalR.HubConnectionBuilder().withUrl("/hubs/hashcat").build();
+
+    newConnection.start()
+        .then(function () {
+            console.log("Успешное подключение к хабу hashcat");
+
+            newConnection.invoke("StartCrackHashcatAsync", hashcatArguments)
+                .catch(function (err) {
+                    console.error(err.toString());
+                })
+                .finally(function () {
+                    newConnection.stop();
+                });
+        })
+        .catch(function (err) {
+            console.error(err.toString());
+        });
+}
+
+function manageRunningRecoveryOnClient(hash, argument) {
+    try {
+        hashcatConnection.invoke("ManageRunningRecovery", hash, argument)
+    }
+    catch (err) {
+        console.error(err);
+    }
+}

@@ -17,13 +17,6 @@
 .profile_menu {
     width: 20%;
 }
-.container {
-    margin-top: 50px;
-}
-div div div .row {
-    display: flex;
-    justify-content: space-between;
-}
 .profile_window {
     width: 100.5%;
     height: 100%;
@@ -69,7 +62,45 @@ div div div .row {
 .tab-pane {
     min-height: 600px;
 }
-
+/*.tab-content {
+    height: 600px;
+    overflow: auto;
+}*/
+/*.tab-content::-webkit-scrollbar{
+    padding-top: 10px; 
+}
+.tab-content::-webkit-scrollbar-thumb {
+    background-color: #FFF;
+    border-radius: 5px;
+}*/
+/*@media (min-width: 768px) {
+    .static-content {
+        height: 600px
+    }
+}*/
+/*.menu li.active:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    transform: skew(20deg);
+}
+.menu li.active:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    transform: skew(-20deg);
+}
+.menu li:first-child:before,
+.menu li:first-child:after {
+    display: none;
+    border-top-left-radius: 20px;
+}*/
 .menu li {
     padding: 10px;
     font-family: 'Montserrat', sans-serif;
@@ -90,21 +121,6 @@ div div div .row {
 }
 .profile_content.active {
     display: block;
-}
-.load {
-    text-align: center;
-    margin-top: 10px ;
-    font-size: 20px;
-    color: #FFF;
-    animation: rotate 1s linear infinite;
-}
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
 }
 /*Таблиця*/
 .table-db {

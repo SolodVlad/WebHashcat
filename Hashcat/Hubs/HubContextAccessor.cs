@@ -6,10 +6,7 @@ namespace WebHashcat.Hubs
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public HubContextAccessor(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
+        public HubContextAccessor(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
         public IHubContext<BalanceHub> GetHubContext()
         {

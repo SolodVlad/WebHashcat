@@ -125,20 +125,4 @@ header .navbar-brand:hover {
     transform: scale(1.1);
 }
 /*Header*/
-/*Button*/
-.def-btn {
-    background-color: transparent;
-    border: 1px solid #FFF;
-    color: #FFF;
-}
-.def-btn:hover {
-    background-color: #0b5a9d;
-    border: 1px solid #FFF;
-    color: #FFF;
-}
-.def-btn:focus {
-    background-color: #0b5a9d;
-    border: 1px solid #FFF;
-}
-/*Button*/
 /*Admin_mane_page*/

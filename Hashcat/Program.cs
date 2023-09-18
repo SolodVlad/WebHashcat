@@ -1,12 +1,12 @@
 using BLL.Infrastructure;
 using BLL.Services;
 using Domain.Models;
-using Microsoft.AspNetCore.SignalR;
 using WebHashcat.Configurations;
 using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using WebHashcat.Hubs;
-using Microsoft.AspNetCore.Identity;
+using WebHashcat.Areas.Cabinet.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,44 +25,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureSwagger();
-//builder.Services.AuthenticationCookie();
-
-//builder.Services.Configure<CookieAuthenticationOptions>(options =>
-//{
-//    options.Cookie.Name = "AuthCookie";
-//    options.Cookie.HttpOnly = true;
-//    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-//    options.Cookie.SameSite = SameSiteMode.Strict;
-//    options.ExpireTimeSpan = TimeSpan.FromDays(1);
-//    options.SlidingExpiration = false;
-//    options.LoginPath = "/Login";
-//});
-
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(options =>
-//{
-//    options.Cookie.Name = "AuthCookie";
-//    options.Cookie.HttpOnly = true;
-//    options.Cookie.SecurePolicy = CookieSecurePolicy.None; //�������� �� always
-//    options.Cookie.SameSite = SameSiteMode.Strict;
-//    options.ExpireTimeSpan = TimeSpan.FromDays(1);
-//    options.SlidingExpiration = false;
-//    options.LoginPath = "/Login";
-//});
-
-builder.Services.AddSignalR().AddAzureSignalR();
-builder.Services.Configure<HubOptions>(options =>
-{
-    options.ClientTimeoutInterval = TimeSpan.FromDays(1);
-});
-
-//builder.Services.AddSingleton<UserManager<User>>();
-//builder.Services.AddScoped<BalanceHub>();
-
-builder.Services.AddSingleton<HubContextAccessor>();
-
-//builder.Services.AddAuthentication().AddIdentityServerJwt();
-//builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>());
-builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 builder.Services.Configure<SendGridEmailSenderOptions>(option =>
 {
@@ -92,13 +54,27 @@ builder.Services.AddDistributedRedisCache(option =>
     option.Configuration = builder.Configuration["CacheConnection"];
 });
 
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
-
 builder.Services.AddHttpContextAccessor();
 
-var app = builder.Build();
+builder.Services.AddSignalR().AddAzureSignalR();
+builder.Services.Configure<HubOptions>(options =>
+{
+    options.ClientTimeoutInterval = TimeSpan.FromDays(1);
+    options.MaximumParallelInvocationsPerClient = 10;
+});
 
+builder.Services.AddSingleton<HubContextAccessor>();
+
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
+
+//builder.Services.AddSingleton<UserBalanceManager>();
+builder.Services.AddSingleton<ShellStreamService>();
+
+var app = builder.Build();
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -120,11 +96,10 @@ app.Use(async (context, next) =>
 });
 
 app.UseFileServer();
-app.UseAzureSignalR(routes =>
-{
-    routes.MapHub<HashcatHub>("/hubs/hashcat");
-    routes.MapHub<BalanceHub>("/hubs/balance");
-});
+
+app.MapHub<HashcatHub>("/hubs/hashcat");
+
+app.MapHub<BalanceHub>("/hubs/balance");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -137,14 +112,6 @@ app.UseAuthentication();
 
 app.MapControllers();
 app.MapRazorPages();
-
-//app.UseCors(builder =>
-//{
-//    builder.WithOrigins("https://localhost:7149")
-//        .AllowAnyHeader()
-//        .WithMethods("GET", "POST")
-//        .AllowCredentials();
-//});
 
 app.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}");
 

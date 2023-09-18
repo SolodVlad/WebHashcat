@@ -33,13 +33,17 @@ namespace WebHashcatAdminPanel.Controllers
                 var admin = new User
                 {
                     UserName = "admin",
-                    //Email = "admin@example.com" // Здесь укажите почту администратора
+                    Email = "admin@example.com"
                 };
 
                 var result = await _userManager.CreateAsync(admin, _defPass);
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(admin, "Admin");
+
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(admin);
+                    await _userManager.ConfirmEmailAsync(admin, token);
+
                     return View();
                 }
                 else

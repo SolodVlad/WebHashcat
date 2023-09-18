@@ -17,6 +17,7 @@ using System.Text;
 using WebHashcat.Models;
 using WebHashcat.Areas.Identity.Services;
 using Microsoft.Extensions.Caching.Distributed;
+using WebHashcat.Areas.Cabinet.Managers;
 
 namespace WebHashcat.Areas.Identity.Controllers
 {
@@ -28,15 +29,17 @@ namespace WebHashcat.Areas.Identity.Controllers
         private readonly IConfiguration _config;
         private readonly IEmailSender _emailSender;
         private readonly TokenService _tokenService;
+        //private readonly UserBalanceManager _userBalanceManager;
 
         private readonly string _cookieName = "AuthCookie";
 
-        public AuthenticationApiController(UserManager<User> userManager, IConfiguration config, IEmailSender emailSender, IDistributedCache cache)
+        public AuthenticationApiController(UserManager<User> userManager, IConfiguration config, IEmailSender emailSender, IDistributedCache cache/*, UserBalanceManager userBalanceManager*/)
         {
             _userManager = userManager;
             _config = config;
             _emailSender = emailSender;
             _tokenService = new TokenService(config, cache);
+            //_userBalanceManager = userBalanceManager;
         }
 
         [HttpPost]

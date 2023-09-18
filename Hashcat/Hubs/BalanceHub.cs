@@ -1,28 +1,19 @@
 ﻿using DLL.Context;
-using Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Renci.SshNet;
-using System.Configuration;
-using System.Diagnostics;
-using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Timers;
-using WebHashcat.Models;
 using Timer = System.Timers.Timer;
+using Domain.Models;
 
 namespace WebHashcat.Hubs
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BalanceHub : Hub
     {
-        private readonly UserManager<User> _userManager;
         private readonly IHubContext<BalanceHub> _hubContext;
         private readonly IConfiguration _configuration;
 
@@ -62,12 +53,12 @@ namespace WebHashcat.Hubs
 
             var user = await userManager.FindByNameAsync(userName);
             user.Balance -= _defCost;
-            
+
             userManager.UpdateAsync(user).Wait();
 
             await _hubContext.Clients.User(userName).SendAsync("paymentWithdrawal", user.Balance);
 
-            if (user.Balance == 0) 
+            if (user.Balance == 0)
                 StopPaymentWithdrawal();
         }
     }

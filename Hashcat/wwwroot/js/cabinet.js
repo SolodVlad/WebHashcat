@@ -35,17 +35,35 @@ $('#startCrackBtn').click(function () {
         Hash: $('#hash').val()
     };
 
+    $('#hashTypesSelect').css('display', 'none');
+    $(this).css('display', 'none');
+    $('#startAutodetectModeBtn').css('display', 'block');
+
     startCrackHashcatOnClient(hashcatArguments);
 });
 
-$(function () {
-    $('.stopCrackBtn').click(function () {
-        var row = $(this).closest('tr');
+$(document).on('click', '.stopBtn', function () {
+    var row = $(this).closest('tr');
 
-        var hash = row.attr('id');
+    var hash = row.attr('id');
 
-        stopCrackHashcatOnClient(hash);
-    });
+    manageRunningRecoveryOnClient(hash, "q");
+});
+
+$(document).on('click', '.pauseBtn', function () {
+    var row = $(this).closest('tr');
+
+    var hash = row.attr('id');
+
+    manageRunningRecoveryOnClient(hash, "p");
+});
+
+$(document).on('click', '.resumeBtn', function () {
+    var row = $(this).closest('tr');
+
+    var hash = row.attr('id');
+
+    manageRunningRecoveryOnClient(hash, "r");
 });
 
 $('#replenishmentBtn').click(function () {

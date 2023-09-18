@@ -33,17 +33,6 @@
         "AZURE_USERNAME": "Kras_vc76@student.itstep.org",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
       }
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "environmentVariables": {
-        "ASPNETCORE_URLS": "https://+:443;http://+:80",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
-      },
-      "publishAllPorts": true,
-      "useSSL": true
     }
   },
   "iisSettings": {

@@ -12,15 +12,14 @@
       "type": "redis",
       "connectionId": "CacheConnection"
     },
-    "appInsights1": {
-      "type": "appInsights",
-      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-      "dynamicId": null
-    },
     "signalr1": {
       "type": "signalr",
       "connectionId": "Azure:SignalR:ConnectionString",
       "dynamicId": null
+    },
+    "appInsights1": {
+      "type": "appInsights",
+      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING"
     }
   }
 }

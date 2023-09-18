@@ -3,14 +3,6 @@
   "defaultProvider": "unpkg",
   "libraries": [
     {
-      "library": "@microsoft/signalr@latest",
-      "destination": "wwwroot/js/signalr/",
-      "files": [
-        "dist/browser/signalr.js",
-        "dist/browser/signalr.min.js"
-      ]
-    },
-    {
       "library": "bootstrap@5.3.1",
       "destination": "wwwroot/lib/bootstrap/",
       "files": [
@@ -23,6 +15,15 @@
       "destination": "wwwroot/lib/jquery/",
       "files": [
         "dist/jquery.min.js"
+      ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/js/signalr/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
       ]
     }
   ]

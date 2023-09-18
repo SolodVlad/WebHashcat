@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace WebHashcat.Configurations
 {

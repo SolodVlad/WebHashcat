@@ -3,21 +3,11 @@ html, body {
     font-size: 16px;
 }
 .header-container {
-    padding: 0px 0px;
+    padding: 50px 0px;
 }
-/*#content {
-    position: relative;
-    padding-bottom: 100px;
-}*/
 #content-container {
-    /*min-height: 100%;
-    position: relative;*/
-
-    /*height: 100vh;
-    overflow-y: auto;*/
-
-    /*max-height: calc(100vh - 100px);
-    overflow-y: auto;*/
+    min-height: 100%;
+    position: relative;
 }
 body, html {
     height: 100%;
@@ -151,7 +141,6 @@ header .navbar-brand:hover {
     background-color: #0b5a9d;
     border: 1px solid #FFF;
 }
-
 /* Button */
 /* Header */
 /* Content */
@@ -165,8 +154,8 @@ footer {
     color: #FFF;
     text-align: center;
     bottom: 0;
-    width: 100%;
-    padding: 10px;
+    left: 0;
+    right: 0;
     height: 100px;
     z-index: 2000;
 }
