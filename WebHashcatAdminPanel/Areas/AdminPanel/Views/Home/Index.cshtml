@@ -13,21 +13,17 @@
             <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" data-bs-target="#hash-crack" role="tab" aria-controls="hash-crack" aria-selected="true">
                     <i class="bg-info bi-house-door text-center me-1"></i>
-                    Взлом хешів
+                    Оновлення таблиці пошуку
                 </a>
-                <a class="nav-link" id="replenishment-tab" data-bs-toggle="pill" data-bs-target="#replenishment-crack" role="tab" aria-controls="replenishment" aria-selected="false">
-                    <i class="bg-info bi-house-door text-center me-1"></i>
-                    Поповнення балансу
-                </a>
-                <a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
+                @* <a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
                     <i class="bi bi-key text-center me-1"></i>
                     Зміна паролю
-                </a>
+                </a> *@
             </div>
         </div>
         <div class="tab-content content-container p-4 flex-grow-1 col-9.5" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
-                <h1>Загрузка файла на сервер</h1>
+                <h1>Оновлення таблиці пошуку</h1>
                 <input type="file" id="fileInput" multiple accept="text/plain" style="display: none;">
                 <button for="fileInput" id="fileInputBtn" style="cursor: pointer;">Выберите файл</button>
                 <br>
@@ -35,55 +31,25 @@
                     Перетащите файл сюда
                 </div>
                 <br>
-                <div id="fileInfo">
-                    Файл: <span id="fileName"></span> (Размер: <span id="fileSize"></span> мегабайт)
+                <div id="fileInfo"></div>
+                <br>
+                <button id="uploadDataToLookupTableBtn" disabled>Додати дані до таблиці пошуку</button>
+                <button id="uploadWordlistToServerBtn" disabled>Завантажити словник(и) на сервер</button>
+            </div>
+
+            @* <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                <h1>Завантаження словників на сервер</h1>
+                <input type="file" id="fileInput" multiple accept="text/plain" style="display: none;">
+                <button for="fileInput" id="fileInputBtn" style="cursor: pointer;">Выберите файл</button>
+                <br>
+                <div id="dragArea" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+                    Перетащите файл сюда
                 </div>
                 <br>
-                <button id="uploadBtn" disabled>Загрузить на сервер</button>
-
-                @* <input type="file" id="fileElem" multiple accept="text/*" style="display:none" onchange="handleFiles(this.files)" />
-                <label for="fileElem">Select some files</label> *@
-            </div>
-            <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
-                <h3 class="mb-4">Поповнення балансу</h3>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Введіть сумму поповнення:</label>
-                            <input type="number" class="form-control mt-1" id="sum"> @*form-group*@
-                            <input type="button" class="btn btn-primary def-btn mt-2" id="replenishmentBtn" value="Поповнити" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                <h3 class="mb-4">Зміна паролю</h3>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Старий пароль:</label>
-                            <input type="password" class="form-control mt-1">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Новий пароль:</label>
-                            <input type="password" class="form-control mt-1">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Повторіть новий пароль:</label>
-                            <input type="password" class="form-control mt-1">
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <button class="btn btn-primary def-btn">Оновити</button>
-                </div>
-            </div>
+                <div id="fileInfo"></div>
+                <br>
+                <button id="uploadWordlistToServerBtn" disabled>Завантажити словник(и) на сервер</button>
+            </div> *@
         </div>
     </div>
 </div>

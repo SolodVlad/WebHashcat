@@ -1,11 +1,15 @@
 ﻿var fileInput = $('#fileInput');
 var fileInputBtn = $('#fileInputBtn');
 var dragArea = $('#dragArea');
-var uploadBtn = $('#uploadBtn');
 var fileInfo = $('#fileInfo');
 var fileListView = $('#fileListView');
+var filesForSend = [];
 
-uploadBtn.prop('disabled', true);
+var uploadDataToLookupTableBtn = $('#uploadDataToLookupTableBtn');
+var uploadWordlistToServerBtn = $('#uploadWordlistToServerBtn');
+
+uploadDataToLookupTableBtn.prop('disabled', true);
+uploadWordlistToServerBtn.prop('disabled', true);
 
 function formatFileSize(bytes) {
     if (bytes < 1024) return bytes + ' байт';
@@ -14,14 +18,9 @@ function formatFileSize(bytes) {
     else return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' ГБ';
 }
 
-fileInputBtn.click(function () {
-    fileInput.click();
-});
-
-fileInput.change(function () {
-    var files = fileInput[0].files;
+function handleFiles(files) {
     if (files.length > 0) {
-        fileInfo.empty();
+        Array.prototype.push.apply(filesForSend, files);
         $.each(files, function (i, file) {
             var fileName = file.name;
             var fileSizeFormatted = formatFileSize(file.size);
@@ -29,11 +28,21 @@ fileInput.change(function () {
             fileInfo.append(listItem);
         });
         fileInfo.show();
-        uploadBtn.prop('disabled', false);
+        uploadDataToLookupTableBtn.prop('disabled', false);
+        uploadWordlistToServerBtn.prop('disabled', false);
     } else {
         fileInfo.hide();
-        uploadBtn.prop('disabled', true);
+        uploadDataToLookupTableBtn.prop('disabled', true);
+        uploadWordlistToServerBtn.prop('disabled', true);
     }
+}
+
+fileInputBtn.click(function () {
+    fileInput.click();
+});
+
+fileInput.change(function () {
+    handleFiles(fileInput[0].files);
 });
 
 dragArea.on('dragover', function (e) {
@@ -48,40 +57,51 @@ dragArea.on('dragleave', function () {
 dragArea.on('drop', function (e) {
     e.preventDefault();
     dragArea.removeClass('hover');
-    var files = e.originalEvent.dataTransfer.files;
-    if (files.length > 0) {
-        fileInfo.empty();
-        $.each(files, function (i, file) {
-            var fileName = file.name;
-            var fileSizeFormatted = formatFileSize(file.size);
-            var listItem = $('<li>').text('Файл: ' + fileName + ' (Размер: ' + fileSizeFormatted + ')');
-            fileInfo.append(listItem);
-        });
-        fileInfo.show();
-        uploadBtn.prop('disabled', false);
-    }
+
+    var dt = e.originalEvent.dataTransfer;
+    var files = dt.files;
+
+    handleFiles(files)
 });
 
-uploadBtn.click(function () {
-    var files = fileInput[0].files;
-    if (files.length > 0) {
-        var formData = new FormData();
-        $.each(files, function (i, file) {
-            formData.append('files', file);
-        });
+uploadDataToLookupTableBtn.click(function () {
+    var formData = new FormData();
+    $.each(filesForSend, function (i, file) {
+        formData.append('files', file);
+    });
 
-        $.ajax({
-            url: 'url_вашего_сервера',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                // Обработка успешного ответа от сервера
-            },
-            error: function (error) {
-                console.error('Ошибка:', error);
-            }
-        });
-    }
+    $.ajax({
+        url: 'api/AdminPanelApi/AddDataToLookupTable',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function () {
+            console.log('Success');
+        },
+        error: function (error) {
+            console.error('Ошибка:', error);
+        }
+    });
+});
+
+uploadWordlistToServerBtn.click(function () {
+    var formData = new FormData();
+    $.each(filesForSend, function (i, file) {
+        formData.append('files', file);
+    });
+
+    $.ajax({
+        url: 'api/AdminPanelApi/UploadWordlistToServer',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function () {
+            console.log('Success');
+        },
+        error: function (error) {
+            console.error('Ошибка:', error);
+        }
+    });
 });

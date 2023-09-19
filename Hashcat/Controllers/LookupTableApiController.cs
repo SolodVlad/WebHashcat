@@ -1,7 +1,5 @@
 ﻿using BLL.Services;
-using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using WebHashcat.Services;
 using WebHashcat.ViewModels;
 
