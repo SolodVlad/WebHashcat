@@ -14,21 +14,21 @@
                 <a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" data-bs-target="#hash-crack" role="tab" aria-controls="hash-crack" aria-selected="true">
                     <i class="bg-info bi-house-door text-center me-1"></i>
                     Оновлення таблиці пошуку
-                </a>
-                @* <a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
-                    <i class="bi bi-key text-center me-1"></i>
-                    Зміна паролю
-                </a> *@
+                </a> 
+                @*<a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
+                    <i class="fas fa-lock text-center me-1"></i>
+                    <span>Зміна паролю</span>
+                </a>*@
             </div>
         </div>
         <div class="tab-content content-container p-4 flex-grow-1 col-9.5" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
                 <h1>Оновлення таблиці пошуку</h1>
                 <input type="file" id="fileInput" multiple accept="text/plain" style="display: none;">
-                <button for="fileInput" id="fileInputBtn" style="cursor: pointer;">Выберите файл</button>
                 <br>
-                <div id="dragArea" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
-                    Перетащите файл сюда
+                <div id="dragArea">
+                    <i for="fileInput" id="fileInputBtn" class="fas fa-file-circle-plus"></i>
+                    Перетягніть файл сюди
                 </div>
                 <br>
                 <div id="fileInfo"></div>
@@ -36,20 +36,35 @@
                 <button id="uploadDataToLookupTableBtn" disabled>Додати дані до таблиці пошуку</button>
                 <button id="uploadWordlistToServerBtn" disabled>Завантажити словник(и) на сервер</button>
             </div>
-
-            @* <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                <h1>Завантаження словників на сервер</h1>
-                <input type="file" id="fileInput" multiple accept="text/plain" style="display: none;">
-                <button for="fileInput" id="fileInputBtn" style="cursor: pointer;">Выберите файл</button>
-                <br>
-                <div id="dragArea" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
-                    Перетащите файл сюда
+            
+            @*<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                <h3 class="mb-4">Зміна паролю</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Старий пароль:</label>
+                            <input type="password" class="form-control mt-1">
+                        </div>
+                    </div>
                 </div>
-                <br>
-                <div id="fileInfo"></div>
-                <br>
-                <button id="uploadWordlistToServerBtn" disabled>Завантажити словник(и) на сервер</button>
-            </div> *@
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Новий пароль:</label>
+                            <input type="password" class="form-control mt-1">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Повторіть новий пароль:</label>
+                            <input type="password" class="form-control mt-1">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <button class="btn btn-primary def-btn">Оновити</button>
+                </div>
+            </div>*@
         </div>
     </div>
 </div>

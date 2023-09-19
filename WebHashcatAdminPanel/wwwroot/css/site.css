@@ -150,6 +150,16 @@ header .navbar-brand:hover {
     border: 1px solid #FFF;
 }
 /*Button*/
+/*Autorithation*/
+.register-admin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.register-admin div {
+    max-width: 30rem;
+}
+/*Autorithation*/
 /*Container*/
 .profile_tab {
     display: flex;
@@ -259,7 +269,47 @@ div div div .row {
         transform: rotate(360deg);
     }
 }
-/*�������*/
+#dragArea {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    /*text-align: center;*/
+}
+#fileInputBtn {
+    font-size: 110px;
+    padding-bottom: 20px;
+}
+@media (max-width: 992px) {
+    .menu-container {
+        width: 67px;
+        /*display: flex;
+        flex-direction: column;*/
+    }
+    .menu-container div a {
+        text-align: center;
+        max-width: 67px;
+    }
+    .menu-container div a i {
+        font-size: 38px;
+    }
+    .menu-container div a span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+/*Table*/
 .table-db {
     width: 100%;
     overflow: auto;
@@ -314,6 +364,6 @@ div div div .row {
 td.icon-table {
     background-color: rgba(12, 30, 87, 1);
 }
-/*�������*/
+/*Table*/
 /*Container*/
 /*Admin_mane_page*/
