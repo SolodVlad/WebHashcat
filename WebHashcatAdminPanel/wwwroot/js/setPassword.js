@@ -23,7 +23,13 @@
             } else if (exception === 'abort') {
                 console.error('Ajax request aborted.');
             } else {
-                console.error('Uncaught Error. ' + jqXHR.responseText);
+                var responseTextJSON = JSON.parse(jqXHR.responseText);
+                var errorMessage = ""
+                responseTextJSON.errors.forEach(function (error) {
+                    errorMessage += error.description + "\n"
+                })
+                $('#showErrorMessage').text(errorMessage);
+                console.error('Uncaught Error. ' + errorMessage);
             }
         }
     })

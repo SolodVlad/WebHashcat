@@ -20,46 +20,48 @@ namespace WebHashcatAdminPanel.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (!await _roleManager.RoleExistsAsync("Admin"))
-            {
-                var result = await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                if (!result.Succeeded)
-                {
-                }
-            }
+            return View();
 
-            if ((await _userManager.FindByNameAsync(_defUsername)) == null)
-            {
-                var admin = new User
-                {
-                    UserName = "admin",
-                    Email = "admin@example.com"
-                };
+            //if (!await _roleManager.RoleExistsAsync("Admin"))
+            //{
+            //    var result = await _roleManager.CreateAsync(new IdentityRole("Admin"));
+            //    if (!result.Succeeded)
+            //    {
+            //    }
+            //}
 
-                var result = await _userManager.CreateAsync(admin, _defPass);
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(admin, "Admin");
+            //if ((await _userManager.FindByNameAsync(_defUsername)) == null)
+            //{
+            //    var admin = new User
+            //    {
+            //        UserName = "admin",
+            //        Email = "admin@example.com"
+            //    };
 
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(admin);
-                    await _userManager.ConfirmEmailAsync(admin, token);
+            //    var result = await _userManager.CreateAsync(admin, _defPass);
+            //    if (result.Succeeded)
+            //    {
+            //        await _userManager.AddToRoleAsync(admin, "Admin");
 
-                    return View();
-                }
-                else
-                {
-                }
-            }
-            else 
-            {
-                var admin = await _userManager.FindByNameAsync(_defUsername);
-                if (await _userManager.CheckPasswordAsync(admin, _defPass))
-                {
-                    return View();
-                }
-            }
+            //        var token = await _userManager.GenerateEmailConfirmationTokenAsync(admin);
+            //        await _userManager.ConfirmEmailAsync(admin, token);
 
-            return RedirectToAction("Index", "Login", new { Area = "Identity" });
+            //        return View();
+            //    }
+            //    else
+            //    {
+            //    }
+            //}
+            //else 
+            //{
+            //    var admin = await _userManager.FindByNameAsync(_defUsername);
+            //    if (await _userManager.CheckPasswordAsync(admin, _defPass))
+            //    {
+            //        return View();
+            //    }
+            //}
+
+            //return RedirectToAction("Index", "Login", new { Area = "Identity" });
         }
     }
 }

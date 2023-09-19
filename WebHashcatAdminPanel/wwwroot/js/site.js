@@ -2,13 +2,10 @@
     $.ajax({
         url: 'api/AuthenticationApi/ValidateJWTToken',
         type: 'GET',
-        //contentType: 'application/json',
 
         success: function (response) {
-            if (response) {
-                $('#logoutLi').css('display', 'block');
-            }
-            else {
+            if (!response) $('#logoutLi').css('display', 'block');
+            else if (response === 'Cookie deleted') {
                 $('#logoutLi').css('display', 'none');
 
                 alert('Сесія авторизації минула');
@@ -34,7 +31,7 @@
             }
         }
     }
-};
+)};
 
 document.addEventListener('DOMContentLoaded', function () {
     validateToken();

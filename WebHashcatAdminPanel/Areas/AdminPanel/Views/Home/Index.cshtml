@@ -1,7 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "Cabinet";
+    ViewData["Title"] = "Admin panel";
     Layout = "/Views/Shared/_Layout.cshtml";
 }
+
+<head>
+    <link rel="stylesheet" href="~/css/adminPanel.css" asp-append-version="true" />
+</head>
 
 <div class="container">
     <div class="bg-dark box-shadow-custom rounded d-flex d-sm-row static-content">
@@ -23,50 +27,22 @@
         </div>
         <div class="tab-content content-container p-4 flex-grow-1 col-9.5" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
-                <h3 class="mb-4">Взлом хешів</h3>
-                <label>Введіть хеш:</label>
-                <input class="form-control mt-1" placeholder="Enter hash" id="hash" />
-                <div class="row d-flex">
-                    <div class="form-group">
-                        <input type="button" class="btn btn-primary def-btn mt-2" id="startAutodetectModeBtn" value="Далі" />
-                    </div>
+                <h1>Загрузка файла на сервер</h1>
+                <input type="file" id="fileInput" multiple accept="text/plain" style="display: none;">
+                <button for="fileInput" id="fileInputBtn" style="cursor: pointer;">Выберите файл</button>
+                <br>
+                <div id="dragArea" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+                    Перетащите файл сюда
                 </div>
-                <select id="hashTypesSelect" class="form-control mt-2"></select>
-                <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" value="Старт кряк" />
+                <br>
+                <div id="fileInfo">
+                    Файл: <span id="fileName"></span> (Размер: <span id="fileSize"></span> мегабайт)
+                </div>
+                <br>
+                <button id="uploadBtn" disabled>Загрузить на сервер</button>
 
-                @*<table id="tableBrutResult" border="1" class="table-db mt-1">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Значення (пароль)</th>
-                            <th>Хеш</th>
-                            <th>Тип</th>
-                            <th>Час початку</th>
-                            <th>Пройшло часу</th>
-                            <th>Орієнтовний час завершення</th>
-                            <th>Залишилось часу</th>
-                            <th colspan="2">Прогрес</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyBrutResult">
-                        <tr>
-                            <td style="background: yellow;" class="color-detector"></td>
-                            <td>У процесі</td>
-                            <td>
-                                05ABF64A68C4731699C23B4FC6894A36646FCE525F3C96F9CF743B5D0C3BFD933DAD0E95E449E3AFE1F74D534D69A53B8F46CF835763DD42915813C897B02B87
-                            </td>
-                            <td>SHA512</td>
-                            <td>Aug 27 22:58:48</td>
-                            <td>Aug 27 22:59:47</td>
-                            <td>50 secs</td>
-                            <td>9 secs</td>
-                            <td>9.8%</td>
-                            <td style="background: yellow;" class="color-detector"></td>
-                            <td class="icon-table">
-                                <i type="button" class="far fa-circle-xmark stopCrackBtn form_btn" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>*@
+                @* <input type="file" id="fileElem" multiple accept="text/*" style="display:none" onchange="handleFiles(this.files)" />
+                <label for="fileElem">Select some files</label> *@
             </div>
             <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
                 <h3 class="mb-4">Поповнення балансу</h3>
@@ -112,7 +88,7 @@
     </div>
 </div>
 
-
+<script src="~/js/adminPanel.js"></script>
 
 
 

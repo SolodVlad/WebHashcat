@@ -10,7 +10,7 @@ namespace DLL.Context
     {
         public WebHashcatDbContext(DbContextOptions<WebHashcatDbContext> options) : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

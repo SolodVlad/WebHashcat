@@ -28,6 +28,8 @@ namespace WebHashcatAdminPanel.Areas.Identity.Controllers
         private readonly IWebHostEnvironment _environment;
         private readonly TokenService _tokenService;
 
+        private readonly string _cookieName = "AuthCookie";
+
         public AuthenticationApiController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, IConfiguration config, IEmailSender emailSender, IWebHostEnvironment environment, IDistributedCache cache)
         {
             _userManager = userManager;
@@ -66,10 +68,13 @@ namespace WebHashcatAdminPanel.Areas.Identity.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]
         [Route("ValidateJWTToken")]
-        public async Task<IActionResult> ValidateJwtToken([FromBody] string accessToken)
+        public async Task<IActionResult> ValidateJwtTokenAsync()
         {
+            var accessToken = Request.Cookies[_cookieName];
+
+            if (string.IsNullOrEmpty(accessToken)) return Ok("No authorize");
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config.GetValue<string>("JWTSecret"));
             try
@@ -94,18 +99,19 @@ namespace WebHashcatAdminPanel.Areas.Identity.Controllers
                     var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
 
                     var newJwtAccessSecurityToken = _tokenService.GenerateNewAccessToken(principal.Claims.ToList());
-                    AppendCookie("AuthCookie", new JwtSecurityTokenHandler().WriteToken(newJwtAccessSecurityToken));
+                    AppendCookie(_cookieName, new JwtSecurityTokenHandler().WriteToken(newJwtAccessSecurityToken));
 
                     return Ok();
                 }
 
-                Response.Cookies.Delete("AuthCookie");
-                return NoContent();
+                Response.Cookies.Delete(_cookieName);
+                return Ok("Cookie deleted");
             }
             catch (Exception ex)
             {
+                Response.Cookies.Delete(_cookieName);
                 Debug.WriteLine(ex.Message);
-                throw new Exception(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 

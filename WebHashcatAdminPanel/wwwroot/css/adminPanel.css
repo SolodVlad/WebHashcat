@@ -1,0 +1,14 @@
+﻿#dragArea {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#dragArea.hover {
+    border-color: #333;
+}
+
+#fileInfo {
+    display: none;
+}
