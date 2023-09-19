@@ -12,16 +12,12 @@
         <div class="profile-tab-nav border-right menu-container col-2.5">
             <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" data-bs-target="#hash-crack" role="tab" aria-controls="hash-crack" aria-selected="true">
-                    <i class="bg-info bi-house-door text-center me-1"></i>
-                    Взлом хешів
-                </a>
-                <a class="nav-link" id="replenishment-tab" data-bs-toggle="pill" data-bs-target="#replenishment-crack" role="tab" aria-controls="replenishment" aria-selected="false">
-                    <i class="bg-info bi-house-door text-center me-1"></i>
-                    Поповнення балансу
+                    <i class="fas fa-file text-center me-1"></i>
+                    <span>Додати словник</span>
                 </a>
                 <a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
-                    <i class="bi bi-key text-center me-1"></i>
-                    Зміна паролю
+                    <i class="fas fa-lock text-center me-1"></i>
+                    <span>Зміна паролю</span>
                 </a>
             </div>
         </div>
@@ -29,9 +25,9 @@
             <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
                 <h1>Загрузка файла на сервер</h1>
                 <input type="file" id="fileInput" multiple accept="text/plain" style="display: none;">
-                <button for="fileInput" id="fileInputBtn" style="cursor: pointer;">Выберите файл</button>
                 <br>
-                <div id="dragArea" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+                <div id="dragArea">
+                    <i for="fileInput" id="fileInputBtn" class="fas fa-file-circle-plus"></i>
                     Перетащите файл сюда
                 </div>
                 <br>
@@ -39,22 +35,10 @@
                     Файл: <span id="fileName"></span> (Размер: <span id="fileSize"></span> мегабайт)
                 </div>
                 <br>
-                <button id="uploadBtn" disabled>Загрузить на сервер</button>
+                <button id="uploadBtn" class="btn btn-primary def-btn" disabled>Загрузить на сервер</button>
 
                 @* <input type="file" id="fileElem" multiple accept="text/*" style="display:none" onchange="handleFiles(this.files)" />
                 <label for="fileElem">Select some files</label> *@
-            </div>
-            <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
-                <h3 class="mb-4">Поповнення балансу</h3>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Введіть сумму поповнення:</label>
-                            <input type="number" class="form-control mt-1" id="sum"> @*form-group*@
-                            <input type="button" class="btn btn-primary def-btn mt-2" id="replenishmentBtn" value="Поповнити" />
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                 <h3 class="mb-4">Зміна паролю</h3>
