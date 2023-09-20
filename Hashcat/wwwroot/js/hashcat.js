@@ -68,7 +68,7 @@ hashcatConnection.on('hashcatResult', (result) => {
             tdElements.eq(10).css('background-color', 'yellow');
         }
         else if (result.status == 'Exhausted') {
-            tdElements.eq(0).html();
+            tdElements.eq(0).html('');
             tdElements.eq(1).css('background-color', 'red');
             tdElements.eq(2).text('Не знайдено');
             tdElements.eq(10).css('background-color', 'red');
@@ -77,9 +77,9 @@ hashcatConnection.on('hashcatResult', (result) => {
             tdElements.eq(0).html('');
             tdElements.eq(1).css('background-color', 'blue');
             tdElements.eq(2).text(result.value);
-            tdElements.eq(3).text('0');
-            tdElements.eq(4).text('0');
-            tdElements.eq(5).text('100%');
+            tdElements.eq(7).text('0');
+            tdElements.eq(8).text('0');
+            tdElements.eq(9).text('100%');
             tdElements.eq(10).css('background-color', 'blue');
         }
         else if (result.status == 'Quit') {
