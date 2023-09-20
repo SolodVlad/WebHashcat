@@ -5,107 +5,129 @@
 <head>
     <link rel="stylesheet" href="~/css/cabinet.css" asp-append-version="true" />
 </head>
-@*<section class="py-5 my-5">*@
-    <div class="container">
-        @*<h1 class="mb-5" style="color: #FFF; padding-left: 2%">Профіль</h1>*@
-        <div class="bg-dark box-shadow-custom rounded d-flex d-sm-row static-content">
-            <div class="profile-tab-nav border-right menu-container col-2.5">
-                <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" data-bs-target="#hash-crack" role="tab" aria-controls="hash-crack" aria-selected="true">
-                        <i class="bg-info bi-house-door text-center me-1"></i>
-                        Взлом хешів
-                    </a>
-                    <a class="nav-link" id="replenishment-tab" data-bs-toggle="pill" data-bs-target="#replenishment-crack" role="tab" aria-controls="replenishment" aria-selected="false">
-                        <i class="bg-info bi-house-door text-center me-1"></i>
-                        Поповнення балансу
-                    </a>
-                    <a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
-                        <i class="bi bi-key text-center me-1"></i>
-                        Зміна паролю
-                    </a>
+<div class="container">
+    <div class="bg-dark box-shadow-custom rounded d-flex d-sm-row static-content">
+        <div class="profile-tab-nav border-right menu-container col-2">
+            <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                @*<a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" data-bs-target="#hash-crack"role="tab" aria-controls="hash-crack" aria-selected="true">
+                <i class="fas fa-file text-center me-1"></i>
+                <span>Оновлення таблиці пошуку</span>
+                </a>*@
+                <a class="nav-link active" id="hash-crack-tab" data-bs-toggle="pill" data-bs-target="#hash-crack" role="tab" aria-controls="hash-crack" aria-selected="true">
+                    <i class="fas fa-file-code text-center me-1"></i>
+                    <span>Взлом хешів</span>
+                </a>
+                <a class="nav-link" id="replenishment-tab" data-bs-toggle="pill" data-bs-target="#replenishment-crack" role="tab" aria-controls="replenishment" aria-selected="false">
+                    <i class="fas fa-money-bill text-center me-1"></i>
+                    <span>Поповнення балансу</span>
+                </a>
+                <a class="nav-link" id="password-tab" data-bs-toggle="pill" data-bs-target="#password" role="tab" ariacontrols="password" aria-selected="false">
+                    <i class="fas fa-key text-center me-1"></i>
+                    <span>Зміна паролю</span>
+                </a>
+            </div>
+        </div>
+        <div class="tab-content content-container p-4 flex-grow-1 col-10" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
+                <h3 class="mb-4">Взлом хешів</h3>
+                <label>Введіть хеш:</label>
+                <input class="form-control mt-1" placeholder="Enter hash" id="hash" />
+                <div class="row d-flex">
+                    <div class="form-group">
+                        <input type="button" class="btn btn-primary def-btn mt-2" id="startAutodetectModeBtn" value="Далі" />
+                        @*<i class="fas fa-spinner load"></i>*@
+                    </div>
+                </div>
+                <select id="hashTypesSelect" class="form-control mt-2" style="display: none"></select>
+                <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" style="display: none" value="Старт кряк" />
+                <div class="container">
+                    <div class="table-responsive">
+                        <table id="tableBrutResult" border="1" class="table-db mt-1">
+                            @*style="display: none"*@
+                            <thead>
+                                <tr>
+                                    <th class="icon-table"></th>
+                                    <th colspan="2">Значення (пароль)</th>
+                                    <th>Хеш</th>
+                                    <th>Тип</th>
+                                    <th>Час початку</th>
+                                    <th>Пройшло часу</th>
+                                    <th>Орієнтовний час завершення</th>
+                                    <th>Залишилось часу</th>
+                                    <th colspan="2">Прогрес</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyBrutResult">
+                                <tr>
+                                    <td class="icon-table">
+                                        <i type="button" class="far fa-circle-xmark stopBtn form_btn mt-2" />
+                                        <i type="button" class="far fa-circle-pause pauseBtn form_btn mt-2" />
+                                        <i type="button" class="far fa-circle-play resumeBtn form_btn mt-2" />
+                                    </td>
+                                    <td class="color-detector" style="background: green"></td>
+                                    <td>Не знайдено</td>
+                                    <td>f63d1676162db8db8cc8bd053ae25891eabe326c8ff11acce699d16567bc1b82db3a2ce41462d20c58d03943aec1a3f9559f7b423fae74a63dd2621724c4be1a</td>
+                                    <td>SHA2-512</td>
+                                    <td>2023-09-19T22:53:07</td>
+                                    <td>2 mins, 52 secs</td>
+                                    <td>2023-09-19T22:55:59</td>
+                                    <td>0 secs</td>
+                                    <td>100%</td>
+                                    <td class="color-detector" style="background: green"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="tab-content content-container p-4 flex-grow-1 col-9.5" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="hash-crack" role="tabpanel" aria-labelledby="hash-crack-tab">
-                    <h3 class="mb-4">Взлом хешів</h3>
-                    <label>Введіть хеш:</label>
-                    <input class="form-control mt-1" placeholder="Enter hash" id="hash" />
-                    @*<span asp-validation-for="Hash" class="text-danger">HASH</span>*@
-                    <div class="row d-flex">
+            <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
+                <h3 class="mb-4">Поповнення балансу</h3>
+                <div class="row">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <input type="button" class="btn btn-primary def-btn mt-2" id="startAutodetectModeBtn" value="Далі" />
-                            @*<i class="fas fa-spinner load"></i>*@
+                            <label>Введіть сумму поповнення:</label>
+                            <input type="number" class="form-control mt-1" id="sum"> @*form-group*@
+                            <input type="button" class="btn btn-primary def-btn mt-2" id="replenishmentBtn" value="Поповнити" />
                         </div>
                     </div>
-                    <select id="hashTypesSelect" class="form-control mt-2" style="display: none"></select>
-                    <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" style="display: none" value="Старт кряк" />
-
-                    <table id="tableBrutResult" border="1" class="table-db mt-1" style="display: none;">
-                        <thead>
-                            <tr>
-                                <th colspan="2">Значення (пароль)</th>
-                                <th>Хеш</th>
-                                <th>Тип</th>
-                                <th>Час початку</th>
-                                <th>Пройшло часу</th>
-                                <th>Орієнтовний час завершення</th>
-                                <th>Залишилось часу</th>
-                                <th colspan="2">Прогрес</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="tbodyBrutResult"></tbody>
-                    </table>
                 </div>
-                <div class="tab-pane fade" id="replenishment" role="tabpanel" aria-labelledby="replenishment-tab">
-                    <h3 class="mb-4">Поповнення балансу</h3>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Введіть сумму поповнення:</label>
-                                <input type="number" class="form-control mt-1" id="sum"> @*form-group*@
-                                <input type="button" class="btn btn-primary def-btn mt-2" id="replenishmentBtn" value="Поповнити" />
-                            </div>
+                @*<div class="profile_content" id="profile_2">
+                <input type="number" id="sum"/>
+                <button type="submit" id="replenishmentBtn">Поповнити баланс</button>
+                </div>*@
+            </div>
+            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                <h3 class="mb-4">Зміна паролю</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Старий пароль:</label>
+                            <input type="password" class="form-control mt-1">
                         </div>
                     </div>
-                    @*<div class="profile_content" id="profile_2">
-                    <input type="number" id="sum"/>
-                    <button type="submit" id="replenishmentBtn">Поповнити баланс</button>
-                    </div>*@
                 </div>
-                <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                    <h3 class="mb-4">Зміна паролю</h3>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Старий пароль:</label>
-                                <input type="password" class="form-control mt-1">
-                            </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Новий пароль:</label>
+                            <input type="password" class="form-control mt-1">
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Новий пароль:</label>
-                                <input type="password" class="form-control mt-1">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Повторіть новий пароль:</label>
-                                <input type="password" class="form-control mt-1">
-                            </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Повторіть новий пароль:</label>
+                            <input type="password" class="form-control mt-1">
                         </div>
                     </div>
-                    <div class="mt-2">
-                        <button class="btn btn-primary def-btn">Оновити</button>
-                        @*<button class="btn btn-primary def-btn">Cancel</button>*@
-                    </div>
+                </div>
+                <div class="mt-2">
+                    <button class="btn btn-primary def-btn">Оновити</button>
+                    @*<button class="btn btn-primary def-btn">Cancel</button>*@
                 </div>
             </div>
         </div>
     </div>
-@*</section>*@
+</div>
 @*<div class="container">
     <div class="bg-dark box-shadow-custom rounded d-flex d-sm-row static-content">
         <div class="profile-tab-nav border-right menu-container col-2.5">
