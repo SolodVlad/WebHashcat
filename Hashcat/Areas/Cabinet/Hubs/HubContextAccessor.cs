@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace WebHashcat.Hubs
+namespace WebHashcat.Areas.Cabinet.Hubs
 {
     public class HubContextAccessor
     {

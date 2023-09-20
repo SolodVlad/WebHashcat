@@ -5,8 +5,8 @@ using WebHashcat.Configurations;
 using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using WebHashcat.Hubs;
 using WebHashcat.Areas.Cabinet.Services;
+using WebHashcat.Areas.Cabinet.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 

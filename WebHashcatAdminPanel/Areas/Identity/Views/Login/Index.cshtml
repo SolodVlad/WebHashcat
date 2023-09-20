@@ -6,11 +6,12 @@
 <div class="container">
     <div class="row container register-admin">
         <div class="form-group mt-3">
-            <label style="color: #FFF;">Enter login</label>
-            <input type="text" id="login" class="form-control mt-1"/>
-            <label style="color: #FFF;" class="mt-2">Enter password</label>
+            <label style="color: #FFF;" class="mt-2">Введіть пароль адміністратора</label>
             <input type="password" id="password" class="form-control mt-1"/>
-            <input type="submit" id="loginBtn" class="btn btn-primary def-btn mt-2" />
+            <input type="submit" id="loginBtn" class="btn btn-primary def-btn mt-2" value="Вхід" />
+            <label style="color: red;" id="loginErrorMessage" />
         </div>
     </div>
 </div>
+
+<script src="~/js/login.js"></script>

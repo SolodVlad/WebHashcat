@@ -1,4 +1,4 @@
-﻿namespace WebHashcat.Models
+﻿namespace WebHashcat.Areas.Identity.Models
 {
     public class Register
     {

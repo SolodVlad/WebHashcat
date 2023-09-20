@@ -1,6 +1,4 @@
 ﻿using Domain.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,16 +6,14 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using WebHashcat.Models;
 using WebHashcat.Areas.Identity.Services;
 using Microsoft.Extensions.Caching.Distributed;
-using WebHashcat.Areas.Cabinet.Managers;
+using WebHashcat.Areas.Identity.Models;
 
 namespace WebHashcat.Areas.Identity.Controllers
 {

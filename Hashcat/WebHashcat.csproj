@@ -44,7 +44,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Cabinet\Data\" />
-    <Folder Include="Areas\Cabinet\Models\" />
   </ItemGroup>
 
 </Project>

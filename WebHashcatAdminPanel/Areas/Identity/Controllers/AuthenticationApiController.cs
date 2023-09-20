@@ -42,7 +42,7 @@ namespace WebHashcatAdminPanel.Areas.Identity.Controllers
         [HttpPost]
         [Route("Login")]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginAsync(string password)
+        public async Task<IActionResult> LoginAsync([FromBody] string password)
         {
             var user = await _userManager.FindByNameAsync("admin");
             if (user != null && await _userManager.CheckPasswordAsync(user, password))
@@ -59,7 +59,8 @@ namespace WebHashcatAdminPanel.Areas.Identity.Controllers
                 var jwtAccessToken = new JwtSecurityTokenHandler().WriteToken(_tokenService.GenerateNewAccessToken(authClaims));
                 var refreshToken = _tokenService.GenerateRefreshToken();
 
-                await _tokenService.SaveRefreshTokenToCacheAsync(_adminSha512, refreshToken);
+                if (!await _tokenService.IsRefreshTokenExistsAsync(_adminSha512))
+                    await _tokenService.SaveRefreshTokenToCacheAsync(_adminSha512, refreshToken);
 
                 AppendCookie("AuthCookie", jwtAccessToken);
 

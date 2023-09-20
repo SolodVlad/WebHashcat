@@ -6,7 +6,6 @@ using System.Security.Claims;
 using System;
 using System.Text;
 using WebHashcat.Areas.Identity.Models;
-using WebHashcat.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

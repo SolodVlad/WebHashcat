@@ -9,7 +9,7 @@ using System.Timers;
 using Timer = System.Timers.Timer;
 using Domain.Models;
 
-namespace WebHashcat.Hubs
+namespace WebHashcat.Areas.Cabinet.Hubs
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BalanceHub : Hub

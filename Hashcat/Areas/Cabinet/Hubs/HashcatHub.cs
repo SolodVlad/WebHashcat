@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.SignalR;
 using Renci.SshNet;
 using System.Globalization;
+using WebHashcat.Areas.Cabinet.Models;
 using WebHashcat.Areas.Cabinet.Services;
-using WebHashcat.Models;
 
-namespace WebHashcat.Hubs
+namespace WebHashcat.Areas.Cabinet.Hubs
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class HashcatHub : Hub
@@ -23,9 +23,9 @@ namespace WebHashcat.Hubs
         private readonly string _sshUsername;
         private readonly string _sshPassword;
 
-        private readonly ShellStreamService _userSessionsManager;
+        private readonly ShellStreamService _shellStreamService;
 
-        public HashcatHub(IEmailSender emailSender, IConfiguration configuration, ShellStreamService userSessionsManager)
+        public HashcatHub(IEmailSender emailSender, IConfiguration configuration, ShellStreamService shellStreamService)
         {
             _emailSender = emailSender;
 
@@ -33,7 +33,7 @@ namespace WebHashcat.Hubs
             _sshUsername = configuration.GetValue<string>("SSH-Username");
             _sshPassword = configuration.GetValue<string>("SSH-Password");
 
-            _userSessionsManager = userSessionsManager;
+            _shellStreamService = shellStreamService;
         }
 
         public async Task StartAutodetectModeHashcatAsync(string hash)
@@ -113,7 +113,7 @@ namespace WebHashcat.Hubs
                     shellStream.WriteLine(command);
                     var result = new HashcatResult { Hash = hashcatArguments.Hash };
 
-                    _userSessionsManager.AddToCurrentUser(Context.UserIdentifier, hashcatArguments.Hash, shellStream);
+                    _shellStreamService.AddToCurrentUser(Context.UserIdentifier, hashcatArguments.Hash, shellStream);
 
                     var line = "";
                     while (true)
@@ -183,13 +183,13 @@ namespace WebHashcat.Hubs
                     await Clients.User(Context.UserIdentifier).SendAsync("hashcatResult", "Failed to connect to the remote server.");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 await Clients.User(Context.UserIdentifier).SendAsync("hashcatResult", ex.Message);
             }
             finally
             {
-                _userSessionsManager.RemoveFromUserSessionAsync(Context.UserIdentifier, hashcatArguments.Hash);
+                _shellStreamService.RemoveFromUserSessionAsync(Context.UserIdentifier, hashcatArguments.Hash);
                 client.Disconnect();
             }
         }
@@ -205,7 +205,7 @@ namespace WebHashcat.Hubs
                     //var command = $"hashcat q --session {_userSessionsManager.GetValueFromUserSessionAsync(Context.UserIdentifier, hash)}";
                     //using var shellStream = client.CreateShellStream(Guid.NewGuid().ToString(), 0, 0, 0, 0, 1024);
 
-                    var shellStream = _userSessionsManager.GetShellStreamFromCurrentUser(Context.UserIdentifier, hash);
+                    var shellStream = _shellStreamService.GetShellStreamFromCurrentUser(Context.UserIdentifier, hash);
                     shellStream.WriteLine(argument);
                     shellStream.Flush();
                 }

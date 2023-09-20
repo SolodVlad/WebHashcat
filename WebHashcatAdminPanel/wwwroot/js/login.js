@@ -1,21 +1,19 @@
-﻿$('#changeDefPassBtn').click(function () {
+﻿$("#loginBtn").click(function () {
     $.ajax({
-        url: 'api/SetPasswordApi/SetPassword',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify($("#newPassword").val()),
-
+        url: "api/AuthenticationApi/Login",
+        type: "POST",
+        data: JSON.stringify($('#password').val()),
+        contentType: "application/json",
         success: function () {
-            window.location.replace('/Login');
+            window.location.replace("AdminPanel");
         },
-
         error: function (jqXHR, exception) {
             if (jqXHR.status === 0) {
                 console.error('Not connect. Verify Network.');
             } else if (jqXHR.status == 404) {
                 console.error('Requested page not found (404).');
             } else if (jqXHR.status == 500) {
-                console.error('Internal Server Error (500).');
+                console.error('Internal Server Error.');
             } else if (exception === 'parsererror') {
                 console.error('Requested JSON parse failed.');
             } else if (exception === 'timeout') {
@@ -23,14 +21,9 @@
             } else if (exception === 'abort') {
                 console.error('Ajax request aborted.');
             } else {
-                var responseTextJSON = JSON.parse(jqXHR.responseText);
-                var errorMessage = "";
-                responseTextJSON.forEach(function (error) {
-                    errorMessage += error.description + "\n"
-                })
-                $('#showErrorMessage').text(errorMessage);
-                console.error('Uncaught Error. ' + errorMessage);
+                console.error('Uncaught Error. ' + jqXHR.responseText);
+                $("#loginErrorMessage").text("Неправильний логін або пароль")
             }
         }
-    })
+    });
 })

@@ -3,7 +3,7 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace WebHashcat.Models
+namespace WebHashcat.Areas.Cabinet.Models
 {
     public class HashcatArguments
     {
