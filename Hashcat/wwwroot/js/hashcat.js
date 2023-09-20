@@ -63,9 +63,10 @@ hashcatConnection.on('hashcatResult', (result) => {
             tdElements.eq(0).css('background-color', 'yellow');
             tdElements.eq(1).text('У процесі');
             tdElements.eq(9).css('background-color', 'yellow');
-            tdElements.eq(10).html('<input type="button" class="stopBtn form_btn" value="СТОП"/> ' +
-                '<input type="button" class="pauseBtn form_btn" value="ПАУЗА"/>' +
-                '<input type="button" class="resumeBtn form_btn" value="ВІДНОВИТИ"/>');
+            tdElements.eq(10).html(
+                '<i type="button" class="far fa-circle-xmark stopBtn form_btn mt-2"/>' +
+                '<i type="button" class="far fa-circle-pause pauseBtn form_btn mt-2"/>'  +
+                '<i type="button" class="far fa-circle-play resumeBtn form_btn mt-2"/>');
         }
         else if (result.status == 'Exhausted') {
             tdElements.eq(0).css('background-color', 'red');
@@ -107,10 +108,10 @@ hashcatConnection.on('hashcatResult', (result) => {
                 '<td>' + result.timeLeft + '</td>' +
                 '<td>' + result.progress + '%</td>' +
                 '<td style="background: yellow;" class="color-detector"></td>' +
-                '<td>' +
-                '<input type="button" class="stopBtn form_btn" value="СТОП"/>' +
-                '<input type="button" class="pauseBtn form_btn" value="ПАУЗА"/>' +
-                '<input type="button" class="resumeBtn form_btn" value="ВІДНОВИТИ"/>' +
+                '<td class="icon-table">' +
+                '<i type="button" class="far fa-circle-xmark stopBtn form_btn mt-2"/>'  +
+                '<i type="button" class="far fa-circle-pause pauseBtn form_btn mt-2"/>' +
+                '<i type="button" class="far fa-circle-play resumeBtn form_btn mt-2"/>' +
                 '</td>' +
                 '</tr > ';
 

@@ -284,7 +284,7 @@ div div div .row {
     font-size: 110px;
     padding-bottom: 20px;
 }
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
     .menu-container {
         width: 67px;
         /*display: flex;

@@ -26,7 +26,7 @@
         <header id="header" class="fixed-top">
             <nav class="navbar navbar-expand-lg navbar-dark visual-style-black">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="@Url.Action("Index", "Home", new { Area = "" })">WebHashсat</a>
+                    <a class="navbar-brand blue" href="@Url.Action("Index", "Home", new { Area = "" })">WebHashсat</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -39,7 +39,7 @@
                                 <a class="nav-link visual-a-blue" href="@Url.Action("Index", "Home", new {Area = "Cabinet"})">Кабінет</a>
                             </li>*@
                             <li class="nav-item">
-                                <a class="nav-link visual-a-blue" href="@Url.Action("FAQ", "Home", new {Area = ""})">FAQ</a>
+                                <a class="nav-link visual-a-blue blue" href="@Url.Action("FAQ", "Home", new {Area = ""})">FAQ</a>
                             </li>
                             @*<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle visual-a-blue" data-bs-toggle="dropdown" href="#">Послуги</a>
@@ -76,12 +76,16 @@
     </section>
     <footer>
         <div class="footer-content">
-            <ul>
-                <li>Контактні дані:</li>
-                <li>Тел: +380959263850</li>
-                <li>Пошта: WebHashcat@protonmail.com</li>
-            </ul>
-            <label>© 2023 WebHashcat - сайт для відновлення паролю. Усі права захищено</label>
+            <div>
+                <ul>
+                    <li>Контактні дані:</li>
+                    <li>Тел: +380959263850</li>
+                    <li>Пошта: WebHashcat@protonmail.com</li>
+                </ul>
+            </div>
+            <div>
+                <label>© 2023 WebHashcat - сайт для відновлення паролю. Усі права захищено</label>
+            </div>
         </div>
     </footer>
     <script>
