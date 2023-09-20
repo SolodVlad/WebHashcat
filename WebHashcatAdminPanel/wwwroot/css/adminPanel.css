@@ -3,6 +3,12 @@
     padding: 20px;
     text-align: center;
     transition: border-color 0.3s ease-in-out;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
 }
 
 #dragArea.hover {
@@ -11,4 +17,9 @@
 
 #fileInfo {
     display: none;
+}
+
+#fileInputBtn {
+    font-size: 110px;
+    padding-bottom: 20px;
 }

@@ -71,6 +71,10 @@ builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICAT
 
 //builder.Services.AddSingleton<UserBalanceManager>();
 builder.Services.AddSingleton<ShellStreamService>();
+builder.Services.AddDistributedRedisCache(option =>
+{
+    option.Configuration = builder.Configuration["CacheConnection"];
+});
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

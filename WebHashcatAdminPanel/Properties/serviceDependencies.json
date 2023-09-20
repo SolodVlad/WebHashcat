@@ -2,15 +2,18 @@
   "dependencies": {
     "appInsights1": {
       "type": "appInsights",
-      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING"
+      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+      "dynamicId": null
     },
     "secrets1": {
       "type": "secrets",
-      "connectionId": "VaultUri"
+      "connectionId": "VaultUri",
+      "dynamicId": null
     },
     "redis1": {
       "type": "redis",
-      "connectionId": "CacheConnection"
+      "connectionId": "CacheConnection",
+      "dynamicId": null
     }
   }
 }

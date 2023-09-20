@@ -42,8 +42,7 @@
                 <input type="button" id="startCrackBtn" class="btn btn-primary def-btn mt-2" style="display: none" value="Старт кряк" />
                 <div class="container">
                     <div class="table-responsive">
-                        <table id="tableBrutResult" border="1" class="table-db mt-1">
-                            @*style="display: none"*@
+                        <table id="tableBrutResult" border="1" class="table-db mt-1" style="display: none">
                             <thead>
                                 <tr>
                                     <th class="icon-table"></th>
@@ -58,11 +57,11 @@
                                 </tr>
                             </thead>
                             <tbody id="tbodyBrutResult">
-                                <tr>
+                                @* <tr>
                                     <td class="icon-table">
-                                        <i type="button" class="far fa-circle-xmark stopBtn form_btn mt-2" />
-                                        <i type="button" class="far fa-circle-pause pauseBtn form_btn mt-2" />
-                                        <i type="button" class="far fa-circle-play resumeBtn form_btn mt-2" />
+                                        <i type="button" class="far fa-circle-xmark manageRunningRecoveryBtn form_btn mt-2" data-action="stop" />
+                                        <i type="button" class="far fa-circle-pause manageRunningRecoveryBtn form_btn mt-2" data-action="pause" />
+                                        <i type="button" class="far fa-circle-play manageRunningRecoveryBtn form_btn mt-2" data-action="resume" />
                                     </td>
                                     <td class="color-detector" style="background: green"></td>
                                     <td>Не знайдено</td>
@@ -74,7 +73,7 @@
                                     <td>0 secs</td>
                                     <td>100%</td>
                                     <td class="color-detector" style="background: green"></td>
-                                </tr>
+                                </tr> *@
                             </tbody>
                         </table>
                     </div>

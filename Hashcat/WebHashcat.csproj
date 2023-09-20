@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Hashcat-2e06d7eb-6aef-4701-823c-b5c12cf6c340</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/5745165c-031c-4804-95c0-ad919b58d134/resourceGroups/WebHashcat/providers/microsoft.insights/components/LocalWebHashcat</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/b3167d31-0482-4b92-9f82-64d7a811c52c/resourceGroups/WebHashcat/providers/microsoft.insights/components/WebHashcat</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>

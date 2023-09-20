@@ -15,8 +15,8 @@
       "applicationUrl": "http://localhost:5210",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "VaultUri": "https://webhashcatvault.vault.azure.net/",
-        "AZURE_USERNAME": "Kras_vc76@student.itstep.org"
+        "VaultUri": "https://webhashcat.vault.azure.net/",
+        "AZURE_USERNAME": "Cupr_wf30@student.itstep.org"
       }
     },
     "https": {
@@ -26,8 +26,8 @@
       "applicationUrl": "https://localhost:7099;http://localhost:5210",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "VaultUri": "https://webhashcatvault.vault.azure.net/",
-        "AZURE_USERNAME": "Kras_vc76@student.itstep.org"
+        "VaultUri": "https://webhashcat.vault.azure.net/",
+        "AZURE_USERNAME": "Cupr_wf30@student.itstep.org"
       }
     },
     "IIS Express": {
@@ -35,8 +35,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "VaultUri": "https://webhashcatvault.vault.azure.net/",
-        "AZURE_USERNAME": "Kras_vc76@student.itstep.org"
+        "VaultUri": "https://webhashcat.vault.azure.net/",
+        "AZURE_USERNAME": "Cupr_wf30@student.itstep.org"
       }
     }
   }

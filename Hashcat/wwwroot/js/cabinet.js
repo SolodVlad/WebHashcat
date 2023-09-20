@@ -42,29 +42,68 @@ $('#startCrackBtn').click(function () {
     startCrackHashcatOnClient(hashcatArguments);
 });
 
-$(document).on('click', '.stopBtn', function () {
+$(document).on('click', '.manageRunningRecoveryBtn', function () {
     var row = $(this).closest('tr');
-
     var hash = row.attr('id');
 
-    manageRunningRecoveryOnClient(hash, "q");
+    if ($(this).hasClass('stopBtn')) {
+        manageRunningRecoveryOnClient(hash, "q");
+    } else if ($(this).hasClass('pauseBtn')) {
+        manageRunningRecoveryOnClient(hash, "p");
+    } else if ($(this).hasClass('resumeBtn')) {
+        manageRunningRecoveryOnClient(hash, "r");
+    }
 });
 
-$(document).on('click', '.pauseBtn', function () {
-    var row = $(this).closest('tr');
+//$(document).on('click', '.stopBtn', function () {
+//    var row = $(this).closest('tr');
 
-    var hash = row.attr('id');
+//    var hash = row.attr('id');
 
-    manageRunningRecoveryOnClient(hash, "p");
-});
+//    manageRunningRecoveryOnClient(hash, "q");
+//})
 
-$(document).on('click', '.resumeBtn', function () {
-    var row = $(this).closest('tr');
+//$(document).on('click', '.pauseBtn', function () {
+//    var row = $(this).closest('tr');
 
-    var hash = row.attr('id');
+//    var hash = row.attr('id');
 
-    manageRunningRecoveryOnClient(hash, "r");
-});
+//    manageRunningRecoveryOnClient(hash, "p");
+//})
+
+//$(document).on('click', '.resumeBtn', function () {
+//    var row = $(this).closest('tr');
+
+//    var hash = row.attr('id');
+
+//    manageRunningRecoveryOnClient(hash, "r");
+//})
+
+//$(function () {
+//    $('#stop').click(function () {
+//        var row = $(this).closest('tr');
+
+//        var hash = row.attr('id');
+
+//        manageRunningRecoveryOnClient(hash, "q");
+//    });
+
+//    $('#pause').click(function () {
+//        var row = $(this).closest('tr');
+
+//        var hash = row.attr('id');
+
+//        manageRunningRecoveryOnClient(hash, "p");
+//    });
+
+//    $('#play').click(function () {
+//        var row = $(this).closest('tr');
+
+//        var hash = row.attr('id');
+
+//        manageRunningRecoveryOnClient(hash, "r");
+//    });
+//});
 
 $('#replenishmentBtn').click(function () {
     $.ajax({

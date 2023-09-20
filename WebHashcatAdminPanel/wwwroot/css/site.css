@@ -269,21 +269,7 @@ div div div .row {
         transform: rotate(360deg);
     }
 }
-#dragArea {
-    border: 2px dashed #ccc;
-    padding: 20px;
-    min-height: 260px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    /*text-align: center;*/
-}
-#fileInputBtn {
-    font-size: 110px;
-    padding-bottom: 20px;
-}
+
 @media (max-width: 1200px) {
     .menu-container {
         width: 67px;

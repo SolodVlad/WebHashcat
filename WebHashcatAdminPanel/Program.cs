@@ -37,6 +37,10 @@ builder.Services.AddHsts(options =>
 builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
 ConfigurationBll.Configure(builder.Services, builder.Configuration);
+builder.Services.AddDistributedRedisCache(option =>
+{
+    option.Configuration = builder.Configuration["CacheConnection"];
+});
 
 var app = builder.Build();
 

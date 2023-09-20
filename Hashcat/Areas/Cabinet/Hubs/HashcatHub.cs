@@ -202,9 +202,6 @@ namespace WebHashcat.Areas.Cabinet.Hubs
                 client.Connect();
                 if (client.IsConnected)
                 {
-                    //var command = $"hashcat q --session {_userSessionsManager.GetValueFromUserSessionAsync(Context.UserIdentifier, hash)}";
-                    //using var shellStream = client.CreateShellStream(Guid.NewGuid().ToString(), 0, 0, 0, 0, 1024);
-
                     var shellStream = _shellStreamService.GetShellStreamFromCurrentUser(Context.UserIdentifier, hash);
                     shellStream.WriteLine(argument);
                     shellStream.Flush();

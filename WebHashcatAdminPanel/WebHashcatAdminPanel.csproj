@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-WebHashcatAdminPanel-c5ea3999-2dd3-4ec5-ac07-42dd25019f3e</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/5745165c-031c-4804-95c0-ad919b58d134/resourceGroups/WebHashcat/providers/microsoft.insights/components/WebHashcatAdminPanel</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/b3167d31-0482-4b92-9f82-64d7a811c52c/resourceGroups/WebHashcat/providers/microsoft.insights/components/WebHashcatAdminPanel</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>

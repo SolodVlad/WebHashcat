@@ -50,54 +50,61 @@ hashcatConnection.on('hashcatResult', (result) => {
     if (row.length !== 0) {
         var tdElements = row.find('td');
 
-        tdElements.eq(1).text(result.value);
-        tdElements.eq(2).text(result.hash);
-        tdElements.eq(3).text(result.hashType);
-        tdElements.eq(4).text(result.timeStarted);
-        tdElements.eq(5).text(result.timePassed);
-        tdElements.eq(6).text(result.timeEstimated);
-        tdElements.eq(7).text(result.timeLeft);
-        tdElements.eq(8).text(result.progress + '%');
+        tdElements.eq(2).text(result.value);
+        tdElements.eq(3).text(result.hash);
+        tdElements.eq(4).text(result.hashType);
+        tdElements.eq(5).text(result.timeStarted);
+        tdElements.eq(6).text(result.timePassed);
+        tdElements.eq(7).text(result.timeEstimated);
+        tdElements.eq(8).text(result.timeLeft);
+        tdElements.eq(9).text(result.progress + '%');
 
         if (result.status == 'Running') {
-            tdElements.eq(0).css('background-color', 'yellow');
-            tdElements.eq(1).text('У процесі');
-            tdElements.eq(9).css('background-color', 'yellow');
-            tdElements.eq(10).html(
-                '<i type="button" class="far fa-circle-xmark stopBtn form_btn mt-2"/>' +
-                '<i type="button" class="far fa-circle-pause pauseBtn form_btn mt-2"/>'  +
-                '<i type="button" class="far fa-circle-play resumeBtn form_btn mt-2"/>');
+            tdElements.eq(0).html(
+                '<i type="button" class="far fa-circle-xmark manageRunningRecoveryBtn stopBtn form_btn mt-2"/>' +
+                '<i type="button" class="far fa-circle-pause manageRunningRecoveryBtn pauseBtn form_btn mt-2"/>');
+            tdElements.eq(1).css('background-color', 'yellow');
+            tdElements.eq(2).text('У процесі');
+            tdElements.eq(10).css('background-color', 'yellow');
         }
         else if (result.status == 'Exhausted') {
-            tdElements.eq(0).css('background-color', 'red');
-            tdElements.eq(1).text('Не знайдено');
-            tdElements.eq(9).css('background-color', 'red');
-            tdElements.eq(10).remove();
+            tdElements.eq(0).html();
+            tdElements.eq(1).css('background-color', 'red');
+            tdElements.eq(2).text('Не знайдено');
+            tdElements.eq(10).css('background-color', 'red');
         }
         else if (result.status == 'Cracked') {
-            tdElements.eq(0).css('background-color', 'blue');
-            tdElements.eq(1).text(result.value);
-            tdElements.eq(6).text('0');
-            tdElements.eq(7).text('0');
-            tdElements.eq(8).text('100%');
-            tdElements.eq(9).css('background-color', 'blue');
-            tdElements.eq(10).remove();
+            tdElements.eq(0).html('');
+            tdElements.eq(1).css('background-color', 'blue');
+            tdElements.eq(2).text(result.value);
+            tdElements.eq(3).text('0');
+            tdElements.eq(4).text('0');
+            tdElements.eq(5).text('100%');
+            tdElements.eq(10).css('background-color', 'blue');
         }
-        else if (result.status == "Quit") {
-            tdElements.eq(0).css('background-color', 'red');
-            tdElements.eq(1).text('Зупиннено користувачем');
-            tdElements.eq(9).css('background-color', 'red');
+        else if (result.status == 'Quit') {
+            tdElements.eq(0).html('');
+            tdElements.eq(1).css('background-color', 'red');
+            tdElements.eq(2).text('Зупинено користувачем');
+            tdElements.eq(10).css('background-color', 'red');
         }
 
-        else if (result.status == "Paused") {
-            tdElements.eq(0).css('background-color', 'pink');
-            tdElements.eq(1).text('Поставлено на паузу');
-            tdElements.eq(9).css('background-color', 'pink');
+        else if (result.status == 'Paused') {
+            tdElements.eq(0).html(
+                '<i type="button" class="far fa-circle-xmark stopBtn manageRunningRecoveryBtn form_btn mt-2"/>' +
+                '<i type="button" class="far fa-circle-play resumeBtn manageRunningRecoveryBtn form_btn mt-2"/>');
+            tdElements.eq(1).css('background-color', 'pink');
+            tdElements.eq(2).text('Поставлено на паузу');
+            tdElements.eq(10).css('background-color', 'pink');
         }
     }
     else {
         if (result.status == "Running")
             row = '<tr id="' + result.hash + '">' +
+                '<td class="icon-table">' +
+                '<i type="button" class="far fa-circle-xmark stopBtn manageRunningRecoveryBtn form_btn mt-2"/>' +
+                '<i type="button" class="far fa-circle-pause pauseBtn manageRunningRecoveryBtn form_btn mt-2"/>' +
+                '</td>' +
                 '<td style="background: yellow;" class="color-detector"></td>' +
                 '<td>У процесі</td>' +
                 '<td>' + result.hash + '</td>' +
@@ -108,11 +115,6 @@ hashcatConnection.on('hashcatResult', (result) => {
                 '<td>' + result.timeLeft + '</td>' +
                 '<td>' + result.progress + '%</td>' +
                 '<td style="background: yellow;" class="color-detector"></td>' +
-                '<td class="icon-table">' +
-                '<i type="button" class="far fa-circle-xmark stopBtn form_btn mt-2"/>'  +
-                '<i type="button" class="far fa-circle-pause pauseBtn form_btn mt-2"/>' +
-                '<i type="button" class="far fa-circle-play resumeBtn form_btn mt-2"/>' +
-                '</td>' +
                 '</tr > ';
 
         else if (result.status == "Exhausted")
@@ -131,6 +133,10 @@ hashcatConnection.on('hashcatResult', (result) => {
 
         else if (result.status == "Paused")
             row = '<tr id="' + result.hash + '">' +
+                '<td>' +
+                '<i type="button" class="far fa-circle-xmark manageRunningRecoveryBtn stopBtn form_btn mt-2"/>' +
+                '<i type="button" class="far fa-circle-play manageRunningRecoveryBtn resumeBtn form_btn mt-2"/>' +
+                '</td>' +
                 '<td style="background: pink;" class="color-detector"></td>' +
                 '<td>Поставлено на паузу</td>' +
                 '<td>' + result.hash + '</td>' +
@@ -141,10 +147,6 @@ hashcatConnection.on('hashcatResult', (result) => {
                 '<td>' + result.timeLeft + '</td>' +
                 '<td>' + result.progress + '%</td>' +
                 '<td style="background: pink;" class="color-detector"></td>' +
-                '<td>' +
-                '<input type="button" class="stopBtn form_btn" value="СТОП"/>' +
-                '<input type="button" class="resumeBtn form_btn" value="ВІДНОВИТИ"/>' +
-                '</td>' +
                 '</tr > ';
 
         else
